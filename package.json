@@ -4,12 +4,17 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "client": "npm run dev --prefix client",
+    "server:dev": "nodemon server/app.js",
+    "server:prod": "NODE_ENV=production nodemon server/app.js",
+    "dev": "concurrently \"npm run server:dev\" \"npm run client\"",
+    "prod": "concurrently \"npm run server:prod\" \"npm run client\""
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "concurrently": "^8.2.2",
     "express": "^4.18.2"
   }
 }
