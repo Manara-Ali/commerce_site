@@ -8,13 +8,13 @@ const app = express();
 
 app.use("/api/v1/users", userRouter);
 
-const __dirname = path.resolve();
+// const __dirname = path.resolve();
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/client/dist")));
+  app.use(express.static(path.join(path.resolve(), "/client/dist")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "dist", "index.html"));
+    res.sendFile(path.join(path.resolve(), "client", "dist", "index.html"));
   });
 } else {
   app.get("/", (req, res) => {
