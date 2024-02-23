@@ -10,20 +10,20 @@
 
 body {
   background-color: #f4f4f4;
+  font-size: 1.3rem;
 }
 
 .navbar {
   text-transform: uppercase;
-  font-size: 1.3rem;
   background-color: #d7456b;
   border-bottom: 0.5rem solid #66ba30;
 }
 
 .navbar .navbar-brand {
-  margin-right: 20%;
+  margin-right: 15%;
 }
 
-.navbar .collapse .form-inline input[type="search"]{
+.navbar .collapse .form-inline input[type="search"] {
   padding: 1.8rem;
   width: 20rem;
 }
@@ -47,15 +47,14 @@ body {
 
 .navbar .navbar-nav .nav-item {
   padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .navbar .navbar-nav .nav-link {
   text-align: center;
   display: inline-block;
   padding: 1.01rem;
-  padding-left: 1.8rem;
-  padding-right: 1.8rem;
+  /* padding-left: 1.8rem; */
+  /* padding-right: 1rem; */
   color: #fff;
   font-family: "Montserrat", sans-serif;
   font-weight: 500;
@@ -67,4 +66,32 @@ body {
 
 .navbar .navbar-toggler-icon {
   margin-bottom: 2.5rem;
+}
+
+/* Login Form */
+#email {
+  padding: 2rem;
+  border-radius: 1.5rem;
+  margin-bottom: 3rem;
+  font-size: 2rem;
+}
+
+#password {
+  padding: 2rem;
+  border-radius: 1.5rem;
+  margin-bottom: 3rem;
+  font-size: 2rem;
+}
+
+#login-btn {
+  padding: 1.2rem;
+  border-radius: 1.5rem;
+  width: 100%;
+  background-color: #66ba30;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+#login-btn:hover {
+  opacity: 0.9;
 }
