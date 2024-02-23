@@ -11,3 +11,60 @@
 body {
   background-color: #f4f4f4;
 }
+
+.navbar {
+  text-transform: uppercase;
+  font-size: 1.3rem;
+  background-color: #d7456b;
+  border-bottom: 0.5rem solid #66ba30;
+}
+
+.navbar .navbar-brand {
+  margin-right: 20%;
+}
+
+.navbar .collapse .form-inline input[type="search"]{
+  padding: 1.8rem;
+  width: 20rem;
+}
+
+.navbar .collapse .form-inline button[type="submit"] {
+  padding: 0.75rem;
+  width: 10rem;
+  border-color: #fff;
+  color: #000;
+}
+
+.navbar .collapse .form-inline button[type="submit"]:hover {
+  background-color: #000;
+  color: #fff;
+}
+
+.navbar .navbar-nav {
+  width: 50%;
+  justify-content: space-between;
+}
+
+.navbar .navbar-nav .nav-item {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.navbar .navbar-nav .nav-link {
+  text-align: center;
+  display: inline-block;
+  padding: 1.01rem;
+  padding-left: 1.8rem;
+  padding-right: 1.8rem;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  font-weight: 500;
+}
+
+.navbar .navbar-nav .nav-item:hover {
+  border-bottom: 0.2rem solid #fff;
+}
+
+.navbar .navbar-toggler-icon {
+  margin-bottom: 2.5rem;
+}
