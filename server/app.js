@@ -6,6 +6,8 @@ const ApplicationError = require("./utils/applicationError");
 
 const app = express();
 
+app.use(express.json());
+
 app.use("/api/v1/users", userRouter);
 
 // const __dirname = path.resolve();
