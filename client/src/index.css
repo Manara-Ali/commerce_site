@@ -69,21 +69,14 @@ body {
 }
 
 /* Login Form */
-#email {
+#email, #password, #name, #confirm-password {
   padding: 2rem;
   border-radius: 1.5rem;
   margin-bottom: 3rem;
   font-size: 2rem;
 }
 
-#password {
-  padding: 2rem;
-  border-radius: 1.5rem;
-  margin-bottom: 3rem;
-  font-size: 2rem;
-}
-
-#login-btn {
+#login-btn, #signup-btn {
   padding: 1.2rem;
   border-radius: 1.5rem;
   width: 100%;
