@@ -58,6 +58,10 @@ const userSchema = new mongoose.Schema(
           "Both password and confirm password fields must match. Try again",
       },
     },
+    passwordChangedAt: {
+      type: Date,
+      select: false,
+    },
     createdAt: {
       type: Date,
       default: Date.now(),
@@ -87,6 +91,19 @@ userSchema.methods.comparePassword = async function (
   hashedPassword
 ) {
   return await bcrypt.compare(plainPassword, hashedPassword);
+};
+
+// Create a function to verify when the password was last changed
+userSchema.methods.wasPasswordChanged = function (JWTTimestamp) {
+  if (this.passwordChangedAt) {
+    const passwordChangeTimestamp = parseInt(
+      new Date(this.passwordChangedAt).getTime() / 1000
+    );
+
+   return passwordChangeTimestamp > JWTTimestamp;
+  }
+
+  return false;
 };
 
 const User = mongoose.model("User", userSchema);
