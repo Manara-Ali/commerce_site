@@ -13,6 +13,14 @@ body {
   font-size: 1.3rem;
 }
 
+/* APP CONTAINER */
+.app-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .navbar {
   text-transform: uppercase;
   background-color: #d7456b;
@@ -69,7 +77,7 @@ body {
 }
 
 /* Login Form */
-#email, #password, #name, #confirm-password {
+#email, #password, #name, #passwordConfirm {
   padding: 2rem;
   border-radius: 1.5rem;
   margin-bottom: 2rem;
@@ -92,7 +100,7 @@ body {
 footer {
   height: 10rem;
   margin-top: 5rem;
-  background-color: #ccc;
+  background-color: #ddd;
 }
 
 #heart-emoji {
@@ -101,4 +109,18 @@ footer {
 
 #company-name {
   color: steelblue;
+}
+
+/* SPINNER AND SPINNER TEXT */
+#spinner {
+  width: 15rem;
+  height: 15rem;
+  /* color: #66ba30; */
+  /* color: #d7456b; */
+}
+
+#spinner-text {
+  font-size: 2.5rem;
+  /* color: #66ba30; */
+  /* color: #d7456b; */
 }

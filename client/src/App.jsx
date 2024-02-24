@@ -7,14 +7,16 @@ import { Footer } from "./components/Footer";
 
 export const App = () => {
   return (
-    <div>
-      <Navbar/>
+    <div className="app-container">
+      <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
       </Routes>
-      <Footer/>
+      <div className="footer-container">
+        <Footer />
+      </div>
     </div>
   );
 };
