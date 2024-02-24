@@ -39,9 +39,7 @@ export const Signup = () => {
   };
 
   useEffect(() => {
-
     if(user?.name) {
-      console.log("hello");
       navigate("/");
     }
   }, [user?.name])
