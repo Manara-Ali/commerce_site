@@ -1,5 +1,6 @@
 const path = require("path");
 const express = require("express");
+const cors = require("cors");
 const userRouter = require("./routers/userRoutes");
 const errorController = require("./controllers/errorController");
 const ApplicationError = require("./utils/applicationError");
@@ -7,6 +8,10 @@ const ApplicationError = require("./utils/applicationError");
 const app = express();
 
 app.use(express.json());
+
+app.use(cors({
+  origin: "*",
+}));
 
 app.use("/api/v1/users", userRouter);
 
