@@ -18,7 +18,7 @@ export const Navbar = () => {
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon">
-            <i className="fa fa-bars fa-3x" aria-hidden="true"></i>
+            <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
         </span>
       </button>
 
