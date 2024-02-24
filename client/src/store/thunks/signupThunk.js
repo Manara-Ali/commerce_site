@@ -7,7 +7,8 @@ export const signupThunk = createAsyncThunk(
     console.log(data);
     try {
       const response = await axios({
-        url: "http://localhost:8000/api/v1/users/signup",
+        // url: "http://localhost:8000/api/v1/users/signup",
+        url: "https://commerce-site-igmb.onrender.com/api/v1/users/signup",
         method: "POST",
         data,
       });
@@ -16,7 +17,7 @@ export const signupThunk = createAsyncThunk(
 
       return response.data;
     } catch (error) {
-      return rejectWithValue(error.response?.data)
+      return rejectWithValue(error.response?.data);
     }
   }
 );
