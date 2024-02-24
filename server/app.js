@@ -2,6 +2,7 @@ const path = require("path");
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const morgan = require("morgan");
 const userRouter = require("./routers/userRoutes");
 const productRouter = require("./routers/productRoutes");
 const errorController = require("./controllers/errorController");
@@ -9,13 +10,20 @@ const ApplicationError = require("./utils/applicationError");
 
 const app = express();
 
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"));
+}
+
 app.use(express.json());
 
 app.use(cookieParser());
 
-app.use(cors({
-  origin: "*",
-}));
+app.use(
+  cors({
+    origin: "*",
+    credentials: true,
+  })
+);
 
 app.use("/api/v1/users", userRouter);
 
