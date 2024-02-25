@@ -71,7 +71,6 @@ exports.login = catchAsyncFn(async (req, res, next) => {
 });
 
 exports.protect = catchAsyncFn(async (req, res, next) => {
-  console.log(req.cookies.jwt);
   // 1. Retrieve cookie
   let token;
 
