@@ -1,3 +1,4 @@
+const crypto = require("crypto");
 const validator = require("validator");
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
@@ -58,6 +59,14 @@ const userSchema = new mongoose.Schema(
           "Both password and confirm password fields must match. Try again",
       },
     },
+    passwordResetToken: {
+      type: String,
+      select: false,
+    },
+    passwordResetTokenExpiresIn: {
+      type: Date,
+      select: false,
+    },
     passwordChangedAt: {
       type: Date,
       select: false,
@@ -100,10 +109,24 @@ userSchema.methods.wasPasswordChanged = function (JWTTimestamp) {
       new Date(this.passwordChangedAt).getTime() / 1000
     );
 
-   return passwordChangeTimestamp > JWTTimestamp;
+    return passwordChangeTimestamp > JWTTimestamp;
   }
 
   return false;
+};
+
+// Create a function to generate password reset token
+userSchema.methods.generateResetToken = function () {
+  const resetToken = crypto.randomBytes(32).toString("hex");
+
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  this.passwordResetTokenExpiresIn = Date.now() + 10 * 60 * 1000;
+
+  return resetToken;
 };
 
 const User = mongoose.model("User", userSchema);

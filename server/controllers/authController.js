@@ -16,6 +16,9 @@ const ApplicationError = require("../utils/applicationError");
 // IMPORT FUNCTION TO CREATE TOKEN
 const createAndSendToken = require("../utils/createAndSendToken");
 
+// IMPORT FUNCTION TO SEND EMAIL
+const sendEmail = require("../utils/sendEmail");
+
 exports.signup = catchAsyncFn(async (req, res, next) => {
   const user = await User.create({
     name: req.body.name,
@@ -182,13 +185,81 @@ exports.checkAuth = catchAsyncFn(async (req, res, next) => {
 });
 
 exports.restrictTo = (...args) => {
-    return (req, res, next) => {
-        if(!args.includes(req.user.role)) {
-            const applicationError = new ApplicationError("Your are not allowed to access this resource", 403);
+  return (req, res, next) => {
+    if (!args.includes(req.user.role)) {
+      const applicationError = new ApplicationError(
+        "Your are not allowed to access this resource",
+        403
+      );
 
-            return next(applicationError);
-        }
-
-        next();
+      return next(applicationError);
     }
+
+    next();
+  };
 };
+
+exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
+  // 1. Retrieve email from user
+  const { email } = req.body;
+
+  if (!email) {
+    const applicationError = new ApplicationError(
+      "Email is required to reset password. Try again.",
+      400
+    );
+
+    return next(applicationError);
+  }
+
+  // 2. Find user thru the provided email
+  const user = await User.findOne({ email }).select("+email");
+
+  if (!user) {
+    const applicationError = new ApplicationError(
+      "No user was found with the provided email. Try again.",
+      404
+    );
+
+    return next(applicationError);
+  }
+
+  // 3. Generate new password token
+  const resetToken = user.generateResetToken();
+
+  await user.save({ validateBeforeSave: false });
+
+  // 4. Send new password token via email
+  const resetURL = `${req.protocol}://${req.get(
+    "host"
+  )}/api/v1/reset/password/${resetToken}`;
+
+  const message = `Forgot Password? Use the below link to reset your password:\n${resetURL}.\nIf you did not request for a password change, please disregard this message.`;
+
+  try {
+    await sendEmail({
+      email: user.email,
+      subject: "Forgot password? (Token valid for 10 minutes)",
+      message,
+    });
+
+    res.status(200).json({
+      status: "success",
+      message:
+        "A password reset token was successfully sent to your email on file",
+    });
+  } catch (error) {
+    user.passwordResetToken = undefined;
+    user.passwordResetTokenExpirationDate = undefined;
+    user.save({ validateBeforeSave: true });
+
+    const applicationError = new ApplicationError(
+      "An error occured while sending your password reset token. Try again later!",
+      500
+    );
+
+    return next(applicationError);
+  }
+
+  // 5. Send response
+});
