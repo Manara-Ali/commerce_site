@@ -39,11 +39,13 @@ const usersSlice = createSlice({
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.data.user;
+      state.isAuthenticated = true;
     });
 
     builder.addCase(loginThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.data.user;
+      state.isAuthenticated = true;
     });
     
     builder.addCase(checkAuthThunk.fulfilled, (state, action) => {
