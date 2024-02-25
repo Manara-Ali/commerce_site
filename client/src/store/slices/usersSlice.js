@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { signupThunk } from "../thunks/signupThunk";
 import { loginThunk } from "../thunks/loginThunk";
+import { checkAuthThunk } from "../thunks/checkAuthThunk";
 
 const usersSlice = createSlice({
   name: "users",
@@ -8,6 +9,7 @@ const usersSlice = createSlice({
     loading: false,
     user: null,
     error: null,
+    isAuthenticated: false,
   },
 
   reducers: {
@@ -28,6 +30,11 @@ const usersSlice = createSlice({
       state.error = null;
     });
 
+    builder.addCase(checkAuthThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
     ///////////////////////////// FULFILLED
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.loading = false;
@@ -38,16 +45,29 @@ const usersSlice = createSlice({
       state.loading = false;
       state.user = action.payload.data.user;
     });
-
+    
+    builder.addCase(checkAuthThunk.fulfilled, (state, action) => {
+      state.loading = false;
+      state.user = action.payload.data.user;
+      state.isAuthenticated = action.payload.isAuthenticated;
+    });
+    
     ///////////////////////////// REJECTED
     builder.addCase(signupThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
+      // state.isAuthenticated = action.payload.data.isAuthenticated;
     });
-
+    
     builder.addCase(loginThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
+    });
+    
+    builder.addCase(checkAuthThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+      state.isAuthenticated = action.payload.isAuthenticated;
     });
   },
 });

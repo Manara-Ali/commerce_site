@@ -1,11 +1,20 @@
+import { useEffect } from "react";
 import { Routes, Route } from "react-router-dom";
+import {useDispatch, useSelector} from 'react-redux';
 import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { Footer } from "./components/Footer";
+import { checkAuthThunk } from "./store";
 
 export const App = () => {
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(checkAuthThunk());
+  }, []);
+  
   return (
     <div className="app-container">
       <Navbar />

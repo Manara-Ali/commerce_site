@@ -9,4 +9,5 @@ export const store = configureStore({
 
 export * from "./thunks/signupThunk";
 export * from './thunks/loginThunk';
+export * from "./thunks/checkAuthThunk";
 export * from './slices/usersSlice';
