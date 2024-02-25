@@ -95,7 +95,9 @@ exports.protect = catchAsyncFn(async (req, res, next) => {
     process.env.JWT_SECRET_KEY
   );
 
-  const user = await User.findById(decodedPayload.id).select("+passwordChangedAt");
+  const user = await User.findById(decodedPayload.id).select(
+    "+passwordChangedAt"
+  );
 
   // 3. Verify that the user was not deleted after token was sent
   if (!user) {
@@ -122,4 +124,59 @@ exports.protect = catchAsyncFn(async (req, res, next) => {
 
   // 7. Call the next middleware in the stack
   next();
+});
+
+exports.checkAuth = catchAsyncFn(async (req, res, next) => {
+  // 1. Retrieve cookie
+  let token;
+
+  if (req.headers && req.headers.authorization?.startsWith("Bearer")) {
+    token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies && req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  if (!token) {
+    return res.status(401).json({
+      status: "fail",
+      isAuthenticated: false,
+      data: null,
+    });
+  }
+
+  // 2. Use cookie to find user (Verify token)
+  const decodedPayload = await util.promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+
+  const user = await User.findById(decodedPayload.id).select(
+    "+passwordChangedAt"
+  );
+
+  // 3. Verify that the user was not deleted after token was sent
+  if (!user) {
+    return res.status(401).json({
+      status: "fail",
+      isAuthenticated: false,
+      data: null,
+    });
+  }
+
+  // 4. Verify that password was not changed after token was sent
+  if (user.wasPasswordChanged(decodedPayload.iat)) {
+    return res.status(401).json({
+      status: "fail",
+      isAuthenticated: false,
+      data: null,
+    });
+  }
+
+  return res.status(200).json({
+    status: "success",
+    isAuthenticated: true,
+    data: {
+      user,
+    },
+  });
 });
