@@ -1,6 +1,9 @@
 // IMPORT UTIL
 const util = require("util");
 
+// IMPORT CRYPTO
+const crypto = require("crypto");
+
 // IMPORT JWT
 const jwt = require("jsonwebtoken");
 
@@ -232,7 +235,7 @@ exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
   // 4. Send new password token via email
   const resetURL = `${req.protocol}://${req.get(
     "host"
-  )}/api/v1/reset/password/${resetToken}`;
+  )}/api/v1/users/reset/password/${resetToken}`;
 
   const message = `Forgot Password? Use the below link to reset your password:\n${resetURL}.\nIf you did not request for a password change, please disregard this message.`;
 
@@ -262,4 +265,53 @@ exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
   }
 
   // 5. Send response
+});
+
+exports.resetPassword = catchAsyncFn(async (req, res, next) => {
+  const { password, passwordConfirm } = req.body;
+
+  if (!password || !passwordConfirm) {
+    const applicationError = new ApplicationError(
+      "Both password and confirm password fields are required to reset your password. Try again",
+      400
+    );
+
+    return next(applicationError);
+  }
+
+  const resetToken = req.params.resetToken;
+
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetTokenExpiresIn: {
+      $gt: Date.now(),
+    },
+  });
+
+  if (!user) {
+    const applicationError = new ApplicationError(
+      "Invalid or expired token. Try again",
+      400
+    );
+
+    return next(applicationError);
+  }
+
+  // 4. Update password
+  user.password = password;
+  user.passwordConfirm = passwordConfirm;
+  user.passwordResetToken = undefined;
+  user.passwordResetTokenExpiresIn = undefined;
+
+  await user.save();
+
+  user.password = undefined;
+  user.passwordChangedAt = undefined;
+
+  createAndSendToken(res, 200, user);
 });

@@ -129,6 +129,17 @@ userSchema.methods.generateResetToken = function () {
   return resetToken;
 };
 
+// Create a document middleware to set the time a password was changed
+userSchema.pre("save", function (next) {
+  if (!this.isModified("password") || this.isNew) {
+    return next();
+  }
+
+  this.passwordChangedAt = Date.now() - 1000;
+
+  return next();
+});
+
 const User = mongoose.model("User", userSchema);
 
 module.exports = User;
