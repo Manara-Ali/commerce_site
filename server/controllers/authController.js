@@ -96,7 +96,7 @@ exports.protect = catchAsyncFn(async (req, res, next) => {
   );
 
   const user = await User.findById(decodedPayload.id).select(
-    "+passwordChangedAt"
+    "+role +passwordChangedAt"
   );
 
   // 3. Verify that the user was not deleted after token was sent
@@ -180,3 +180,15 @@ exports.checkAuth = catchAsyncFn(async (req, res, next) => {
     },
   });
 });
+
+exports.restrictTo = (...args) => {
+    return (req, res, next) => {
+        if(!args.includes(req.user.role)) {
+            const applicationError = new ApplicationError("Your are not allowed to access this resource", 403);
+
+            return next(applicationError);
+        }
+
+        next();
+    }
+};
