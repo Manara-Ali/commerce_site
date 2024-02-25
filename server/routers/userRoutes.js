@@ -10,8 +10,16 @@ router.route("/auth/check-auth").get(authController.checkAuth);
 
 router
   .route("/")
-  .get(userController.getAllUsers)
-  .post(userController.createUser);
+  .get(
+    authController.protect,
+    authController.restrictTo("admin"),
+    userController.getAllUsers
+  )
+  .post(
+    authController.protect,
+    authController.restrictTo("admin"),
+    userController.createUser
+  );
 
 router
   .route("/:id")
