@@ -140,6 +140,7 @@ exports.checkAuth = catchAsyncFn(async (req, res, next) => {
   if (req.headers && req.headers.authorization?.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
   } else if (req.cookies && req.cookies.jwt) {
+    console.log(token, "Herer")
     token = req.cookies.jwt;
   }
 
