@@ -22,6 +22,7 @@ const createAndSendToken = require("../utils/createAndSendToken");
 // IMPORT FUNCTION TO SEND EMAIL
 const sendEmail = require("../utils/sendEmail");
 
+
 exports.signup = catchAsyncFn(async (req, res, next) => {
   const user = await User.create({
     name: req.body.name,
@@ -237,14 +238,15 @@ exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
     "host"
   )}/api/v1/users/reset/password/${resetToken}`;
 
-  const message = `Forgot Password? Use the below link to reset your password:\n${resetURL}.\nIf you did not request for a password change, please disregard this message.`;
+  const message = `<h2>Forgot Password?</h2>
+     <p>Use the below link to reset your password:\n${resetURL}.\nIf you did not request for a password change, please disregard this message.</p>
+     
+     <p>Your team at ColdFusion Technology</p>
+     <p>Best Regards!</p>
+     `;
 
   try {
-    await sendEmail({
-      email: user.email,
-      subject: "Forgot password? (Token valid for 10 minutes)",
-      message,
-    });
+    await sendEmail("Forgot password? (Token valid for 10 minutes)", message, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER);
 
     res.status(200).json({
       status: "success",
@@ -312,6 +314,41 @@ exports.resetPassword = catchAsyncFn(async (req, res, next) => {
 
   user.password = undefined;
   user.passwordChangedAt = undefined;
+
+  createAndSendToken(res, 200, user);
+});
+
+// Update current user password
+exports.updatePassword = catchAsyncFn(async (req, res, next) => {
+  // 1. Retrieve current password and new password
+  const { currentPassword, newPassword, newPasswordConfirm } = req.body;
+
+  if (!currentPassword || !newPassword || !newPasswordConfirm) {
+    const applicationError = new ApplicationError(
+      "All fields are required to update your password. Try again!",
+      401
+    );
+
+    return next(applicationError);
+  }
+
+  // 2. Find the current user
+  const user = await User.findById(req.user._id).select("+password");
+
+  if (!(await user.comparePassword(currentPassword, user.password))) {
+    const applicationError = new ApplicationError(
+      "Your password does not match the one we have on file. Try again.",
+      401
+    );
+
+    return next(applicationError);
+  }
+
+  // Updat password
+  user.password = newPassword;
+  user.passwordConfirm = newPasswordConfirm;
+
+  await user.save();
 
   createAndSendToken(res, 200, user);
 });
