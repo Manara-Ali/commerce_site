@@ -323,7 +323,9 @@ exports.resetPassword = catchAsyncFn(async (req, res, next) => {
   user.password = undefined;
   user.passwordChangedAt = undefined;
 
-  createAndSendToken(res, 200, user);
+  const message = "Congratulations! Your password reset was successful.";
+
+  createAndSendToken(res, 200, user, message);
 });
 
 // Update current user password

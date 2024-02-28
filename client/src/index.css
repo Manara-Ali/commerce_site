@@ -88,7 +88,7 @@ body {
   font-size: 2rem;
 }
 
-#login-btn, #signup-btn, #forgot-password-btn {
+#login-btn, #signup-btn, #forgot-password-btn, #reset-password-btn {
   padding: 1.2rem;
   border-radius: 1.5rem;
   width: 100%;

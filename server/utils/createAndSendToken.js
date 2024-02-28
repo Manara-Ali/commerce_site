@@ -7,7 +7,7 @@ const signToken = (id) => {
   });
 };
 
-const createAndSendToken = (res, statusCode, user) => {
+const createAndSendToken = (res, statusCode, user, message) => {
   const token = signToken(user._id);
 
   const cookieOptions = {
@@ -28,6 +28,7 @@ const createAndSendToken = (res, statusCode, user) => {
     token,
     data: {
       user,
+      message,
     },
   });
 };
