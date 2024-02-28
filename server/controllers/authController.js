@@ -238,7 +238,8 @@ exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
     "host"
   )}/api/v1/users/reset/password/${resetToken}`;
 
-  const message = `<h2>Forgot Password?</h2>
+  const message = `
+  <h2 style="color:red;">Forgot Password?</h2>
      <p>Use the below link to reset your password:\n${resetURL}.\nIf you did not request for a password change, please disregard this message.</p>
      
      <p>Your team at ColdFusion Technology</p>
