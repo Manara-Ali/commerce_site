@@ -6,8 +6,8 @@ export const checkAuthThunk = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios({
-        // url:"https://commerce-site-igmb.onrender.com/api/v1/users/auth/check-auth",
-        url: "/api/v1/users/auth/check-auth",
+        // url: "/api/v1/users/auth/check-auth",
+        url:"https://commerce-site-igmb.onrender.com/api/v1/users/auth/check-auth",
         method: "GET",
       },
       {
