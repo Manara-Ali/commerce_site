@@ -9,6 +9,7 @@ import { Footer } from "./components/Footer";
 import { checkAuthThunk } from "./store";
 import { Protect } from "./components/Protect";
 import { ForgotPassword } from "./pages/ForgotPassword";
+import { ResetPassword } from "./pages/ResetPassword";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ export const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
+        <Route path="/reset/password/:resetToken" element={<ResetPassword />} />
       </Routes>
         <Footer />
     </div>

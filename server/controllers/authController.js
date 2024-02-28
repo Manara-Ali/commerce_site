@@ -139,7 +139,6 @@ exports.checkAuth = catchAsyncFn(async (req, res, next) => {
   if (req.headers && req.headers.authorization?.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
   } else if (req.cookies && req.cookies.jwt) {
-    console.log(token, "Herer");
     token = req.cookies.jwt;
   }
 
@@ -236,10 +235,10 @@ exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
   // 4. Send new password token via email
   const resetURL = `${req.protocol}://${req.get(
     "host"
-  )}/api/v1/users/reset/password/${resetToken}`;
+  )}/reset/password/${resetToken}`;
 
   const message = `
-  <h2 style="color:red;">Forgot Password?</h2>
+  <h2>Forgot Password?</h2>
      <p>Use the below link to reset your password:\n${resetURL}.\nIf you did not request for a password change, please disregard this message.</p>
      
      <p>Your team at ColdFusion Technology</p>
