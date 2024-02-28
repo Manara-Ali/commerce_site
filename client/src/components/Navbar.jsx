@@ -4,7 +4,7 @@ import logo from '../assets/silver-spoon-logo.png';
 export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-xl d-flex justify-content-between">
-      <div className="container">
+      {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
         <img src={logo} alt="log" style={{width: "150px", height: "100px"}}/>
       </Link>
@@ -64,7 +64,7 @@ export const Navbar = () => {
           </li>
         </ul>
       </div>
-      </div>
+      {/* </div> */}
     </nav>
   );
 };

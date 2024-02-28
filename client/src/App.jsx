@@ -8,6 +8,7 @@ import { Signup } from "./pages/Signup";
 import { Footer } from "./components/Footer";
 import { checkAuthThunk } from "./store";
 import { Protect } from "./components/Protect";
+import { ForgotPassword } from "./pages/ForgotPassword";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -30,10 +31,9 @@ export const App = () => {
         />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
+        <Route path="/forgot/password" element={<ForgotPassword />} />
       </Routes>
-      <div className="footer-container">
         <Footer />
-      </div>
     </div>
   );
 };

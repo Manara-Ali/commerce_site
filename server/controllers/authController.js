@@ -22,7 +22,6 @@ const createAndSendToken = require("../utils/createAndSendToken");
 // IMPORT FUNCTION TO SEND EMAIL
 const sendEmail = require("../utils/sendEmail");
 
-
 exports.signup = catchAsyncFn(async (req, res, next) => {
   const user = await User.create({
     name: req.body.name,
@@ -140,7 +139,7 @@ exports.checkAuth = catchAsyncFn(async (req, res, next) => {
   if (req.headers && req.headers.authorization?.startsWith("Bearer")) {
     token = req.headers.authorization.split(" ")[1];
   } else if (req.cookies && req.cookies.jwt) {
-    console.log(token, "Herer")
+    console.log(token, "Herer");
     token = req.cookies.jwt;
   }
 
@@ -247,12 +246,20 @@ exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
      `;
 
   try {
-    await sendEmail("Forgot password? (Token valid for 10 minutes)", message, user.email, process.env.EMAIL_USER, process.env.EMAIL_USER);
+    await sendEmail(
+      "Forgot password? (Token valid for 10 minutes)",
+      message,
+      user.email,
+      process.env.EMAIL_USER,
+      process.env.EMAIL_USER
+    );
 
     res.status(200).json({
       status: "success",
-      message:
-        "A password reset token was successfully sent to your email on file",
+      data: {
+        message:
+          "A password reset token was successfully sent to your email on file",
+      },
     });
   } catch (error) {
     user.passwordResetToken = undefined;

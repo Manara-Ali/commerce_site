@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { loginThunk, clearErrors } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
@@ -52,7 +52,7 @@ export const Login = () => {
   }
 
   return (
-    <div className="container">
+    <div className="container my-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h1 className="display-1 mb-5 text-center">Login</h1>
@@ -80,6 +80,9 @@ export const Login = () => {
                 value={form.password}
                 onChange={handleChange}
               />
+              <p className="my-4">
+                <Link to={"/forgot/password"}>Forgot Password?</Link>
+              </p>
             </div>
             <button id="login-btn" type="submit" className="btn">
               Submit

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { signupThunk } from "../thunks/signupThunk";
 import { loginThunk } from "../thunks/loginThunk";
 import { checkAuthThunk } from "../thunks/checkAuthThunk";
+import { forgotPasswordThunk } from "../thunks/forgotPasswordThunk";
 
 const usersSlice = createSlice({
   name: "users",
@@ -10,11 +11,13 @@ const usersSlice = createSlice({
     user: null,
     error: null,
     isAuthenticated: false,
+    message: "",
   },
 
   reducers: {
     clearErrors(state) {
       state.error = null;
+      state.message = "";
     },
   },
 
@@ -31,6 +34,11 @@ const usersSlice = createSlice({
     });
 
     builder.addCase(checkAuthThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
+    builder.addCase(forgotPasswordThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
     });
@@ -54,6 +62,12 @@ const usersSlice = createSlice({
       state.isAuthenticated = action.payload.isAuthenticated;
     });
     
+    builder.addCase(forgotPasswordThunk.fulfilled, (state, action) => {
+      console.log(action.payload)
+      state.loading = false;
+      state.message = action.payload.data.message;
+    });
+    
     ///////////////////////////// REJECTED
     builder.addCase(signupThunk.rejected, (state, action) => {
       state.loading = false;
@@ -70,6 +84,11 @@ const usersSlice = createSlice({
       state.loading = false;
       // state.error = action.payload;
       state.isAuthenticated = action.payload.isAuthenticated;
+    });
+    
+    builder.addCase(forgotPasswordThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
     });
   },
 });

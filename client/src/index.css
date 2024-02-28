@@ -15,10 +15,14 @@ body {
 
 /* APP CONTAINER */
 .app-container {
-  height: 100vh;
+  /* height: 100vh; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+
+.container {
+  height: 60vh;
 }
 
 .navbar {
@@ -84,7 +88,7 @@ body {
   font-size: 2rem;
 }
 
-#login-btn, #signup-btn {
+#login-btn, #signup-btn, #forgot-password-btn {
   padding: 1.2rem;
   border-radius: 1.5rem;
   width: 100%;
@@ -97,10 +101,9 @@ body {
   opacity: 0.9;
 }
 
-footer {
-  height: 10rem;
-  margin-top: 5rem;
+.footer-container {
   background-color: #ddd;
+  padding: 3rem 10rem 10rem 10rem;
 }
 
 #heart-emoji {
