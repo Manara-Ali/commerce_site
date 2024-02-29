@@ -35,6 +35,14 @@ export const ResetPassword = () => {
     setForm({});
   };
 
+  useEffect(() => {
+    if(isAuthenticated) {
+      setTimeout(() => {
+        navigate("/");
+      }, 3000)
+    }
+  }, [isAuthenticated])
+
   if (loading) {
     return <Spinner />;
   }
@@ -44,14 +52,6 @@ export const ResetPassword = () => {
       dispatch(clearErrors());
     }, 5000);
   }
-
-  useEffect(() => {
-    if(isAuthenticated) {
-      setTimeout(() => {
-        navigate("/");
-      }, 3000)
-    }
-  }, [isAuthenticated])
 
   return (
     <>
