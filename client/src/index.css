@@ -22,7 +22,8 @@ body {
 }
 
 .container {
-  height: 60vh;
+  /* height: 60vh; */
+  height: auto;
 }
 
 .navbar {
@@ -81,14 +82,20 @@ body {
 }
 
 /* Login Form */
-#email, #password, #name, #passwordConfirm {
+#email,
+#password,
+#name,
+#passwordConfirm {
   padding: 2rem;
   border-radius: 1.5rem;
   margin-bottom: 2rem;
   font-size: 2rem;
 }
 
-#login-btn, #signup-btn, #forgot-password-btn, #reset-password-btn {
+#login-btn,
+#signup-btn,
+#forgot-password-btn,
+#reset-password-btn {
   padding: 1.2rem;
   border-radius: 1.5rem;
   width: 100%;
@@ -103,7 +110,8 @@ body {
 
 .footer-container {
   background-color: #ddd;
-  padding: 3rem 10rem 10rem 10rem;
+  padding: 7rem 10rem 10rem 10rem;
+  margin-top: 10rem;
 }
 
 #heart-emoji {
@@ -130,4 +138,23 @@ body {
 
 #menu {
   color: #66ba30;
+}
+
+/* PROFILE IMG */
+#profile-img-item {
+  padding: 0;
+}
+
+#profile-img-item .nav-link {
+  padding: 0;
+}
+
+#profile-img-item .nav-link img {
+  width: 5rem;
+  height: 5rem;
+  margin: 0;
+}
+
+#profile-img-item:hover {
+  border: none;
 }

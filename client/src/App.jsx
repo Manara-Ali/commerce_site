@@ -10,17 +10,26 @@ import { checkAuthThunk } from "./store";
 import { Protect } from "./components/Protect";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
+import {PrivateNavbar} from './components/PrivateNavbar';
+import { Profile } from "./pages/Profile";
 
 export const App = () => {
   const dispatch = useDispatch();
+
+  const {isAuthenticated, user} = useSelector((state) => {
+    return state.usersCombinedReducer;
+  });
 
   useEffect(() => {
     dispatch(checkAuthThunk());
   }, []);
 
+  console.log(isAuthenticated);
+  console.log(user);
+
   return (
     <div className="app-container">
-      <Navbar />
+      {isAuthenticated ? <PrivateNavbar/> : <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -34,6 +43,7 @@ export const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
         <Route path="/reset/password/:resetToken" element={<ResetPassword />} />
+        <Route path="/profile" element={<Profile/>}/>
       </Routes>
         <Footer />
     </div>
