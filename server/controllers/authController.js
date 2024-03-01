@@ -157,7 +157,7 @@ exports.checkAuth = catchAsyncFn(async (req, res, next) => {
   );
 
   const user = await User.findById(decodedPayload.id).select(
-    "+passwordChangedAt"
+    "+email +passwordChangedAt"
   );
 
   // 3. Verify that the user was not deleted after token was sent
