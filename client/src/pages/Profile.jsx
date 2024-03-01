@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
   getStorage,
@@ -7,23 +7,26 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../utils/firebase";
+import { updateUserDataThunk, clearErrors } from "../store";
+import { Spinner } from "../components/Spinner";
+import { Alert } from "../components/Alert";
 
-console.log(app)
+console.log(app);
 
 export const Profile = () => {
+  const dispatch = useDispatch();
   const inputRef = useRef();
   const [file, setFile] = useState();
   const [formData, setFormData] = useState({});
-  const [filePercentage, setFilePercentage] = useState(0);
+  const [fileUploadPercentage, setFileUploadPercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
-  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   const { loading, user, error } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
 
   const handleChange = (e) => {
-    console.log(user)
+    console.log(user);
     setFormData(() => {
       return {
         ...formData,
@@ -51,8 +54,8 @@ export const Profile = () => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-          console.log(progress);
-          setFilePercentage(Math.round(progress));
+        console.log(progress);
+        setFileUploadPercentage(Math.round(progress));
       },
       (error) => {
         setFileUploadError(true);
@@ -68,18 +71,69 @@ export const Profile = () => {
     );
   };
 
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    if (!fileUploadError) {
+      dispatch(updateUserDataThunk(formData));
+    } else {
+      console.log(fileUploadError);
+    }
+  };
+
+  const fileUploader = () => {
+    if (fileUploadError) {
+      setTimeout(() => {
+        setFileUploadError(false);
+      }, 2000);
+      return (
+        <span className="text-danger">
+          Image Upload Error. Try again later!
+        </span>
+      );
+    } else if (fileUploadPercentage > 0 && fileUploadPercentage < 100) {
+      return (
+        <span className="text-muted">{`Uploading Image... ${fileUploadPercentage}%`}</span>
+      );
+    } else if (!fileUploadError && fileUploadPercentage === 100) {
+      setTimeout(() => {
+        setFileUploadPercentage(0);
+      }, 3000);
+      return <span className="text-success">Image successfully uploaded!</span>;
+    } else {
+      return null;
+    }
+  };
+
   console.log(formData);
 
   useEffect(() => {
-    if(file) handleFileUpload(file);
+    if (file) handleFileUpload(file);
   }, [file]);
+
+  if (loading) {
+    return <Spinner />;
+  }
+
+  if (error) {
+    setTimeout(() => {
+      dispatch(clearErrors());
+    }, 3000);
+  }
 
   return (
     <div className="container">
       <h1 className="display-2 text-center my-3">User Profile</h1>
+      {error ? <Alert type="alert-danger" message={error.message} /> : null}
+      {fileUploadError ? (
+        <Alert type="alert-danger" message={fileUploadError} />
+      ) : null}
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          <form className="d-flex flex-column align-items-center">
+          <form
+            onSubmit={handleSubmit}
+            className="d-flex flex-column align-items-center"
+          >
             <input
               type="file"
               accept="image/*"
@@ -90,11 +144,11 @@ export const Profile = () => {
             <img
               id="profile-img-item"
               className="w-25 rounded-circle my-2"
-              src={user?.photo}
+              src={formData.photo || user?.photo}
               alt="profile"
               onClick={() => inputRef.current.click()}
             />
-
+            <p>{fileUploader()}</p>
             <div className="form-group w-100">
               <label htmlFor="name">Username</label>
               <input
@@ -121,6 +175,7 @@ export const Profile = () => {
               type="submit"
               id="update-profile-btn"
               className="btn w-100 mb-3"
+              disabled={loading}
             >
               UPDATE PROFILE
             </button>

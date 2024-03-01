@@ -16,6 +16,8 @@ router
   .route("/update/password")
   .patch(authController.protect, authController.updatePassword);
 
+router.route("/update-my-data").post(authController.protect, userController.updateMyData);
+
 router
   .route("/")
   .get(

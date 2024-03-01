@@ -159,6 +159,7 @@ body {
   width: 5rem;
   height: 5rem;
   margin: 0;
+  border-radius: 50%;
 }
 
 #profile-img-item:hover {

@@ -31,7 +31,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default:
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/User-avatar.svg/2048px-User-avatar.svg.png",
+        "https://cdn-icons-png.flaticon.com/512/1144/1144760.png",
     },
     role: {
       type: String,
