@@ -40,6 +40,10 @@ const userSchema = new mongoose.Schema(
       default: "user",
       select: false,
     },
+    active: {
+      type: Boolean,
+      default: true,
+    },
     password: {
       type: String,
       trim: true,
