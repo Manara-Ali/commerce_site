@@ -109,6 +109,22 @@ body {
   text-transform: uppercase;
 }
 
+#google-login-btn {
+  padding: 1.2rem;
+  border-radius: 1.5rem;
+  width: 100%;
+  color: #14a2b8;
+  text-transform: uppercase;
+}
+
+#google-login-btn:hover {
+  padding: 1.2rem;
+  border-radius: 1.5rem;
+  width: 100%;
+  color: #fff;
+  text-transform: uppercase;
+}
+
 #login-btn:hover {
   opacity: 0.9;
 }

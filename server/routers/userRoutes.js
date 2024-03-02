@@ -6,6 +6,7 @@ const router = express.Router();
 
 router.route("/signup").post(authController.signup);
 router.route("/login").post(authController.login);
+router.route("/google/auth").post(authController.googleAuth);
 router.route("/auth/check-auth").get(authController.checkAuth);
 
 router.route("/forgot/password").post(authController.forgotPassword);
@@ -16,7 +17,9 @@ router
   .route("/update/password")
   .patch(authController.protect, authController.updatePassword);
 
-router.route("/update-my-data").post(authController.protect, userController.updateMyData);
+router
+  .route("/update-my-data")
+  .post(authController.protect, userController.updateMyData);
 
 router
   .route("/")

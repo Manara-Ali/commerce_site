@@ -5,6 +5,7 @@ import { checkAuthThunk } from "../thunks/checkAuthThunk";
 import { forgotPasswordThunk } from "../thunks/forgotPasswordThunk";
 import { resetPasswordThunk } from "../thunks/resetPasswordThunk";
 import { updateUserDataThunk } from "../thunks/updateUserDataThunk";
+import { googleAuthThunk } from "../thunks/googleAuthThunk";
 
 const usersSlice = createSlice({
   name: "users",
@@ -56,6 +57,11 @@ const usersSlice = createSlice({
       state.error = null;
     });
 
+    builder.addCase(googleAuthThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
     ///////////////////////////// FULFILLED
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.loading = false;
@@ -96,6 +102,14 @@ const usersSlice = createSlice({
       state.isAuthenticated = true;
     });
     
+    builder.addCase(googleAuthThunk.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.loading = false;
+      state.user = action.payload.data.user;
+      state.status = action.payload.status;
+      state.isAuthenticated = true;
+    });
+    
     ///////////////////////////// REJECTED
     builder.addCase(signupThunk.rejected, (state, action) => {
       state.loading = false;
@@ -127,6 +141,13 @@ const usersSlice = createSlice({
     });
     
     builder.addCase(updateUserDataThunk.rejected, (state, action) => {
+      console.log(action.payload)
+      state.loading = false;
+      state.error = action.payload;
+      state.status = action.payload.status;
+    });
+    
+    builder.addCase(googleAuthThunk.rejected, (state, action) => {
       console.log(action.payload)
       state.loading = false;
       state.error = action.payload;

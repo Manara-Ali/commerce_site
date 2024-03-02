@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { loginThunk, clearErrors } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
+import { OAuth } from "../components/OAuth";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -26,8 +27,6 @@ export const Login = () => {
       };
     });
   };
-
-  console.log(form);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -87,6 +86,7 @@ export const Login = () => {
             <button id="login-btn" type="submit" className="btn">
               Submit
             </button>
+            <OAuth><i className="fa fa-google fa-2x pr-3" aria-hidden="true"></i>Login With Google</OAuth>
           </form>
         </div>
       </div>

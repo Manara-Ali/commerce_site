@@ -1,14 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from 'axios';
 
-export const updateUserDataThunk = createAsyncThunk(
-  "user/update-data",
-  async (data, { rejectWithValue }) => {
+export const googleAuthThunk = createAsyncThunk("user/google-auth", async (data, {rejectWithValue}) => {
     console.log(data);
     try {
       const response = await axios({
-        // url: "/api/v1/users/update-my-data",
-        url:  "https://commerce-site-igmb.onrender.com/api/v1/users/update-my-data",
+          // url: "/api/v1/users/google/auth",
+        url:  "https://commerce-site-igmb.onrender.com/api/v1/users/google/auth",
         method: "POST",
         data,
       });
@@ -19,5 +17,4 @@ export const updateUserDataThunk = createAsyncThunk(
     } catch (error) {
       return rejectWithValue(error.response?.data);
     }
-  }
-);
+})

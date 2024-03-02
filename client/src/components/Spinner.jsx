@@ -1,6 +1,6 @@
 export const Spinner = () => {
   return (
-    <div className="d-flex flex-column justify-content-center align-items-center mt-5">
+    <div className="container d-flex flex-column justify-content-center align-items-center mt-5"  style={{height: "60vh"}}>
         <div
       className="spinner-border" role="status" id="spinner"
     >

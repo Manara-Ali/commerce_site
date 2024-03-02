@@ -5,6 +5,7 @@ import { signupThunk } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 import { clearErrors } from "../store";
+import { OAuth } from "../components/OAuth";
 
 export const Signup = () => {
   const dispatch = useDispatch();
@@ -39,16 +40,16 @@ export const Signup = () => {
   };
 
   useEffect(() => {
-    if(user?.name) {
+    if (user?.name) {
       navigate("/");
     }
-  }, [user?.name])
+  }, [user?.name]);
 
   if (loading) {
     return <Spinner />;
   }
 
-  if(error) {
+  if (error) {
     setTimeout(() => {
       dispatch(clearErrors());
     }, 3000);
@@ -110,6 +111,10 @@ export const Signup = () => {
             <button id="signup-btn" type="submit" className="btn">
               Submit
             </button>
+            <OAuth>
+              <i className="fa fa-google fa-2x mr-3" aria-hidden="true"></i>
+              Sign Up With Google
+            </OAuth>
           </form>
         </div>
       </div>

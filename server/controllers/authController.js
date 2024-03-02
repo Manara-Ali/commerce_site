@@ -4,6 +4,8 @@ const util = require("util");
 // IMPORT CRYPTO
 const crypto = require("crypto");
 
+const bcrypt = require("bcryptjs");
+
 // IMPORT JWT
 const jwt = require("jsonwebtoken");
 
@@ -361,4 +363,35 @@ exports.updatePassword = catchAsyncFn(async (req, res, next) => {
   await user.save();
 
   createAndSendToken(res, 200, user);
+});
+
+exports.googleAuth = catchAsyncFn(async (req, res, next) => {
+  const { name, email, photo } = req.body;
+
+  const user = await User.findOne({ email });
+
+  if (user) {
+    createAndSendToken(res, 200, user);
+  } else {
+    // 3. IF USER DOES NOT EXIST
+    const generatePassword = crypto.randomBytes(8).toString("hex");
+
+    const password = await bcrypt.hash(generatePassword, 14);
+
+    const passwordConfirm = password;
+
+    const user = await User.create({
+      name:
+        name.split(" ").join("").toLowerCase() +
+        crypto.randomBytes(4).toString("hex"),
+      email,
+      photo,
+      password,
+      passwordConfirm,
+    });
+
+    user.password = undefined;
+
+    createAndSendToken(res, 201, user);
+  }
 });

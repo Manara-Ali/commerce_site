@@ -20,6 +20,7 @@ const userSchema = new mongoose.Schema(
         true,
         "This email already exist on our servers. Try again with a different email address.",
       ],
+      lowercase: true,
       validate: {
         validator: validator.isEmail,
         message:
@@ -44,7 +45,7 @@ const userSchema = new mongoose.Schema(
       trim: true,
       required: [true, "Password is a required field"],
       minlength: [8, "Password must be at least 8 characters long"],
-      maxlength: [40, "Password cannot exceed 40 characters"],
+      maxlength: [100, "Password cannot exceed 40 characters"],
       select: false,
     },
     passwordConfirm: {

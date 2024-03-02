@@ -43,7 +43,9 @@ export const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
         <Route path="/reset/password/:resetToken" element={<ResetPassword />} />
-        <Route path="/profile" element={<Profile/>}/>
+        <Route path="/profile" element={<Protect>
+          <Profile/>
+        </Protect>}/>
       </Routes>
         <Footer />
     </div>

@@ -13,4 +13,5 @@ export * from "./thunks/checkAuthThunk";
 export * from "./thunks/forgotPasswordThunk";
 export * from './thunks/resetPasswordThunk';
 export * from './thunks/updateUserDataThunk';
+export * from './thunks/googleAuthThunk';
 export * from './slices/usersSlice';
