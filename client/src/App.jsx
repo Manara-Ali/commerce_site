@@ -24,9 +24,6 @@ export const App = () => {
     dispatch(checkAuthThunk());
   }, []);
 
-  console.log(isAuthenticated);
-  console.log(user);
-
   return (
     <div className="app-container">
       {isAuthenticated ? <PrivateNavbar/> : <Navbar />}

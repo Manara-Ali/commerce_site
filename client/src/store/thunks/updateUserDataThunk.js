@@ -4,7 +4,6 @@ import axios from "axios";
 export const updateUserDataThunk = createAsyncThunk(
   "user/update-data",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
       const response = await axios({
         // url: "/api/v1/users/update-my-data",
@@ -12,8 +11,6 @@ export const updateUserDataThunk = createAsyncThunk(
         method: "POST",
         data,
       });
-
-      console.log(response.data);
 
       return response.data;
     } catch (error) {

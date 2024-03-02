@@ -27,9 +27,9 @@ const sendEmail = async function (
     // Send email
     transporter.sendMail(options, function (err, info) {
       if (err) {
-        console.log(err);
+        console.error(err);
       } else {
-        console.log(info);
+        console.error(info);
       }
     });
   } else {
@@ -56,9 +56,9 @@ const sendEmail = async function (
     // Send email
     transporter.sendMail(options, function (err, info) {
       if (err) {
-        console.log(err);
+        console.error(err);
       } else {
-        console.log(info);
+        console.error(info);
       }
     });
   }

@@ -8,8 +8,6 @@ export const Protect = ({ children }) => {
     return state.usersCombinedReducer;
   });
 
-  console.log(isAuthenticated);
-
   return (
     <>
       {isAuthenticated ? (

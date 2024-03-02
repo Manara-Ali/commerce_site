@@ -15,8 +15,6 @@ export const Signup = () => {
     return state.usersCombinedReducer;
   });
 
-  console.log(user);
-
   const [form, setForm] = useState({
     name: "",
     email: "",

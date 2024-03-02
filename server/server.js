@@ -6,9 +6,9 @@ dotenv.config({
 });
 
 process.on("uncaughtException", (error) => {
-  console.log("UNCAUGHT EXCEPTION");
+  console.error("UNCAUGHT EXCEPTION");
   console.error(error.name, error.message, "💥");
-  console.log("server is shutting down all connections...");
+  console.error("server is shutting down all connections...");
   process.exit(1);
 });
 
@@ -19,19 +19,19 @@ const DB = mongoose
     process.env.DATABASE.replace("<PASSWORD>", process.env.DATABASE_PASSWORD)
   )
   .then((con) => {
-    console.log(`CONNECTED TO ${con.connection?.name} DB!`);
+    console.error(`CONNECTED TO ${con.connection?.name} DB!`);
   });
 
 const PORT = process.env.PORT || 8000;
 
 const server = app.listen(PORT, () => {
-  console.log(`SERVER STARTED ON PORT ${PORT}...`);
+  console.error(`SERVER STARTED ON PORT ${PORT}...`);
 });
 
 process.on("unhandledRejection", (error) => {
-  console.log("UNHANDLED REJECTION");
+  console.error("UNHANDLED REJECTION");
   console.error(error.name, error.message, "💥");
-  console.log("server is shutting down all connections...");
+  console.error("server is shutting down all connections...");
   server.close(() => {
     process.exit(1);
   });

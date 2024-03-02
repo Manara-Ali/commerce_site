@@ -10,8 +10,6 @@ export const forgotPasswordThunk = createAsyncThunk("user/forgot-password", asyn
             data,
         });
 
-        console.log(response.data);
-
         return response.data;
     } catch (error) {
         return rejectWithValue(error.response?.data);

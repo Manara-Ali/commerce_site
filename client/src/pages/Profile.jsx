@@ -73,7 +73,7 @@ export const Profile = () => {
     if (!fileUploadError) {
       dispatch(updateUserDataThunk(formData));
     } else {
-      console.log(fileUploadError);
+      console.error(fileUploadError);
     }
   };
 

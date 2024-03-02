@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from 'axios';
 
 export const googleAuthThunk = createAsyncThunk("user/google-auth", async (data, {rejectWithValue}) => {
-    console.log(data);
     try {
       const response = await axios({
           // url: "/api/v1/users/google/auth",
@@ -10,8 +9,6 @@ export const googleAuthThunk = createAsyncThunk("user/google-auth", async (data,
         method: "POST",
         data,
       });
-
-      console.log(response.data);
 
       return response.data;
     } catch (error) {

@@ -82,7 +82,6 @@ const usersSlice = createSlice({
     });
     
     builder.addCase(forgotPasswordThunk.fulfilled, (state, action) => {
-      console.log(action.payload)
       state.loading = false;
       state.message = action.payload.data.message;
     });
@@ -95,7 +94,6 @@ const usersSlice = createSlice({
     });
     
     builder.addCase(updateUserDataThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.user = action.payload.data.updatedUser;
       state.status = action.payload.status;
@@ -103,7 +101,6 @@ const usersSlice = createSlice({
     });
     
     builder.addCase(googleAuthThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.user = action.payload.data.user;
       state.status = action.payload.status;
@@ -134,21 +131,18 @@ const usersSlice = createSlice({
     });
     
     builder.addCase(resetPasswordThunk.rejected, (state, action) => {
-      console.log(action.payload)
       state.loading = false;
       state.error = action.payload;
       state.message = action.payload.message;
     });
     
     builder.addCase(updateUserDataThunk.rejected, (state, action) => {
-      console.log(action.payload)
       state.loading = false;
       state.error = action.payload;
       state.status = action.payload.status;
     });
     
     builder.addCase(googleAuthThunk.rejected, (state, action) => {
-      console.log(action.payload)
       state.loading = false;
       state.error = action.payload;
       state.status = action.payload.status;

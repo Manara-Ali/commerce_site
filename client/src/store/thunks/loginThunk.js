@@ -14,8 +14,6 @@ export const loginThunk = createAsyncThunk("user/login", async (data, {rejectWit
             withCredentials: true,
         });
 
-        console.log(response.data);
-
         return response.data;
                 
     } catch (error) {

@@ -2,7 +2,6 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const resetPasswordThunk = createAsyncThunk("user/reset-password", async (data, {rejectWithValue}) => {
-    console.log(data);
     try {
         const response = await axios({
             // url: `/api/v1/users/reset/password/${data.resetToken}`,
@@ -14,12 +13,9 @@ export const resetPasswordThunk = createAsyncThunk("user/reset-password", async 
             },
         });
 
-        console.log(response.data);
-
         return response.data;
         
     } catch (error) {
-        console.log(error);
         return rejectWithValue(error.response?.data);
     }
 })

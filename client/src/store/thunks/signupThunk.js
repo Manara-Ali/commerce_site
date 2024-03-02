@@ -4,7 +4,6 @@ import axios from "axios";
 export const signupThunk = createAsyncThunk(
   "user/signup",
   async (data, { rejectWithValue }) => {
-    console.log(data);
     try {
       const response = await axios({
         // url: "/api/v1/users/signup",
