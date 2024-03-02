@@ -6,6 +6,7 @@ import { forgotPasswordThunk } from "../thunks/forgotPasswordThunk";
 import { resetPasswordThunk } from "../thunks/resetPasswordThunk";
 import { updateUserDataThunk } from "../thunks/updateUserDataThunk";
 import { googleAuthThunk } from "../thunks/googleAuthThunk";
+import { logoutThunk } from "../thunks/logoutThunk";
 
 const usersSlice = createSlice({
   name: "users",
@@ -62,6 +63,11 @@ const usersSlice = createSlice({
       state.error = null;
     });
 
+    builder.addCase(logoutThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
     ///////////////////////////// FULFILLED
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.loading = false;
@@ -107,6 +113,14 @@ const usersSlice = createSlice({
       state.isAuthenticated = true;
     });
     
+    builder.addCase(logoutThunk.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.loading = false;
+      state.user = null;
+      state.status = action.payload.status;
+      state.isAuthenticated = false;
+    });
+    
     ///////////////////////////// REJECTED
     builder.addCase(signupThunk.rejected, (state, action) => {
       state.loading = false;
@@ -146,6 +160,13 @@ const usersSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
       state.status = action.payload.status;
+    });
+
+    builder.addCase(logoutThunk.rejected, (state, action) => {
+      console.log(action.payload);
+      state.loading = false;
+      state.error = action.payload;
+      // state.status = action.payload.status;
     });
   },
 });

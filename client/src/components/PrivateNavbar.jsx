@@ -1,18 +1,32 @@
-import { Link } from "react-router-dom";
-import logo from '../assets/silver-spoon-logo.png';
-import { useSelector } from "react-redux";
-
+import { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../assets/silver-spoon-logo.png";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutThunk } from "../store";
 
 export const PrivateNavbar = () => {
-  const {user} = useSelector((state) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { user, status, loading, isAuthenticated } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
+
+  const handleLogout = () => {
+    dispatch(logoutThunk());
+  };
+
+  useEffect(() => {
+    if(status === "success") {
+      navigate("/login");
+    }
+  }, [status]);
 
   return (
     <nav className="navbar navbar-expand-xl d-flex justify-content-between">
       {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
-        <img src={logo} alt="log" style={{width: "150px", height: "100px"}}/>
+        <img src={logo} alt="log" style={{ width: "150px", height: "100px" }} />
       </Link>
       <button
         className="navbar-toggler"
@@ -24,22 +38,19 @@ export const PrivateNavbar = () => {
         aria-label="Toggle navigation"
       >
         <span className="navbar-toggler-icon">
-            <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
+          <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
         </span>
       </button>
 
       <div className="collapse navbar-collapse" id="navbar-content">
-            <form className="form-inline my-2 my-lg-0">
+        <form className="form-inline my-2 my-lg-0">
           <input
             className="form-control mr-sm-2"
             type="search"
             placeholder="Search Menu"
             aria-label="Search"
           />
-          <button
-            className="btn my-2 my-sm-0"
-            type="submit"
-          >
+          <button className="btn my-2 my-sm-0" type="submit">
             <i className="fa fa-search fa-2x" aria-hidden="true"></i>
           </button>
         </form>
@@ -55,22 +66,19 @@ export const PrivateNavbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-              className="nav-link"
-              to="/contact"
-            >
+            <Link className="nav-link" to="/contact">
               Contact
             </Link>
           </li>
           <li className="nav-item" id="profile-img-item">
             <Link className="nav-link" to="/profile">
-              <img src={user.photo} 
-              alt="user photo"
-              />
+              <img src={user.photo} alt="user photo" />
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/logout">Log Out</Link>
+            <Link className="nav-link" onClick={handleLogout}>
+              Log Out
+            </Link>
           </li>
         </ul>
       </div>

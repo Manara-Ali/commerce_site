@@ -395,3 +395,19 @@ exports.googleAuth = catchAsyncFn(async (req, res, next) => {
     createAndSendToken(res, 201, user);
   }
 });
+
+exports.logout = (req, res, next) => {
+  try {
+    res.cookie("jwt", "", {
+      httpOnly: true,
+      expires: new Date(Date.now() - 1000),
+    });
+
+    res.status(200).json({
+      status: "success",
+      data: null,
+    });
+  } catch (error) {
+    next(error);
+  }
+};

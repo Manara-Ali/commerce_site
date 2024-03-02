@@ -4,7 +4,7 @@ import axios from 'axios';
 export const googleAuthThunk = createAsyncThunk("user/google-auth", async (data, {rejectWithValue}) => {
     try {
       const response = await axios({
-          // url: "/api/v1/users/google/auth",
+        //   url: "/api/v1/users/google/auth",
         url:  "https://commerce-site-igmb.onrender.com/api/v1/users/google/auth",
         method: "POST",
         data,
