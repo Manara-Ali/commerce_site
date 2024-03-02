@@ -11,8 +11,6 @@ import { updateUserDataThunk, clearErrors } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 
-console.log(app);
-
 export const Profile = () => {
   const dispatch = useDispatch();
   const inputRef = useRef();
@@ -26,7 +24,6 @@ export const Profile = () => {
   });
 
   const handleChange = (e) => {
-    console.log(user);
     setFormData(() => {
       return {
         ...formData,
@@ -54,7 +51,6 @@ export const Profile = () => {
         const progress =
           (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-        console.log(progress);
         setFileUploadPercentage(Math.round(progress));
       },
       (error) => {
@@ -104,8 +100,6 @@ export const Profile = () => {
       return null;
     }
   };
-
-  console.log(formData);
 
   useEffect(() => {
     if (file) handleFileUpload(file);
