@@ -7,6 +7,7 @@ import { resetPasswordThunk } from "../thunks/resetPasswordThunk";
 import { updateUserDataThunk } from "../thunks/updateUserDataThunk";
 import { googleAuthThunk } from "../thunks/googleAuthThunk";
 import { logoutThunk } from "../thunks/logoutThunk";
+import { deleteAccountThunk } from "../thunks/deleteAccountThunk";
 
 const usersSlice = createSlice({
   name: "users",
@@ -68,6 +69,11 @@ const usersSlice = createSlice({
       state.error = null;
     });
 
+    builder.addCase(deleteAccountThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
     ///////////////////////////// FULFILLED
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.loading = false;
@@ -114,6 +120,14 @@ const usersSlice = createSlice({
     });
     
     builder.addCase(logoutThunk.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.loading = false;
+      state.user = null;
+      state.status = action.payload.status;
+      state.isAuthenticated = false;
+    });
+    
+    builder.addCase(deleteAccountThunk.fulfilled, (state, action) => {
       console.log(action.payload);
       state.loading = false;
       state.user = null;

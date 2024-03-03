@@ -12,6 +12,7 @@ import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
 import {PrivateNavbar} from './components/PrivateNavbar';
 import { Profile } from "./pages/Profile";
+import { DeleteAccount } from "./pages/DeleteAccount";
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ export const App = () => {
         <Route path="/profile" element={<Protect>
           <Profile/>
         </Protect>}/>
+        <Route path="/delete-account" element={<DeleteAccount/>}/>
       </Routes>
         <Footer />
     </div>

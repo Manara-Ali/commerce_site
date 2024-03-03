@@ -22,8 +22,8 @@ body {
 }
 
 .container {
-  /* height: 60vh; */
-  height: auto;
+  height: 60vh;
+  /* height: auto; */
 }
 
 .navbar {
@@ -100,7 +100,8 @@ body {
 #forgot-password-btn,
 #reset-password-btn,
 #update-profile-btn,
-#update-password-btn {
+#update-password-btn,
+#delete-account-btn {
   padding: 1.2rem;
   border-radius: 1.5rem;
   width: 100%;

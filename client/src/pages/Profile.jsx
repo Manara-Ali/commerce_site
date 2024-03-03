@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import {Link} from 'react-router-dom';
 import {
   getDownloadURL,
   getStorage,
@@ -184,9 +185,11 @@ export const Profile = () => {
             </button>
             </Link> */}
           <div className="d-flex justify-content-between">
+            <Link to={"/delete-account"}>
             <span id="span-delete" className="text-danger d-inline-block">
               Delete Account
             </span>
+            </Link>
           </div>
         </div>
       </div>

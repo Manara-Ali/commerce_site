@@ -23,6 +23,10 @@ router
   .post(authController.protect, userController.updateMyData);
 
 router
+  .route("/delete/account")
+  .post(authController.protect, userController.deleteMyAccount);
+
+router
   .route("/")
   .get(
     authController.protect,

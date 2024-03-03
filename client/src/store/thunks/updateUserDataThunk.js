@@ -6,8 +6,8 @@ export const updateUserDataThunk = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios({
-        url: "/api/v1/users/update-my-data",
-        // url:  "https://commerce-site-igmb.onrender.com/api/v1/users/update-my-data",
+        // url: "/api/v1/users/update-my-data",
+        url:  "https://commerce-site-igmb.onrender.com/api/v1/users/update-my-data",
         method: "POST",
         data,
       });
