@@ -1,12 +1,18 @@
+import { useRef } from "react";
 import { Link } from "react-router-dom";
-import logo from '../assets/silver-spoon-logo.png';
+import logo from "../assets/silver-spoon-logo.png";
 
 export const Navbar = () => {
+  const navRef = useRef();
+
   return (
-    <nav className="navbar navbar-expand-xl d-flex justify-content-between">
+    <nav
+      className="navbar navbar-expand-xl d-flex justify-content-between"
+      onClick={() => navRef.current?.click()}
+    >
       {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
-        <img src={logo} alt="log" style={{width: "150px", height: "100px"}}/>
+        <img src={logo} alt="log" style={{ width: "150px", height: "100px" }} />
       </Link>
       <button
         className="navbar-toggler"
@@ -16,24 +22,22 @@ export const Navbar = () => {
         aria-controls="navbar-content"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        ref={navRef}
       >
         <span className="navbar-toggler-icon">
-            <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
+          <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
         </span>
       </button>
 
       <div className="collapse navbar-collapse" id="navbar-content">
-            <form className="form-inline my-2 my-lg-0">
+        <form className="form-inline my-2 my-lg-0">
           <input
             className="form-control mr-sm-2"
             type="search"
             placeholder="Search Menu"
             aria-label="Search"
           />
-          <button
-            className="btn my-2 my-sm-0"
-            type="submit"
-          >
+          <button className="btn my-2 my-sm-0" type="submit">
             <i className="fa fa-search fa-2x" aria-hidden="true"></i>
           </button>
         </form>
@@ -49,18 +53,19 @@ export const Navbar = () => {
             </Link>
           </li>
           <li className="nav-item">
-            <Link
-              className="nav-link"
-              to="/contact"
-            >
+            <Link className="nav-link" to="/contact">
               Contact
             </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/login">Login</Link>
+            <Link className="nav-link" to="/login">
+              Login
+            </Link>
           </li>
           <li className="nav-item">
-            <Link className="nav-link" to="/signup">Sign Up</Link>
+            <Link className="nav-link" to="/signup">
+              Sign Up
+            </Link>
           </li>
         </ul>
       </div>
