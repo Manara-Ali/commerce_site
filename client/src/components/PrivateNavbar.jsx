@@ -1,10 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/silver-spoon-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk } from "../store";
 
 export const PrivateNavbar = () => {
+  const navRef = useRef();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,13 +18,16 @@ export const PrivateNavbar = () => {
   };
 
   useEffect(() => {
-    if(status === "success") {
+    if (status === "success") {
       navigate("/login");
     }
   }, [status]);
 
   return (
-    <nav className="navbar navbar-expand-xl d-flex justify-content-between">
+    <nav
+      className="navbar navbar-expand-xl d-flex justify-content-between"
+      onClick={() => navRef.current?.click()}
+    >
       {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
         <img src={logo} alt="log" style={{ width: "150px", height: "100px" }} />
@@ -36,6 +40,7 @@ export const PrivateNavbar = () => {
         aria-controls="navbar-content"
         aria-expanded="false"
         aria-label="Toggle navigation"
+        ref={navRef}
       >
         <span className="navbar-toggler-icon">
           <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
