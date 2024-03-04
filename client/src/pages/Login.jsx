@@ -54,7 +54,7 @@ export const Login = () => {
     <div className="container my-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
-          <h1 className="display-1 mb-5 text-center">Login</h1>
+          <h1 className="display-3 mb-5 text-center">Login</h1>
           {error ? <Alert type="alert-danger" message={error.message} /> : null}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
@@ -80,7 +80,7 @@ export const Login = () => {
                 onChange={handleChange}
               />
               <p className="my-4">
-                <Link to={"/forgot/password"}>Forgot Password?</Link>
+                <Link to={"/forgot/password"} style={{color: "red"}}>Forgot Password?</Link>
               </p>
             </div>
             <button id="login-btn" type="submit" className="btn">

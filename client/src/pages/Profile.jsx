@@ -118,7 +118,7 @@ export const Profile = () => {
 
   return (
     <div className="container">
-      <h1 className="display-2 text-center my-3">User Profile</h1>
+      <h1 className="display-3 text-center my-3">User Profile</h1>
       {error ? <Alert type="alert-danger" message={error.message} /> : null}
       {fileUploadError ? (
         <Alert type="alert-danger" message={fileUploadError} />
@@ -150,7 +150,6 @@ export const Profile = () => {
                 type="text"
                 className="form-control"
                 id="name"
-                placeholder="Username"
                 onChange={handleChange}
                 value={formData.name || ""}
               />
@@ -161,7 +160,6 @@ export const Profile = () => {
                 type="email"
                 className="form-control"
                 id="email"
-                placeholder="Email"
                 onChange={handleChange}
                 value={formData.email || ""}
               />
@@ -208,7 +206,6 @@ export const Profile = () => {
                 type="text"
                 className="form-control"
                 id="password-current"
-                placeholder="Current Password"
               />
             </div>
             <div className="form-group w-100">
@@ -217,7 +214,6 @@ export const Profile = () => {
                 type="password"
                 className="form-control"
                 id="password-new"
-                placeholder="New Password"
               />
             </div>
             <div className="form-group w-100">
@@ -226,7 +222,6 @@ export const Profile = () => {
                 type="password"
                 className="form-control"
                 id="passwordConfirm"
-                placeholder="Confirm Password"
               />
             </div>
             <button

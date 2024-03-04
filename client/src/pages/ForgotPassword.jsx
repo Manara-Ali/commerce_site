@@ -56,7 +56,7 @@ export const ForgotPassword = () => {
       <div className="container my-5">
         <div className="row">
           <div className="col-md-6 offset-md-3">
-            <h1 className="display-1 mb-3 text-center">Forgot Password</h1>
+            <h1 className="display-3 mb-3 text-center">Forgot Password</h1>
             {error ? (
               <Alert type="alert-danger" message={error.message} />
             ) : null}

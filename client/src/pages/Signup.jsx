@@ -96,7 +96,7 @@ export const Signup = () => {
               />
             </div>
             <div className="form-group">
-              <label htmlFor="passwordConfirm">Password</label>
+              <label htmlFor="passwordConfirm">Confirm Password</label>
               <input
                 type="password"
                 className="form-control"

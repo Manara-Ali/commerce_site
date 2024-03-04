@@ -24,10 +24,10 @@ export const DeleteAccount = () => {
     dispatch(deleteAccountThunk({ currentPassword }));
   };
 
-  console.log(status);
+  console.log(currentPassword);
 
   useEffect(() => {
-    if (status === 204) {
+    if (status === "No Content") {
       dispatch(logoutThunk());
     }
     if (!user) {

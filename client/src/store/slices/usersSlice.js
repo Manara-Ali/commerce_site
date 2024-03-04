@@ -131,7 +131,7 @@ const usersSlice = createSlice({
       console.log(action.payload);
       state.loading = false;
       state.user = null;
-      state.status = action.payload.status;
+      state.status = action.payload.statusText;
       state.isAuthenticated = false;
     });
     

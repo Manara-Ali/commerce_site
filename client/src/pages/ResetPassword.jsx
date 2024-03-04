@@ -67,7 +67,7 @@ export const ResetPassword = () => {
       <div className="container my-5">
         <div className="row">
           <div className="col-md-6 offset-md-3">
-            <h1 className="display-1 mb-5 text-center">Reset Password</h1>
+            <h1 className="display-3 mb-5 text-center">Reset Password</h1>
             {error ? (
               <Alert type="alert-danger" message={error.message} />
             ) : message ? (
