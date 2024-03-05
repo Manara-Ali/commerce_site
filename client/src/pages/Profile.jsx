@@ -185,6 +185,7 @@ export const Profile = () => {
               src={formData.photo || user?.photo}
               alt="profile"
               onClick={() => inputRef.current.click()}
+              style={{width: "100px", height: "120px"}}
             />
             <p>{fileUploader()}</p>
             <div className="form-group w-100">

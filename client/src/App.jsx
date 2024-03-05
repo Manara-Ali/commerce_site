@@ -6,7 +6,6 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { Signup } from "./pages/Signup";
 import { Footer } from "./components/Footer";
-import { checkAuthThunk } from "./store";
 import { Protect } from "./components/Protect";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
@@ -15,15 +14,10 @@ import { Profile } from "./pages/Profile";
 import { DeleteAccount } from "./pages/DeleteAccount";
 
 export const App = () => {
-  const dispatch = useDispatch();
 
   const { isAuthenticated, user } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
-
-  useEffect(() => {
-    dispatch(checkAuthThunk());
-  }, []);
 
   return (
     <div className="app-container">

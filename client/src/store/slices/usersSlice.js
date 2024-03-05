@@ -36,51 +36,61 @@ const usersSlice = createSlice({
     builder.addCase(signupThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(loginThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(checkAuthThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(forgotPasswordThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(resetPasswordThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(updateUserDataThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(googleAuthThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(logoutThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(deleteAccountThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     builder.addCase(updatePasswordThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
+      state.status = "";
     });
 
     ///////////////////////////// FULFILLED
