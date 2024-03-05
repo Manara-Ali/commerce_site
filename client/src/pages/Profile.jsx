@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -18,6 +18,7 @@ import { Alert } from "../components/Alert";
 
 export const Profile = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const inputRef = useRef();
   const [file, setFile] = useState();
   const [formData, setFormData] = useState({});
@@ -29,9 +30,19 @@ export const Profile = () => {
     newPasswordConfirm: "",
   });
 
-  const { loading, user, error, status, message, passwordUpdateError } = useSelector((state) => {
+  const {
+    loading,
+    user,
+    isAuthenticated,
+    error,
+    status,
+    message,
+    passwordUpdateError,
+  } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
+
+  console.log(isAuthenticated);
 
   const handleChange = (e) => {
     setFormData(() => {
@@ -101,13 +112,17 @@ export const Profile = () => {
     e.preventDefault();
 
     dispatch(updatePasswordThunk(passwordObj));
-    
+
     setPasswordObj({
       currentPassword: "",
       newPassword: "",
       newPasswordConfirm: "",
     });
   };
+
+  useEffect(() => {
+    if (file) handleFileUpload(file);
+  }, [file]);
 
   const fileUploader = () => {
     if (fileUploadError) {
@@ -133,13 +148,9 @@ export const Profile = () => {
     }
   };
 
-  useEffect(() => {
-    if (file) handleFileUpload(file);
-  }, [file]);
-
-  // if (loading) {
-  //   return <Spinner />;
-  // }
+  if (loading) {
+    return <Spinner />;
+  }
 
   if (error) {
     setTimeout(() => {
@@ -148,6 +159,12 @@ export const Profile = () => {
   }
 
   if(passwordUpdateError) {
+    setTimeout(() => {
+      dispatch(clearErrors());
+    }, 3000);
+  }
+
+  if(status === "success" || status === "fail") {
     setTimeout(() => {
       dispatch(clearErrors());
     }, 3000);
@@ -185,7 +202,7 @@ export const Profile = () => {
               src={formData.photo || user?.photo}
               alt="profile"
               onClick={() => inputRef.current.click()}
-              style={{width: "100px", height: "120px"}}
+              style={{ width: "100px", height: "120px" }}
             />
             <p>{fileUploader()}</p>
             <div className="form-group w-100">
@@ -216,7 +233,7 @@ export const Profile = () => {
               className="btn w-100 mb-3"
               disabled={loading}
             >
-              {loading ? "Loading...": "UPDATE PROFILE"}
+              {loading ? "Loading..." : "UPDATE PROFILE"}
             </button>
           </form>
           {/* <Link to="/create-listing">
@@ -245,8 +262,10 @@ export const Profile = () => {
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h3 className="lead display-4 text-center mb-5">Update Password</h3>
-          {passwordUpdateError ? <Alert type="alert-danger" message={passwordUpdateError.message} /> : null}
-          {message && <Alert type={"alert-success"} message={message}/>}
+          {passwordUpdateError ? (
+            <Alert type="alert-danger" message={passwordUpdateError.message} />
+          ) : null}
+          {message && <Alert type={"alert-success"} message={message} />}
           <form
             className="d-flex flex-column align-items-center"
             onSubmit={handlePasswordSubmit}
@@ -290,7 +309,7 @@ export const Profile = () => {
               className="btn w-100 mb-3"
               disabled={loading}
             >
-              {loading ? "Loading...": "UPDATE PASSWORD"}
+              {loading ? "Loading..." : "UPDATE PASSWORD"}
             </button>
           </form>
         </div>

@@ -1,4 +1,4 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+// import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 export const updatePasswordThunk = createAsyncThunk(
@@ -7,7 +7,7 @@ export const updatePasswordThunk = createAsyncThunk(
     try {
       const response = await axios({
         url: "/api/v1/users/update/password",
-        // url:  "https://commerce-site-igmb.onrender.com/api/v1/users/update/password",
+        url:  "https://commerce-site-igmb.onrender.com/api/v1/users/update/password",
         method: "PATCH",
         data,
       });
