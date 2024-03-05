@@ -8,6 +8,7 @@ import { updateUserDataThunk } from "../thunks/updateUserDataThunk";
 import { googleAuthThunk } from "../thunks/googleAuthThunk";
 import { logoutThunk } from "../thunks/logoutThunk";
 import { deleteAccountThunk } from "../thunks/deleteAccountThunk";
+import { updatePasswordThunk } from "../thunks/updatePasswordThunk";
 
 const usersSlice = createSlice({
   name: "users",
@@ -15,6 +16,7 @@ const usersSlice = createSlice({
     loading: false,
     user: null,
     error: null,
+    passwordUpdateError: null,
     isAuthenticated: false,
     message: "",
     status: "",
@@ -23,7 +25,9 @@ const usersSlice = createSlice({
   reducers: {
     clearErrors(state) {
       state.error = null;
+      state.passwordUpdateError = null;
       state.message = "";
+      state.status = "";
     },
   },
 
@@ -74,6 +78,11 @@ const usersSlice = createSlice({
       state.error = null;
     });
 
+    builder.addCase(updatePasswordThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+
     ///////////////////////////// FULFILLED
     builder.addCase(signupThunk.fulfilled, (state, action) => {
       state.loading = false;
@@ -86,39 +95,39 @@ const usersSlice = createSlice({
       state.user = action.payload.data.user;
       state.isAuthenticated = true;
     });
-    
+
     builder.addCase(checkAuthThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.data.user;
       state.isAuthenticated = action.payload.isAuthenticated;
     });
-    
+
     builder.addCase(forgotPasswordThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.message = action.payload.data.message;
     });
-    
+
     builder.addCase(resetPasswordThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.data.user;
       state.message = action.payload.data.message;
       state.isAuthenticated = true;
     });
-    
+
     builder.addCase(updateUserDataThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.data.updatedUser;
       state.status = action.payload.status;
       state.isAuthenticated = true;
     });
-    
+
     builder.addCase(googleAuthThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.user = action.payload.data.user;
       state.status = action.payload.status;
       state.isAuthenticated = true;
     });
-    
+
     builder.addCase(logoutThunk.fulfilled, (state, action) => {
       console.log(action.payload);
       state.loading = false;
@@ -126,50 +135,58 @@ const usersSlice = createSlice({
       state.status = action.payload.status;
       state.isAuthenticated = false;
     });
-    
+
     builder.addCase(deleteAccountThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.user = null;
       state.status = action.payload.statusText;
       state.isAuthenticated = false;
     });
-    
+
+    builder.addCase(updatePasswordThunk.fulfilled, (state, action) => {
+      console.log(action.payload);
+      state.loading = false;
+      state.user = action.payload.data.user;
+      state.status = action.payload.status;
+      state.message = "Your password was successfully updated in our system!"
+      state.isAuthenticated = true;
+    });
+
     ///////////////////////////// REJECTED
     builder.addCase(signupThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
       // state.isAuthenticated = action.payload.data.isAuthenticated;
     });
-    
+
     builder.addCase(loginThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
-    
+
     builder.addCase(checkAuthThunk.rejected, (state, action) => {
       state.loading = false;
       // state.error = action.payload;
       state.isAuthenticated = action.payload.isAuthenticated;
     });
-    
+
     builder.addCase(forgotPasswordThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
     });
-    
+
     builder.addCase(resetPasswordThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
       state.message = action.payload.message;
     });
-    
+
     builder.addCase(updateUserDataThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
       state.status = action.payload.status;
     });
-    
+
     builder.addCase(googleAuthThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload;
@@ -181,6 +198,12 @@ const usersSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
       // state.status = action.payload.status;
+    });
+
+    builder.addCase(updatePasswordThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.passwordUpdateError = action.payload;
+      state.status = action.payload.status;
     });
   },
 });

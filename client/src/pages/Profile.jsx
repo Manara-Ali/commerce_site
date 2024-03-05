@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -8,7 +8,11 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../utils/firebase";
-import { updateUserDataThunk, clearErrors } from "../store";
+import {
+  updateUserDataThunk,
+  updatePasswordThunk,
+  clearErrors,
+} from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 
@@ -19,8 +23,13 @@ export const Profile = () => {
   const [formData, setFormData] = useState({});
   const [fileUploadPercentage, setFileUploadPercentage] = useState(0);
   const [fileUploadError, setFileUploadError] = useState(false);
+  const [passwordObj, setPasswordObj] = useState({
+    currentPassword: "",
+    newPassword: "",
+    newPasswordConfirm: "",
+  });
 
-  const { loading, user, error } = useSelector((state) => {
+  const { loading, user, error, status, message, passwordUpdateError } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
 
@@ -28,7 +37,17 @@ export const Profile = () => {
     setFormData(() => {
       return {
         ...formData,
-        [e.target.id]: e.target.value || user?.[e.target.id],
+        [e.target.name]: e.target.value,
+        // [e.target.id]: e.target.value || user?.[e.target.id],
+      };
+    });
+  };
+
+  const handlePasswordChange = (e) => {
+    setPasswordObj(() => {
+      return {
+        ...passwordObj,
+        [e.target.name]: e.target.value,
       };
     });
   };
@@ -78,6 +97,18 @@ export const Profile = () => {
     }
   };
 
+  const handlePasswordSubmit = (e) => {
+    e.preventDefault();
+
+    dispatch(updatePasswordThunk(passwordObj));
+    
+    setPasswordObj({
+      currentPassword: "",
+      newPassword: "",
+      newPasswordConfirm: "",
+    });
+  };
+
   const fileUploader = () => {
     if (fileUploadError) {
       setTimeout(() => {
@@ -106,11 +137,23 @@ export const Profile = () => {
     if (file) handleFileUpload(file);
   }, [file]);
 
-  if (loading) {
-    return <Spinner />;
-  }
+  // if (loading) {
+  //   return <Spinner />;
+  // }
 
   if (error) {
+    setTimeout(() => {
+      dispatch(clearErrors());
+    }, 3000);
+  }
+
+  if(passwordUpdateError) {
+    setTimeout(() => {
+      dispatch(clearErrors());
+    }, 3000);
+  }
+
+  if (message) {
     setTimeout(() => {
       dispatch(clearErrors());
     }, 3000);
@@ -150,6 +193,7 @@ export const Profile = () => {
                 type="text"
                 className="form-control"
                 id="name"
+                name="name"
                 onChange={handleChange}
                 value={formData.name || ""}
               />
@@ -160,6 +204,7 @@ export const Profile = () => {
                 type="email"
                 className="form-control"
                 id="email"
+                name="email"
                 onChange={handleChange}
                 value={formData.email || ""}
               />
@@ -170,7 +215,7 @@ export const Profile = () => {
               className="btn w-100 mb-3"
               disabled={loading}
             >
-              UPDATE PROFILE
+              {loading ? "Loading...": "UPDATE PROFILE"}
             </button>
           </form>
           {/* <Link to="/create-listing">
@@ -184,9 +229,9 @@ export const Profile = () => {
             </Link> */}
           <div className="d-flex justify-content-between">
             <Link to={"/delete-account"}>
-            <span id="span-delete" className="text-danger d-inline-block">
-              Delete Account
-            </span>
+              <span id="span-delete" className="text-danger d-inline-block">
+                Delete Account
+              </span>
             </Link>
           </div>
         </div>
@@ -199,13 +244,21 @@ export const Profile = () => {
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h3 className="lead display-4 text-center mb-5">Update Password</h3>
-          <form className="d-flex flex-column align-items-center">
+          {passwordUpdateError ? <Alert type="alert-danger" message={passwordUpdateError.message} /> : null}
+          {message && <Alert type={"alert-success"} message={message}/>}
+          <form
+            className="d-flex flex-column align-items-center"
+            onSubmit={handlePasswordSubmit}
+          >
             <div className="form-group w-100">
               <label htmlFor="password">Current Password</label>
               <input
-                type="text"
+                type="password"
                 className="form-control"
                 id="password-current"
+                name="currentPassword"
+                onChange={handlePasswordChange}
+                value={passwordObj.currentPassword}
               />
             </div>
             <div className="form-group w-100">
@@ -214,6 +267,9 @@ export const Profile = () => {
                 type="password"
                 className="form-control"
                 id="password-new"
+                name="newPassword"
+                onChange={handlePasswordChange}
+                value={passwordObj.newPassword}
               />
             </div>
             <div className="form-group w-100">
@@ -222,14 +278,18 @@ export const Profile = () => {
                 type="password"
                 className="form-control"
                 id="passwordConfirm"
+                name="newPasswordConfirm"
+                onChange={handlePasswordChange}
+                value={passwordObj.newPasswordConfirm}
               />
             </div>
             <button
               type="submit"
               id="update-password-btn"
               className="btn w-100 mb-3"
+              disabled={loading}
             >
-              UPDATE PASSWORD
+              {loading ? "Loading...": "UPDATE PASSWORD"}
             </button>
           </form>
         </div>

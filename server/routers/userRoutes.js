@@ -20,7 +20,7 @@ router
 
 router
   .route("/update-my-data")
-  .post(authController.protect, userController.updateMyData);
+  .patch(authController.protect, userController.updateMyData);
 
 router
   .route("/delete/account")

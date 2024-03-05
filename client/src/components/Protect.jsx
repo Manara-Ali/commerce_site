@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 
 export const Protect = ({ children }) => {
   const location = useLocation();
-
+  
   const { isAuthenticated } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
@@ -13,7 +13,7 @@ export const Protect = ({ children }) => {
       {isAuthenticated ? (
         children
       ) : (
-        <Navigate to={"/login"} state={{ from: location }} replace />
+        <Navigate to={"/login"} state={{ from: location }} replace={true} />
       )}
     </>
   );

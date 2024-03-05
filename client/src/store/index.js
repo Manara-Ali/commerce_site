@@ -13,6 +13,7 @@ export * from "./thunks/checkAuthThunk";
 export * from "./thunks/forgotPasswordThunk";
 export * from './thunks/resetPasswordThunk';
 export * from './thunks/updateUserDataThunk';
+export * from './thunks/updatePasswordThunk';
 export * from './thunks/googleAuthThunk';
 export * from "./thunks/logoutThunk";
 export * from './thunks/deleteAccountThunk';

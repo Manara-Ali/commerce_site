@@ -10,14 +10,14 @@ import { checkAuthThunk } from "./store";
 import { Protect } from "./components/Protect";
 import { ForgotPassword } from "./pages/ForgotPassword";
 import { ResetPassword } from "./pages/ResetPassword";
-import {PrivateNavbar} from './components/PrivateNavbar';
+import { PrivateNavbar } from "./components/PrivateNavbar";
 import { Profile } from "./pages/Profile";
 import { DeleteAccount } from "./pages/DeleteAccount";
 
 export const App = () => {
   const dispatch = useDispatch();
 
-  const {isAuthenticated, user} = useSelector((state) => {
+  const { isAuthenticated, user } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
 
@@ -27,7 +27,7 @@ export const App = () => {
 
   return (
     <div className="app-container">
-      {isAuthenticated ? <PrivateNavbar/> : <Navbar />}
+      {isAuthenticated || user?._id ? <PrivateNavbar /> : <Navbar />}
       <Routes>
         <Route
           path="/"
@@ -41,12 +41,17 @@ export const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
         <Route path="/reset/password/:resetToken" element={<ResetPassword />} />
-        <Route path="/profile" element={<Protect>
-          <Profile/>
-        </Protect>}/>
-        <Route path="/delete-account" element={<DeleteAccount/>}/>
+        <Route
+          path="/profile"
+          element={
+            <Protect>
+              <Profile />
+            </Protect>
+          }
+        />
+        <Route path="/delete-account" element={<DeleteAccount />} />
       </Routes>
-        <Footer />
+      <Footer />
     </div>
   );
 };

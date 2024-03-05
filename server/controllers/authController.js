@@ -605,19 +605,7 @@ exports.signup = catchAsyncFn(async (req, res, next) => {
       process.env.EMAIL_USER
     );
 
-    console.log("Here");
-
-    // res.status(200).json({
-    //   status: "success",
-    //   data: {
-    //     message:
-    //       "A password reset token was successfully sent to your email on file",
-    //   },
-    // });
   } catch (error) {
-    // user.passwordResetToken = undefined;
-    // user.passwordResetTokenExpirationDate = undefined;
-    // user.save({ validateBeforeSave: true });
 
     const applicationError = new ApplicationError(
       "An error occured while sending your password reset token. Try again later!",
@@ -668,6 +656,8 @@ exports.login = catchAsyncFn(async (req, res, next) => {
   // Remove email and password
   user.email = undefined;
   user.password = undefined;
+  user.active = undefined;
+  user.__v = undefined;
 
   // Send response
   createAndSendToken(res, 200, user);
@@ -1519,6 +1509,11 @@ exports.updatePassword = catchAsyncFn(async (req, res, next) => {
   user.passwordConfirm = newPasswordConfirm;
 
   await user.save();
+
+  user.password = undefined;
+  user.active = undefined;
+  user.passwordChangedAt = undefined;
+  user.__v = undefined;
 
   createAndSendToken(res, 200, user);
 });
