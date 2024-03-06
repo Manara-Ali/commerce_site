@@ -114,20 +114,18 @@ body {
   padding: 0.4rem;
   border-radius: 1.5rem;
   width: 100%;
-  /* color: #14a2b8; */
-  color: #66ba30;
+  color: #1876d1;
   text-transform: uppercase;
   font-weight: bold;
-  border-color: #66ba30;
+  border-color: #1876d1;
 }
 
 #google-login-btn:hover {
-  /* padding: 1.2rem; */
   border-radius: 1.5rem;
   width: 100%;
-  color: #fff;
+  color: rgba(0,0,0, 0.5);
   text-transform: uppercase;
-  background-color: #66ba30;
+  background-color: #eee;
 }
 
 #login-btn:hover, #update-profile-btn:hover {
@@ -185,4 +183,22 @@ body {
 
 #profile-img-item .nav-link:hover {
   border: none;
+}
+
+/* WEATHER ICON */
+#weather-icon {
+  width: 3rem;
+  height: 3rem;
+  margin: -1rem -0.5rem -1rem -1rem;
+}
+
+/* TEMPERATURE ICON */
+#temp-container {
+  margin-left: -1.5rem;
+}
+
+#temp-icon {
+  width: 2.5rem;
+  height: 1.5rem;
+  margin-right: -0.5rem;
 }
