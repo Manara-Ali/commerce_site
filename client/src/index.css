@@ -202,3 +202,9 @@ body {
   height: 1.5rem;
   margin-right: -0.5rem;
 }
+
+/* READ MORE BUTTON */
+#read-more-btn {
+  background-color: #66ba30;
+  color: #fff;
+}

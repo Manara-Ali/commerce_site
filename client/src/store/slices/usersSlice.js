@@ -1,14 +1,14 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { signupThunk } from "../thunks/signupThunk";
-import { loginThunk } from "../thunks/loginThunk";
-import { checkAuthThunk } from "../thunks/checkAuthThunk";
-import { forgotPasswordThunk } from "../thunks/forgotPasswordThunk";
-import { resetPasswordThunk } from "../thunks/resetPasswordThunk";
-import { updateUserDataThunk } from "../thunks/updateUserDataThunk";
-import { googleAuthThunk } from "../thunks/googleAuthThunk";
-import { logoutThunk } from "../thunks/logoutThunk";
-import { deleteAccountThunk } from "../thunks/deleteAccountThunk";
-import { updatePasswordThunk } from "../thunks/updatePasswordThunk";
+import { signupThunk } from "../thunks/userThunks/signupThunk";
+import { loginThunk } from "../thunks/userThunks/loginThunk";
+import { checkAuthThunk } from "../thunks/userThunks/checkAuthThunk";
+import { forgotPasswordThunk } from "../thunks/userThunks/forgotPasswordThunk";
+import { resetPasswordThunk } from "../thunks/userThunks/resetPasswordThunk";
+import { updateUserDataThunk } from "../thunks/userThunks/updateUserDataThunk";
+import { googleAuthThunk } from "../thunks/userThunks/googleAuthThunk";
+import { logoutThunk } from "../thunks/userThunks/logoutThunk";
+import { deleteAccountThunk } from "../thunks/userThunks/deleteAccountThunk";
+import { updatePasswordThunk } from "../thunks/userThunks/updatePasswordThunk";
 
 const usersSlice = createSlice({
   name: "users",
