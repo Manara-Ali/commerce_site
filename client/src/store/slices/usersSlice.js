@@ -139,7 +139,6 @@ const usersSlice = createSlice({
     });
 
     builder.addCase(logoutThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.user = null;
       state.status = action.payload.status;

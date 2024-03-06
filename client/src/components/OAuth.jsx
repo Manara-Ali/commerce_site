@@ -26,7 +26,7 @@ export const OAuth = ({ children }) => {
     <button
       type="button"
       id="google-login-btn"
-      className="btn btn-outline-info w-100 mt-4 d-flex align-items-center justify-content-center"
+      className="btn w-100 mt-4 d-flex align-items-center justify-content-center"
       onClick={handleGoogleClick}
     >
       {children}

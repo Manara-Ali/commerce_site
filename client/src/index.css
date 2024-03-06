@@ -111,19 +111,23 @@ body {
 }
 
 #google-login-btn {
-  padding: 1.2rem;
+  padding: 0.4rem;
   border-radius: 1.5rem;
   width: 100%;
-  color: #14a2b8;
+  /* color: #14a2b8; */
+  color: #66ba30;
   text-transform: uppercase;
+  font-weight: bold;
+  border-color: #66ba30;
 }
 
 #google-login-btn:hover {
-  padding: 1.2rem;
+  /* padding: 1.2rem; */
   border-radius: 1.5rem;
   width: 100%;
   color: #fff;
   text-transform: uppercase;
+  background-color: #66ba30;
 }
 
 #login-btn:hover {

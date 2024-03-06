@@ -6,6 +6,7 @@ import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 import { clearErrors } from "../store";
 import { OAuth } from "../components/OAuth";
+import googleIcon from '../assets/icons8-google.svg'
 
 export const Signup = () => {
   const dispatch = useDispatch();
@@ -110,7 +111,7 @@ export const Signup = () => {
               Submit
             </button>
             <OAuth>
-              <i className="fa fa-google fa-2x mr-3" aria-hidden="true"></i>
+              <img src={googleIcon} alt="google" className="pr-3"/>
               Sign Up With Google
             </OAuth>
           </form>
