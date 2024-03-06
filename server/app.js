@@ -4,7 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const userRouter = require("./routers/userRoutes");
-const productRouter = require("./routers/productRoutes");
+const mealRouter = require("./routers/mealRoutes");
 const errorController = require("./controllers/errorController");
 const ApplicationError = require("./utils/applicationError");
 
@@ -27,7 +27,7 @@ app.use(
 
 app.use("/api/v1/users", userRouter);
 
-app.use("/api/v1/products", productRouter);
+app.use("/api/v1/meals", mealRouter);
 
 // const __dirname = path.resolve();
 

@@ -1,0 +1,17 @@
+[
+    {
+        "userId": "65e7de7b6d56199d5fea1ece",
+        "name": "Jollof Rice",
+        "price": 13.49,
+        "summary": "Jollof rice is a popular West African dish made with rice, tomatoes, onions, and a blend of spices. It is often cooked with vegetables, meat, or fish, and can vary in spiciness and flavor depending on the region or cook's preference...",
+        "description": "Jollof rice is a popular West African dish made with rice, tomatoes, onions, and a blend of spices. It is often cooked with vegetables, meat, or fish, and can vary in spiciness and flavor depending on the region or cook's preference. Jollof rice is known for its vibrant red color, which comes from the tomatoes and tomato paste used in its preparation. It is a staple dish in many West African countries and is often served at celebrations, gatherings, and special occasions.",
+        "spiceLevel": "0",
+        "serving": 2,
+        "imageCover": "https://zenaskitchen.com/wp-content/uploads/2022/12/jollof-rice.jpg",
+        "images": [
+            "https://cdn.jwplayer.com/v2/media/BRU94itM/poster.jpg?width=720",
+            "https://img.buzzfeed.com/thumbnailer-prod-us-east-1/42788e49474248dba75fdfd47114024a/BFV43575_PartyRiceAroundAfrica-FB-V2.jpg",
+            "https://worldlytreat.com/wp-content/uploads/2018/04/smoky-Nigerian-jollof-rice-5-500x500.jpg"
+        ]
+    }
+]
