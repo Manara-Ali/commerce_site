@@ -776,7 +776,7 @@ exports.restrictTo = (...args) => {
   return (req, res, next) => {
     if (!args.includes(req.user.role)) {
       const applicationError = new ApplicationError(
-        "Your are not allowed to access this resource",
+        "Your are not allowed to access / perform actions on this resource",
         403
       );
 
