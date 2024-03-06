@@ -130,7 +130,7 @@ body {
   background-color: #66ba30;
 }
 
-#login-btn:hover {
+#login-btn:hover, #update-profile-btn:hover {
   opacity: 0.9;
 }
 

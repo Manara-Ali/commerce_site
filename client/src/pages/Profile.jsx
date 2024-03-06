@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -18,7 +18,6 @@ import { Alert } from "../components/Alert";
 
 export const Profile = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const inputRef = useRef();
   const [file, setFile] = useState();
   const [formData, setFormData] = useState({});
@@ -148,6 +147,8 @@ export const Profile = () => {
     }
   };
 
+  console.log(isAuthenticated);
+
   if (loading) {
     return <Spinner />;
   }
@@ -202,7 +203,6 @@ export const Profile = () => {
               src={formData.photo || user?.photo}
               alt="profile"
               onClick={() => inputRef.current.click()}
-              // style={{ width: "100px", height: "120px" }}
             />
             <p>{fileUploader()}</p>
             <div className="form-group w-100">
@@ -214,6 +214,7 @@ export const Profile = () => {
                 name="name"
                 onChange={handleChange}
                 value={formData.name || ""}
+                placeholder={user?.name}
               />
             </div>
             <div className="form-group w-100">
@@ -225,6 +226,7 @@ export const Profile = () => {
                 name="email"
                 onChange={handleChange}
                 value={formData.email || ""}
+                placeholder={user?.email}
               />
             </div>
             <button
@@ -279,6 +281,7 @@ export const Profile = () => {
                 name="currentPassword"
                 onChange={handlePasswordChange}
                 value={passwordObj.currentPassword}
+                placeholder="**************"
               />
             </div>
             <div className="form-group w-100">
@@ -290,6 +293,7 @@ export const Profile = () => {
                 name="newPassword"
                 onChange={handlePasswordChange}
                 value={passwordObj.newPassword}
+                placeholder="**************"
               />
             </div>
             <div className="form-group w-100">
@@ -301,6 +305,7 @@ export const Profile = () => {
                 name="newPasswordConfirm"
                 onChange={handlePasswordChange}
                 value={passwordObj.newPasswordConfirm}
+                placeholder="**************"
               />
             </div>
             <button

@@ -614,7 +614,7 @@ exports.signup = catchAsyncFn(async (req, res, next) => {
   }
 
   // Remove password from response
-  user.email = undefined;
+  // user.email = undefined;
   user.password = undefined;
   user.createdAt = undefined;
   user.__v = undefined;
@@ -640,7 +640,7 @@ exports.login = catchAsyncFn(async (req, res, next) => {
   }
 
   // 3. Find current user
-  const user = await User.findOne({ email, active: true }).select("+password");
+  const user = await User.findOne({ email, active: true }).select("+email +password");
 
   // 4. Assuming no user was found with the given email
   if (!user || !(await user.comparePassword(password, user.password))) {
@@ -652,7 +652,7 @@ exports.login = catchAsyncFn(async (req, res, next) => {
   }
 
   // Remove email and password
-  user.email = undefined;
+  // user.email = undefined;
   user.password = undefined;
   user.active = undefined;
   user.__v = undefined;
@@ -1511,7 +1511,7 @@ exports.updatePassword = catchAsyncFn(async (req, res, next) => {
 exports.googleAuth = catchAsyncFn(async (req, res, next) => {
   const { name, email, photo } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await User.findOne({ email }).select("+email");
 
   if (user) {
     createAndSendToken(res, 200, user);
