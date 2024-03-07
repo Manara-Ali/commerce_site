@@ -9,7 +9,7 @@ export const Weather = ({ location, weather }) => {
       </span>
       <span>
         <img id="weather-icon"
-          src={`http://openweathermap.org/img/w/${weather?.weather?.[0]?.icon}.png`}
+          src={`https://openweathermap.org/img/w/${weather?.weather?.[0]?.icon}.png`}
           alt="weather icon"
         />
       </span>

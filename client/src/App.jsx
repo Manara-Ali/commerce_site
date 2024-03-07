@@ -49,7 +49,7 @@ export const App = () => {
   useEffect(() => {
     const getWeather = async () => {
       const response = await axios({
-        url: `http://api.openweathermap.org/data/2.5/weather?lat=${
+        url: `https://api.openweathermap.org/data/2.5/weather?lat=${
           userLocation.latt
         }&lon=${userLocation.longt}&appid=${
           import.meta.env.VITE_OPENWEATHER_API_KEY
