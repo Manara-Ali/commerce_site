@@ -209,6 +209,15 @@ body {
   color: #fff;
 }
 
+#card {
+  /* background-color: blue; */
+  min-width: 30%;
+  /* border-radius: 0.5rem;
+  overflow: hidden; */
+}
+
+
+/* MEDIA QUERY */
 @media (min-width: 992px) {
   #dish-div {
     /* background-color: red; */
@@ -224,6 +233,14 @@ body {
     justify-content: space-evenly;
     margin-right: 1rem;
     margin-left: 1rem;
+  }
+}
+
+@media (min-height: 400px) {
+  #dish-div {
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-around;
   }
 }
 

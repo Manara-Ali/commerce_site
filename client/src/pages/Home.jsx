@@ -35,6 +35,7 @@ export const Home = () => {
             <div
               key={element._id}
               className="card p-0 col-md-3 my-4"
+              id="card"
             >
               <img
                 src={element.imageCover}
