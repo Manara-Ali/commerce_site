@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       default: "user",
-      select: false,
+      // select: false,
     },
     active: {
       type: Boolean,

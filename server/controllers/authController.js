@@ -615,10 +615,10 @@ exports.signup = catchAsyncFn(async (req, res, next) => {
 
   // Remove password from response
   // user.email = undefined;
+  // user.role = undefined;
   user.password = undefined;
   user.createdAt = undefined;
   user.__v = undefined;
-  user.role = undefined;
 
   // Send response
   createAndSendToken(res, 201, user);

@@ -21,48 +21,48 @@ export const App = () => {
   const [userLocation, setUserLocation] = useState({});
   const [weatherData, setWeatherData] = useState({});
 
-  useEffect(() => {
-    axios.get("https://api.ipify.org?format=json").then((response) => {
-      setUserIp(response.data.ip);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("https://api.ipify.org?format=json").then((response) => {
+  //     setUserIp(response.data.ip);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    const params = {
-      auth: import.meta.env.VITE_GEOCODE_API_KEY,
-      locate: userIp,
-      json: "1",
-    };
+  // useEffect(() => {
+  //   const params = {
+  //     auth: import.meta.env.VITE_GEOCODE_API_KEY,
+  //     locate: userIp,
+  //     json: "1",
+  //   };
 
-    axios
-      .get("https://geocode.xyz", { params })
-      .then((response) => {
-        setUserLocation(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [userIp]);
+  //   axios
+  //     .get("https://geocode.xyz", { params })
+  //     .then((response) => {
+  //       setUserLocation(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [userIp]);
 
-  console.log(userLocation);
+  // console.log(userLocation);
 
-  useEffect(() => {
-    const getWeather = async () => {
-      const response = await axios({
-        url: `https://api.openweathermap.org/data/2.5/weather?lat=${
-          userLocation.latt
-        }&lon=${userLocation.longt}&appid=${
-          import.meta.env.VITE_OPENWEATHER_API_KEY
-        }`,
-      });
+  // useEffect(() => {
+  //   const getWeather = async () => {
+  //     const response = await axios({
+  //       url: `https://api.openweathermap.org/data/2.5/weather?lat=${
+  //         userLocation.latt
+  //       }&lon=${userLocation.longt}&appid=${
+  //         import.meta.env.VITE_OPENWEATHER_API_KEY
+  //       }`,
+  //     });
 
-      setWeatherData(response.data);
-    };
+  //     setWeatherData(response.data);
+  //   };
 
-    if (userLocation.latt && userLocation.longt) {
-      getWeather();
-    }
-  }, [userLocation?.latt, userLocation?.longt]);
+  //   if (userLocation.latt && userLocation.longt) {
+  //     getWeather();
+  //   }
+  // }, [userLocation?.latt, userLocation?.longt]);
 
   const { isAuthenticated, user } = useSelector((state) => {
     return state.usersCombinedReducer;
@@ -72,12 +72,12 @@ export const App = () => {
     <div className="app-container">
       {isAuthenticated || user?._id ? <PrivateNavbar /> : <Navbar />}
       <div className="d-flex justify-content-between">
-        {isAuthenticated && (
+        {/* {isAuthenticated && (
           <>
             <Greeting />
             <Weather location={userLocation} weather={weatherData} />
           </>
-        )}
+        )} */}
       </div>
       <Routes>
         <Route

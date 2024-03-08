@@ -106,6 +106,7 @@ body {
   border-radius: 1.5rem;
   width: 100%;
   background-color: #66ba30;
+  /* background-color: #d7456b; */
   color: #fff;
   text-transform: uppercase;
 }
@@ -183,6 +184,10 @@ body {
 
 #profile-img-item .nav-link:hover {
   border: none;
+}
+
+#span-create-meal {
+  color: #66ba30;
 }
 
 /* WEATHER ICON */

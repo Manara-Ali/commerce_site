@@ -248,11 +248,20 @@ export const Profile = () => {
             </button>
             </Link> */}
           <div className="d-flex justify-content-between">
+            <div className="d-flex justify-content-between">
             <Link to={"/delete-account"}>
-              <span id="span-delete" className="text-danger d-inline-block">
+              <span id="span-delete" className=" text-danger d-inline-block font-weight-bold">
                 Delete Account
               </span>
             </Link>
+          </div>
+          {user?.role === "admin" && <div className="d-flex justify-content-between">
+            <Link to={"/create-meal"}>
+              <span id="span-create-meal" className="font-weight-bold d-inline-block">
+                Create Meal
+              </span>
+            </Link>
+          </div>}
           </div>
         </div>
       </div>
