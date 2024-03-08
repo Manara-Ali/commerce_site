@@ -83,9 +83,7 @@ export const App = () => {
         <Route
           path="/"
           element={
-            <Protect>
               <Home />
-            </Protect>
           }
         />
         <Route path="/login" element={<Login />} />

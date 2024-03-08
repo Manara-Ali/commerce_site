@@ -205,6 +205,28 @@ body {
 
 /* READ MORE BUTTON */
 #read-more-btn {
-  background-color: #66ba30;
+  background-color: #d7456b;
   color: #fff;
+}
+
+@media (min-width: 992px) {
+  #dish-div {
+    /* background-color: red; */
+    display: flex;
+    justify-content: space-around;
+  }
+}
+
+@media (max-width: 576px) {
+  #dish-div {
+    /* background-color: blue; */
+    display: flex;
+    justify-content: space-evenly;
+    margin-right: 1rem;
+    margin-left: 1rem;
+  }
+}
+
+.card-body .card-title {
+  font-weight: bold;
 }

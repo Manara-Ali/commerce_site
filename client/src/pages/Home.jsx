@@ -29,13 +29,12 @@ export const Home = () => {
     <div className="container">
       <h1 className="display-4 my-3">Latest Delicacies</h1>
       <hr />
-      <div className="row d-flex justify-content-around">
+      <div className="row" id="dish-div">
         {meals?.map((element) => {
           return (
             <div
               key={element._id}
-              className="card p-0 col-md-3 mr-5"
-              style={{ width: "40rem" }}
+              className="card p-0 col-md-3 my-4"
             >
               <img
                 src={element.imageCover}
@@ -43,11 +42,11 @@ export const Home = () => {
                 alt="..."
               />
               <div className="card-body">
-                <h5 className="card-title">{element.name}</h5>
+                <h4 className="card-title">{element.name}</h4>
                 <p className="card-text">{element.summary}</p>
                 <Link
                   to={`/${element.slug}`}
-                  className="btn"
+                  className="btn w-50"
                   id="read-more-btn"
                 >
                   Read More
