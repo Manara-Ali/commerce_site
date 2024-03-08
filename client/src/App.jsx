@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { Navbar } from "./components/Navbar";
@@ -15,8 +15,10 @@ import { Profile } from "./pages/Profile";
 import { DeleteAccount } from "./pages/DeleteAccount";
 import { Greeting } from "./components/Greeting";
 import { Weather } from "./components/Weather";
+import { CreateMeal } from "./pages/CreateMeal";
 
 export const App = () => {
+  const location = useLocation();
   const [userIp, setUserIp] = useState(null);
   const [userLocation, setUserLocation] = useState({});
   const [weatherData, setWeatherData] = useState({});
@@ -80,12 +82,7 @@ export const App = () => {
         )} */}
       </div>
       <Routes>
-        <Route
-          path="/"
-          element={
-              <Home />
-          }
-        />
+        <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
@@ -99,6 +96,16 @@ export const App = () => {
           }
         />
         <Route path="/delete-account" element={<DeleteAccount />} />
+        <Route
+          path="/create-meal"
+          element={
+            user?.role === "admin" ? (
+              <CreateMeal />
+            ) : (
+              <Navigate to={"/"} state={{ from: location }} replace={true} />
+            )
+          }
+        />
       </Routes>
       <Footer />
     </div>

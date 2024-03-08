@@ -87,7 +87,15 @@ body {
 #name,
 #passwordConfirm,
 #password-current,
-#password-new
+#password-new,
+#price,
+#discount,
+#summary,
+#description,
+#spice-level,
+#serving,
+#image-cover,
+#images
  {
   padding: 2rem;
   border-radius: 1.5rem;
@@ -101,12 +109,13 @@ body {
 #reset-password-btn,
 #update-profile-btn,
 #update-password-btn,
-#delete-account-btn {
+#delete-account-btn,
+#create-meal-btn {
   padding: 1.2rem;
   border-radius: 1.5rem;
   width: 100%;
-  background-color: #66ba30;
-  /* background-color: #d7456b; */
+  /* background-color: #66ba30; */
+  background-color: #d7456b;
   color: #fff;
   text-transform: uppercase;
 }
@@ -251,4 +260,11 @@ body {
 
 .card-body .card-title {
   font-weight: bold;
+}
+
+/* CREATE MEAL */
+.meal-input input[type="file"] {
+  border: none;
+  background: inherit;
+  color: #f4f4f4;
 }
