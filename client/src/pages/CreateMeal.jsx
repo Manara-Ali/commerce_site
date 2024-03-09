@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   getDownloadURL,
   getStorage,
@@ -7,6 +7,9 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../utils/firebase";
+import { createMealThunk } from "../store";
+import { Alert } from "../components/Alert";
+import { Spinner } from "../components/Spinner";
 
 export const CreateMeal = () => {
   const [formData, setFormData] = useState({
@@ -18,8 +21,10 @@ export const CreateMeal = () => {
   const [coverImgUploadError, setCoverImgUploadError] = useState(false);
   const [imagesUploadError, setImagesUploadError] = useState(false);
   const [images, setImages] = useState([]);
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => {
+  const { loading, status, error, user } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
 
@@ -122,12 +127,33 @@ export const CreateMeal = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    dispatch(createMealThunk(formData));
+    setFormData({
+        images: [],
+    });
   }
 
   useEffect(() => {
       setFormData({...formData, secretMeal: checked})
   }, [checked])
+
+  if(status === "success") {
+    setMessage("Your meal was successfully added to the menu!");
+
+    setTimeout(() => {
+        setMessage("");
+    }, 5000);
+  }
+
+  if(loading) {
+    return <Spinner/>
+  }
+  
+  if (error) {
+    setTimeout(() => {
+      dispatch(clearErrors());
+    }, 5000);
+  }
 
   console.log(formData);
 
@@ -148,7 +174,8 @@ export const CreateMeal = () => {
       <div className="row">
         <div className="col-md-6 offset-md-3">
           <h1 className="display-3 mb-5 text-center">Create New Meal</h1>
-          {/* {error ? <Alert type="alert-danger" message={error.message} /> : null} */}
+          {error ? <Alert type="alert-danger" message={error.message} /> : null}
+          {message && <p className="lead text-success">{message}</p>}
           <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="password">Name</label>

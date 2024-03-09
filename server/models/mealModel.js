@@ -47,8 +47,9 @@ const mealSchema = new mongoose.Schema(
       required: [true, "Each meal must have a description section"],
     },
     spiceLevel: {
-      type: Number,
-      default: 0,
+      type: String,
+      trim: true,
+      required: [true, "Each meal must specify its spice level."],
     },
     serving: {
       type: Number,
@@ -62,7 +63,7 @@ const mealSchema = new mongoose.Schema(
       type: Number,
       default: 4.5,
     },
-    imageCover: {
+    coverImage: {
       type: String,
       trim: true,
       required: [true, "Each meal must have a cover image"],
