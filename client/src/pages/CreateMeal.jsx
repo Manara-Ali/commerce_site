@@ -111,9 +111,23 @@ export const CreateMeal = () => {
     });
   };
 
-  // useEffect(() => {
-  //     setMeal({...meal, secretMeal: checked})
-  // }, [checked])
+  const handleChange = (e) => {
+    setFormData(() => {
+        return {
+            ...formData,
+            [e.target.name] : e.target.value,
+        }
+    });
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(formData);
+  }
+
+  useEffect(() => {
+      setFormData({...formData, secretMeal: checked})
+  }, [checked])
 
   console.log(formData);
 
@@ -135,7 +149,7 @@ export const CreateMeal = () => {
         <div className="col-md-6 offset-md-3">
           <h1 className="display-3 mb-5 text-center">Create New Meal</h1>
           {/* {error ? <Alert type="alert-danger" message={error.message} /> : null} */}
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
               <label htmlFor="password">Name</label>
               <input
@@ -143,8 +157,8 @@ export const CreateMeal = () => {
                 className="form-control"
                 name="name"
                 id="name"
-                // onChange={handleChange}
-                // value={meal.name || ""}
+                onChange={(e) => handleChange(e)}
+                value={formData.name || ""}
                 required
               />
             </div>
@@ -155,9 +169,10 @@ export const CreateMeal = () => {
                 className="form-control"
                 name="price"
                 id="price"
-                // onChange={handleChange}
-                // value={meal.price || ""}
+                onChange={handleChange}
+                value={formData.price || ""}
                 min={0}
+                step={0.01}
                 required
               />
             </div>
@@ -168,20 +183,21 @@ export const CreateMeal = () => {
                 className="form-control"
                 name="discount"
                 id="discount"
-                // onChange={handleChange}
-                // value={0 || meal.discount}
+                onChange={handleChange}
+                value={0 || formData.discount}
                 min={0}
+                step={0.01}
               />
             </div>
             <div className="form-group">
               <label htmlFor="password">Summary</label>
-              <input
+              <textarea
                 type="text"
                 className="form-control"
                 name="summary"
                 id="summary"
-                // onChange={handleChange}
-                // value={meal.summary || ""}
+                onChange={handleChange}
+                value={formData.summary || ""}
                 required
               />
             </div>
@@ -192,8 +208,8 @@ export const CreateMeal = () => {
                 className="form-control"
                 name="description"
                 id="description"
-                // onChange={handleChange}
-                // value={0 ||meal.description}
+                onChange={handleChange}
+                value={0 ||formData.description}
                 required
               />
             </div>
@@ -204,8 +220,8 @@ export const CreateMeal = () => {
                 className="form-control"
                 name="spiceLevel"
                 id="spice-level"
-                // onChange={handleChange}
-                // value={meal.spiceLevel || ""}
+                onChange={handleChange}
+                value={formData.spiceLevel || ""}
               />
             </div>
             <div className="form-group">
@@ -215,8 +231,8 @@ export const CreateMeal = () => {
                 className="form-control"
                 name="serving"
                 id="serving"
-                // onChange={handleChange}
-                // value={0 || meal.serving}
+                onChange={handleChange}
+                value={0 || formData.serving}
                 min={0}
                 required
               />
@@ -303,9 +319,8 @@ export const CreateMeal = () => {
                 type="checkbox"
                 className="form-control"
                 name="secretMeal"
-                // checked={checked}
-                // onChange={() => setChecked(!checked)}
-                // value={meal.secretMeal}
+                checked={checked}
+                onChange={() => setChecked(!checked)}
                 style={{ width: "7rem" }}
               />
             </div>
