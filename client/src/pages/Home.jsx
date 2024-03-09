@@ -38,9 +38,9 @@ export const Home = () => {
               id="card"
             >
               <img
-                src={element.imageCover}
+                src={element.coverImage}
                 className="card-img-top"
-                alt="..."
+                alt={`${element?.name}-${element?._id}`}
               />
               <div className="card-body">
                 <h4 className="card-title">{element.name}</h4>
