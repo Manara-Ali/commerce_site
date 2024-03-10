@@ -993,7 +993,7 @@ exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
                                   <tbody>
                                     <tr>
                                       <td style="width:150px;">
-                                        <img alt="Logo" height="auto" src="https://firebasestorage.googleapis.com/v0/b/silver-spoon-21910.appspot.com/o/silver-spoon-logo.png?alt=media&token=13c0ddb7-8b5f-4ce9-82e6-7cd297332a77" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="150" />
+                                        <img alt="Logo" height="auto" src="https://firebasestorage.googleapis.com/v0/b/silver-spoon-21910.appspot.com/o/silver-spoon-logo.png?alt=media&token=e1fed8dd-2ee6-472e-9241-0fd91a42dce4" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="150" />
                                       </td>
                                     </tr>
                                   </tbody>
@@ -1710,7 +1710,7 @@ exports.googleAuth = catchAsyncFn(async (req, res, next) => {
                                   <tbody>
                                     <tr>
                                       <td style="width:150px;">
-                                        <img alt="Logo" height="auto" src="https://firebasestorage.googleapis.com/v0/b/silver-spoon-21910.appspot.com/o/silver-spoon-logo.png?alt=media&token=13c0ddb7-8b5f-4ce9-82e6-7cd297332a77" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="150" />
+                                        <img alt="Logo" height="auto" src="https://firebasestorage.googleapis.com/v0/b/silver-spoon-21910.appspot.com/o/silver-spoon-logo.png?alt=media&token=e1fed8dd-2ee6-472e-9241-0fd91a42dce4" style="border:0;display:block;outline:none;text-decoration:none;height:auto;width:100%;font-size:14px;" width="150" />
                                       </td>
                                     </tr>
                                   </tbody>

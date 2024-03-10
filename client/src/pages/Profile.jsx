@@ -41,8 +41,6 @@ export const Profile = ({ children }) => {
     return state.usersCombinedReducer;
   });
 
-  console.log(isAuthenticated);
-
   const handleChange = (e) => {
     setFormData(() => {
       return {
@@ -146,8 +144,6 @@ export const Profile = ({ children }) => {
       return null;
     }
   };
-
-  console.log(isAuthenticated);
 
   if (loading) {
     return <Spinner />;
