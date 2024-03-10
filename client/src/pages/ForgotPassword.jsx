@@ -24,7 +24,7 @@ export const ForgotPassword = () => {
       };
     });
   };
-  
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(forgotPasswordThunk(form));
@@ -44,10 +44,10 @@ export const ForgotPassword = () => {
 
   return (
     <>
-      <Link to={"/login"}>
+      <Link style={{width: "15rem"}} to={"/login"}>
         <button
-          className="btn btn-secondary w-25 m-3 
-  p-3 d-flex align-items-center justify-content-center"
+          className="btn m-3 p-3 d-flex align-items-center justify-content-center"
+          id="back-btn"
         >
           {" "}
           <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK

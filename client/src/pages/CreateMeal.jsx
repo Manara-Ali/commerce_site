@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -11,7 +12,7 @@ import { createMealThunk } from "../store";
 import { Alert } from "../components/Alert";
 import { Spinner } from "../components/Spinner";
 
-export const CreateMeal = () => {
+export const CreateMeal = ({children}) => {
   const [formData, setFormData] = useState({
     images: [],
   });
@@ -170,6 +171,18 @@ export const CreateMeal = () => {
   }
 
   return (
+    <>
+      <div className="d-flex justify-content-between">{children}
+      </div>
+      <Link style={{width: "15rem"}} to={"/profile"}>
+        <button
+          className="btn m-3 p-3 d-flex align-items-center justify-content-center"
+          id="back-btn"
+        >
+          {" "}
+          <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK
+        </button>
+      </Link>
     <div className="container my-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
@@ -358,5 +371,6 @@ export const CreateMeal = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

@@ -73,16 +73,24 @@ export const App = () => {
   return (
     <div className="app-container">
       {isAuthenticated || user?._id ? <PrivateNavbar /> : <Navbar />}
-      <div className="d-flex justify-content-between">
-        {isAuthenticated && (
-          <>
+      {/* <div className="d-flex justify-content-between"> */}
+      {/* {isAuthenticated && ( */}
+      {/* <>
             <Greeting />
             <Weather location={userLocation} weather={weatherData} />
-          </>
-        )}
-      </div>
+          </> */}
+      {/* )} */}
+      {/* </div> */}
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route
+          path="/"
+          element={
+            <Home>
+              <Greeting />
+              <Weather location={userLocation} weather={weatherData} />
+            </Home>
+          }
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
@@ -91,16 +99,30 @@ export const App = () => {
           path="/profile"
           element={
             <Protect>
-              <Profile />
+              <Profile>
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
+              </Profile>
             </Protect>
           }
         />
-        <Route path="/delete-account" element={<DeleteAccount />} />
+        <Route
+          path="/delete-account"
+          element={
+            <DeleteAccount>
+              <Greeting />
+              <Weather location={userLocation} weather={weatherData} />
+            </DeleteAccount>
+          }
+        />
         <Route
           path="/create-meal"
           element={
             user?.role === "admin" ? (
-              <CreateMeal />
+              <CreateMeal>
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
+              </CreateMeal>
             ) : (
               <Navigate to={"/"} state={{ from: location }} replace={true} />
             )

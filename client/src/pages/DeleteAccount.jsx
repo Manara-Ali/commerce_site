@@ -6,7 +6,7 @@ import { deleteAccountThunk, logoutThunk } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 
-export const DeleteAccount = () => {
+export const DeleteAccount = ({children}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [currentPassword, setCurrentPassword] = useState("");
@@ -45,6 +45,17 @@ export const DeleteAccount = () => {
     }, 3000);
   }
   return (
+    <>
+    <div className="d-flex justify-content-between">{children}</div>   
+    <Link style={{width: "15rem"}} to={"/profile"}>
+        <button
+          className="btn m-3 p-3 d-flex align-items-center justify-content-center"
+          id="back-btn"
+        >
+          {" "}
+          <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK
+        </button>
+      </Link> 
     <div className="container my-5">
       <div className="row">
         <div className="col-md-6 offset-md-3">
@@ -76,5 +87,6 @@ export const DeleteAccount = () => {
         </div>
       </div>
     </div>
+    </>
   );
 };

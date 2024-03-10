@@ -10,11 +10,11 @@ export const Greeting = () => {
 
   const greeting = () => {
     if(timeOfDay >= 5 && timeOfDay < 12) {
-        return `Good morning ${user?.name?.split(" ")[0]}!`;
+        return user ? `Good Morning ${user?.name?.split(" ")[0]}!` : "Good Morning!";
     } else if (timeOfDay >= 12 && timeOfDay < 18) {
-      return `Good Afternoon ${user?.name?.split(" ")[0]}!`;
+      return user ? `Good Afternoon ${user?.name?.split(" ")[0]}!` : "Good Afternoon!";
     } else {
-      return `Good Evening ${user?.name?.split(" ")[0]}!`;
+      return user ? `Good Evening ${user?.name?.split(" ")[0]}!` : "Good Evening!";
     }
   };
 

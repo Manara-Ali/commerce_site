@@ -16,7 +16,7 @@ import {
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 
-export const Profile = () => {
+export const Profile = ({ children }) => {
   const dispatch = useDispatch();
   const inputRef = useRef();
   const [file, setFile] = useState();
@@ -159,13 +159,13 @@ export const Profile = () => {
     }, 3000);
   }
 
-  if(passwordUpdateError) {
+  if (passwordUpdateError) {
     setTimeout(() => {
       dispatch(clearErrors());
     }, 3000);
   }
 
-  if(status === "success" || status === "fail") {
+  if (status === "success" || status === "fail") {
     setTimeout(() => {
       dispatch(clearErrors());
     }, 3000);
@@ -178,67 +178,69 @@ export const Profile = () => {
   }
 
   return (
-    <div className="container">
-      <h1 className="display-3 text-center my-3">User Profile</h1>
-      {error ? <Alert type="alert-danger" message={error.message} /> : null}
-      {fileUploadError ? (
-        <Alert type="alert-danger" message={fileUploadError} />
-      ) : null}
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <form
-            onSubmit={handleSubmit}
-            className="d-flex flex-column align-items-center"
-          >
-            <input
-              type="file"
-              accept="image/*"
-              hidden
-              ref={inputRef}
-              onChange={(e) => setFile(e.target.files[0])}
-            />
-            <img
-              id="profile-img-item"
-              className="w-25 rounded-circle my-2"
-              src={formData.photo || user?.photo}
-              alt="profile"
-              onClick={() => inputRef.current.click()}
-            />
-            <p>{fileUploader()}</p>
-            <div className="form-group w-100">
-              <label htmlFor="name">Username</label>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                name="name"
-                onChange={handleChange}
-                value={formData.name || ""}
-                placeholder={user?.name}
-              />
-            </div>
-            <div className="form-group w-100">
-              <label htmlFor="email">Email address</label>
-              <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                onChange={handleChange}
-                value={formData.email || ""}
-                placeholder={user?.email}
-              />
-            </div>
-            <button
-              type="submit"
-              id="update-profile-btn"
-              className="btn w-100 mb-3"
-              disabled={loading}
+    <>
+      <div className="d-flex justify-content-between">{children}</div>
+      <div className="container">
+        <h1 className="display-3 text-center my-3">User Profile</h1>
+        {error ? <Alert type="alert-danger" message={error.message} /> : null}
+        {fileUploadError ? (
+          <Alert type="alert-danger" message={fileUploadError} />
+        ) : null}
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
+            <form
+              onSubmit={handleSubmit}
+              className="d-flex flex-column align-items-center"
             >
-              {loading ? "Loading..." : "UPDATE PROFILE"}
-            </button>
-          </form>
-          {/* <Link to="/create-listing">
+              <input
+                type="file"
+                accept="image/*"
+                hidden
+                ref={inputRef}
+                onChange={(e) => setFile(e.target.files[0])}
+              />
+              <img
+                id="profile-img-item"
+                className="w-25 rounded-circle my-2"
+                src={formData.photo || user?.photo}
+                alt="profile"
+                onClick={() => inputRef.current.click()}
+              />
+              <p>{fileUploader()}</p>
+              <div className="form-group w-100">
+                <label htmlFor="name">Username</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  id="name"
+                  name="name"
+                  onChange={handleChange}
+                  value={formData.name || ""}
+                  placeholder={user?.name}
+                />
+              </div>
+              <div className="form-group w-100">
+                <label htmlFor="email">Email address</label>
+                <input
+                  type="email"
+                  className="form-control"
+                  id="email"
+                  name="email"
+                  onChange={handleChange}
+                  value={formData.email || ""}
+                  placeholder={user?.email}
+                />
+              </div>
+              <button
+                type="submit"
+                id="update-profile-btn"
+                className="btn w-100 mb-3"
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "UPDATE PROFILE"}
+              </button>
+            </form>
+            {/* <Link to="/create-listing">
               <button
               type="button"
               id="create-listing-btn"
@@ -247,87 +249,99 @@ export const Profile = () => {
               Create Listing
             </button>
             </Link> */}
-          <div className="d-flex justify-content-between">
             <div className="d-flex justify-content-between">
-            <Link to={"/delete-account"}>
-              <span id="span-delete" className=" text-danger d-inline-block font-weight-bold">
-                Delete Account
-              </span>
-            </Link>
-          </div>
-          {user?.role === "admin" && <div className="d-flex justify-content-between">
-            <Link to={"/create-meal"}>
-              <span id="span-create-meal" className="font-weight-bold d-inline-block">
-                Create Meal
-              </span>
-            </Link>
-          </div>}
+              <div className="d-flex justify-content-between">
+                <Link to={"/delete-account"}>
+                  <span
+                    id="span-delete"
+                    className=" text-danger d-inline-block font-weight-bold"
+                  >
+                    Delete Account
+                  </span>
+                </Link>
+              </div>
+              {user?.role === "admin" && (
+                <div className="d-flex justify-content-between">
+                  <Link to={"/create-meal"}>
+                    <span
+                      id="span-create-meal"
+                      className="font-weight-bold d-inline-block"
+                    >
+                      Create Meal
+                    </span>
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col">
-          <hr className="my-5" />
+        <div className="row">
+          <div className="col">
+            <hr className="my-5" />
+          </div>
         </div>
-      </div>
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <h3 className="lead display-4 text-center mb-5">Update Password</h3>
-          {passwordUpdateError ? (
-            <Alert type="alert-danger" message={passwordUpdateError.message} />
-          ) : null}
-          {message && <Alert type={"alert-success"} message={message} />}
-          <form
-            className="d-flex flex-column align-items-center"
-            onSubmit={handlePasswordSubmit}
-          >
-            <div className="form-group w-100">
-              <label htmlFor="password">Current Password</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password-current"
-                name="currentPassword"
-                onChange={handlePasswordChange}
-                value={passwordObj.currentPassword}
-                placeholder="**************"
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
+            <h3 className="lead display-4 text-center mb-5">Update Password</h3>
+            {passwordUpdateError ? (
+              <Alert
+                type="alert-danger"
+                message={passwordUpdateError.message}
               />
-            </div>
-            <div className="form-group w-100">
-              <label htmlFor="passwordConfirm">New Password</label>
-              <input
-                type="password"
-                className="form-control"
-                id="password-new"
-                name="newPassword"
-                onChange={handlePasswordChange}
-                value={passwordObj.newPassword}
-                placeholder="**************"
-              />
-            </div>
-            <div className="form-group w-100">
-              <label htmlFor="password">Confirm Password</label>
-              <input
-                type="password"
-                className="form-control"
-                id="passwordConfirm"
-                name="newPasswordConfirm"
-                onChange={handlePasswordChange}
-                value={passwordObj.newPasswordConfirm}
-                placeholder="**************"
-              />
-            </div>
-            <button
-              type="submit"
-              id="update-password-btn"
-              className="btn w-100 mb-3"
-              disabled={loading}
+            ) : null}
+            {message && <Alert type={"alert-success"} message={message} />}
+            <form
+              className="d-flex flex-column align-items-center"
+              onSubmit={handlePasswordSubmit}
             >
-              {loading ? "Loading..." : "UPDATE PASSWORD"}
-            </button>
-          </form>
+              <div className="form-group w-100">
+                <label htmlFor="password">Current Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password-current"
+                  name="currentPassword"
+                  onChange={handlePasswordChange}
+                  value={passwordObj.currentPassword}
+                  placeholder="**************"
+                />
+              </div>
+              <div className="form-group w-100">
+                <label htmlFor="passwordConfirm">New Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="password-new"
+                  name="newPassword"
+                  onChange={handlePasswordChange}
+                  value={passwordObj.newPassword}
+                  placeholder="**************"
+                />
+              </div>
+              <div className="form-group w-100">
+                <label htmlFor="password">Confirm Password</label>
+                <input
+                  type="password"
+                  className="form-control"
+                  id="passwordConfirm"
+                  name="newPasswordConfirm"
+                  onChange={handlePasswordChange}
+                  value={passwordObj.newPasswordConfirm}
+                  placeholder="**************"
+                />
+              </div>
+              <button
+                type="submit"
+                id="update-password-btn"
+                className="btn w-100 mb-3"
+                disabled={loading}
+              >
+                {loading ? "Loading..." : "UPDATE PASSWORD"}
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };

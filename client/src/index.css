@@ -268,3 +268,10 @@ body {
   background: inherit;
   color: #f4f4f4;
 }
+
+/* BACK BUTTON */
+#back-btn {
+  background-color: #d7456b;
+  color: #fff;
+  width: 10rem;
+}
