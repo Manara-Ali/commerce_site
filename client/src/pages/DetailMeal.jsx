@@ -100,7 +100,7 @@ export const DetailMeal = ({ children }) => {
                 </h4>
               </div>
             </div>
-            <div className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg">
+            {/* <div className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg">
               <div
                 id="carouselExampleSlidesOnly"
                 className="carousel slide"
@@ -116,7 +116,17 @@ export const DetailMeal = ({ children }) => {
                   })}
                 </div>
               </div>
-            </div>
+            </div> */}
+            {meal?.images?.map((element, index) => {
+              return (
+                <div
+                  key={index}
+                  className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg"
+                >
+                  <img src={element} className="d-block w-100" alt={element} />
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
