@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { signupThunk } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 import { clearErrors } from "../store";
 import { OAuth } from "../components/OAuth";
-import googleIcon from '../assets/icons8-google.svg'
+import googleIcon from "../assets/icons8-google.svg";
 
 export const Signup = () => {
   const dispatch = useDispatch();
@@ -107,11 +107,19 @@ export const Signup = () => {
                 value={form.passwordConfirm || ""}
               />
             </div>
+            <p className="my-4">
+              <Link
+                to={"/login"}
+                style={{ color: "#66ba30", fontWeight: "bold" }}
+              >
+                Login here!
+              </Link>
+            </p>
             <button id="signup-btn" type="submit" className="btn">
               Submit
             </button>
             <OAuth>
-              <img src={googleIcon} alt="google" className="pr-3"/>
+              <img src={googleIcon} alt="google" className="pr-3" />
               Sign Up With Google
             </OAuth>
           </form>
