@@ -47,8 +47,6 @@ export const App = () => {
       });
   }, [userIp]);
 
-  console.log(userLocation);
-
   useEffect(() => {
     const getWeather = async () => {
       const response = await axios({

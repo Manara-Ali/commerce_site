@@ -13,8 +13,6 @@ export const DetailMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
-  console.log(error);
-
   useEffect(() => {
     dispatch(getMealThunk(slug));
   }, [slug]);
@@ -105,14 +103,14 @@ export const DetailMeal = ({ children }) => {
             <div className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg">
               <div
                 id="carouselExampleSlidesOnly"
-                class="carousel slide"
+                className="carousel slide"
                 data-ride="carousel"
               >
                 <div className="carousel-inner">
                   {meal.images?.map((element, index) => {
                     return (
-                      <div className="carousel-item active">
-                        <img key={index} src={element} className="d-block w-100" alt={element} />
+                      <div key={index} className="carousel-item active">
+                        <img src={element} className="d-block w-100" alt={element} />
                       </div>
                     );
                   })}
