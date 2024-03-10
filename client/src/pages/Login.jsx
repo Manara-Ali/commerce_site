@@ -5,7 +5,7 @@ import { loginThunk, clearErrors } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 import { OAuth } from "../components/OAuth";
-import googleIcon from '../assets/icons8-google.svg'
+import googleIcon from "../assets/icons8-google.svg";
 
 export const Login = () => {
   const dispatch = useDispatch();
@@ -80,16 +80,31 @@ export const Login = () => {
                 value={form.password}
                 onChange={handleChange}
               />
-              <p className="my-4">
-                <Link to={"/forgot/password"} style={{color: "red"}}>Forgot Password?</Link>
-              </p>
+              <div className="d-flex justify-content-between">
+                <p>
+                  <Link
+                    to={"/forgot/password"}
+                    style={{ color: "red", fontWeight: "bold" }}
+                  >
+                    Forgot Password?
+                  </Link>
+                </p>
+                <p>
+                  <Link
+                    to={"/signup"}
+                    style={{ color: "#66ba30", fontWeight: "bold" }}
+                  >
+                    Sign Up here!
+                  </Link>
+                </p>
+              </div>
             </div>
             <button id="login-btn" type="submit" className="btn">
               Submit
             </button>
             {/* <OAuth><i className="fa fa-google fa-2x pr-3" aria-hidden="true"></i>Login With Google</OAuth> */}
             <OAuth>
-              <img src={googleIcon} alt="google" className="pr-3"/>
+              <img src={googleIcon} alt="google" className="pr-3" />
               Login With Google
             </OAuth>
           </form>
