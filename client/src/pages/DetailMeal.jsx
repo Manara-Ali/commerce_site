@@ -45,20 +45,20 @@ export const DetailMeal = ({ children }) => {
             {error ? (
               <Alert type="alert-danger" message={error.message} />
             ) : null}
-            <img className="card-img-top" src={meal.coverImage} alt={slug} />
+            <img className="card-img-top" src={meal?.coverImage} alt={slug} />
             <div className="col-md-6 offset-md-3 mt-4 border rounded-lg">
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Name:</span>
-                <h4 className="text-center">{meal.name}</h4>
+                <h4 className="text-center">{meal?.name}</h4>
               </div>
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Price:</span>
-                <h4 className="text-center">${meal.price}</h4>
+                <h4 className="text-center">${meal?.price}</h4>
               </div>
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Spice Level:</span>
                 <h4 className="text-center">
-                  {meal.spiceLevel === 0 ? "Not Spicy" : "On-demand"}{" "}
+                  {meal?.spiceLevel === 0 ? "Not Spicy" : "On-demand"}{" "}
                   <i
                     className="ml-3 fa fa-power-off"
                     aria-hidden="true"
@@ -69,7 +69,7 @@ export const DetailMeal = ({ children }) => {
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Serving(s):</span>
                 <h4 className="text-center">
-                  {meal.serving}{" "}
+                  {meal?.serving}{" "}
                   <i
                     className="ml-3 fa fa-user-o"
                     aria-hidden="true"
@@ -80,7 +80,7 @@ export const DetailMeal = ({ children }) => {
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Number Of Ratings:</span>
                 <h4 className="text-center">
-                  {meal.ratingsQuantity}{" "}
+                  {meal?.ratingsQuantity}{" "}
                   <i
                     className="ml-3 fa fa-bar-chart"
                     aria-hidden="true"
@@ -91,7 +91,7 @@ export const DetailMeal = ({ children }) => {
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Ratings Average:</span>
                 <h4 className="text-center">
-                  {meal.ratingsQuantity}
+                  {meal?.ratingsQuantity}
                   <i
                     className="ml-3 fa fa-star-o"
                     aria-hidden="true"
@@ -107,7 +107,7 @@ export const DetailMeal = ({ children }) => {
                 data-ride="carousel"
               >
                 <div className="carousel-inner">
-                  {meal.images?.map((element, index) => {
+                  {meal?.images?.map((element, index) => {
                     return (
                       <div key={index} className="carousel-item active">
                         <img src={element} className="d-block w-100" alt={element} />
