@@ -4,7 +4,7 @@ export const Footer = () => {
       <p>
         Built with <span id="heart-emoji">♥️</span> by
       </p>
-      <p>
+      <p className="text-center">
         Copyright &copy; <span id="company-name">ColdFusion</span> Technology
       </p>
     </footer>

@@ -1,7 +1,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-export const Protect = ({ children }) => {
+export const Protect = ({ children, url }) => {
   const location = useLocation();
   
   const { isAuthenticated } = useSelector((state) => {
@@ -13,7 +13,7 @@ export const Protect = ({ children }) => {
       {isAuthenticated ? (
         children
       ) : (
-        <Navigate to={"/login"} state={{ from: location }} replace={true} />
+        <Navigate to={`${url}`} state={{ from: location }} replace={true} />
       )}
     </>
   );

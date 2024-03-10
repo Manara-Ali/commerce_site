@@ -39,14 +39,30 @@ export const Home = ({ children }) => {
                 className="card p-0 col-md-3 my-4"
                 id="card"
               >
-                <img
+                <Link
+                    to={`/${element.slug}`}
+                    // className="btn w-50"
+                  >
+                    <img
                   src={element.coverImage}
                   className="card-img-top"
                   alt={`${element?.name}-${element?._id}`}
                 />
+                  </Link>
                 <div className="card-body">
                   <h4 className="card-title">{element.name}</h4>
                   <p className="card-text">{element.summary}</p>
+                  <div className="d-flex w-50 mb-3 justify-content-start" id="icons">
+                    <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
+                      <i className="fa fa-comments-o fa-1x mr-2" style={{color: "#d7456b"}} aria-hidden="true">
+                    </i>
+                    <span className="text-muted">{element.ratingsQuantity}</span>
+                    </div>
+                    <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
+                      <i className="fa fa-star-o fa-1x mr-2" style={{color: "#d7456b"}} aria-hidden="true"></i>
+                      <span className="text-muted">{element.ratingsAverage}</span>
+                    </div>
+                  </div>
                   <Link
                     to={`/${element.slug}`}
                     className="btn w-50"

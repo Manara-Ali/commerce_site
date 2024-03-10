@@ -16,6 +16,7 @@ import { DeleteAccount } from "./pages/DeleteAccount";
 import { Greeting } from "./components/Greeting";
 import { Weather } from "./components/Weather";
 import { CreateMeal } from "./pages/CreateMeal";
+import { DetailMeal } from "./pages/DetailMeal";
 
 export const App = () => {
   const location = useLocation();
@@ -98,7 +99,7 @@ export const App = () => {
         <Route
           path="/profile"
           element={
-            <Protect>
+            <Protect url="/login">
               <Profile>
                 <Greeting />
                 <Weather location={userLocation} weather={weatherData} />
@@ -126,6 +127,17 @@ export const App = () => {
             ) : (
               <Navigate to={"/"} state={{ from: location }} replace={true} />
             )
+          }
+        />
+        <Route
+          path="/:slug"
+          element={
+            <Protect url="/login">
+              <DetailMeal>
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
+              </DetailMeal>
+            </Protect>
           }
         />
       </Routes>

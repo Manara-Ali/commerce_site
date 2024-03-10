@@ -1524,9 +1524,11 @@ exports.googleAuth = catchAsyncFn(async (req, res, next) => {
     const passwordConfirm = password;
 
     const user = await User.create({
+      // name:
+      //   name.split(" ").join("").toLowerCase() +
+      //   crypto.randomBytes(4).toString("hex"),
       name:
-        name.split(" ").join("").toLowerCase() +
-        crypto.randomBytes(4).toString("hex"),
+        name.split(" ")[0] + name.split(" ")[0].slice(1),
       email,
       photo,
       password,
