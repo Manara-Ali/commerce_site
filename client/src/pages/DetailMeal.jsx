@@ -4,6 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMealThunk, clearState } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
+import Carousel from "react-bootstrap/Carousel";
+// import ExampleCarouselImage from "components/ExampleCarouselImage";
 
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
@@ -46,7 +48,7 @@ export const DetailMeal = ({ children }) => {
               <Alert type="alert-danger" message={error.message} />
             ) : null}
             <img className="card-img-top" src={meal?.coverImage} alt={slug} />
-            <div className="col-md-6 offset-md-3 mt-4 border rounded-lg">
+            <div className="col-md-6 offset-md-3 mt-5 border rounded-lg">
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Name:</span>
                 <h4 className="text-center">{meal?.name}</h4>
@@ -100,33 +102,17 @@ export const DetailMeal = ({ children }) => {
                 </h4>
               </div>
             </div>
-            {/* <div className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg">
-              <div
-                id="carouselExampleSlidesOnly"
-                className="carousel slide"
-                data-ride="carousel"
-              >
-                <div className="carousel-inner">
-                  {meal?.images?.map((element, index) => {
-                    return (
-                      <div key={index} className="carousel-item active">
-                        <img src={element} className="d-block w-100" alt={element} />
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div> */}
-            {meal?.images?.map((element, index) => {
-              return (
-                <div
-                  key={index}
-                  className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg"
-                >
-                  <img src={element} className="d-block w-100" alt={element} />
-                </div>
-              );
-            })}
+            <div className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg">
+              <Carousel>
+                {meal?.images?.map((element, index) => {
+                  return (
+                    <Carousel.Item key={index}>
+                      <img style={{width: "100%", height: "100%"}} src={element} alt={element} />
+                    </Carousel.Item>
+                  );
+                })}
+              </Carousel>
+            </div>
           </div>
         </div>
       </div>
