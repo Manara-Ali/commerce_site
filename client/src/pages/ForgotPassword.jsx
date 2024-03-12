@@ -42,6 +42,12 @@ export const ForgotPassword = () => {
     }, 5000);
   }
 
+  if (message) {
+    setTimeout(() => {
+      dispatch(clearErrors());
+    }, 3000);
+  }
+
   return (
     <>
       <Link style={{width: "15rem"}} to={"/login"}>

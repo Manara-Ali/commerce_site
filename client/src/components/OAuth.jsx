@@ -1,12 +1,10 @@
 import { GoogleAuthProvider, getAuth, signInWithPopup } from "firebase/auth";
 import { app } from "../utils/firebase";
-import { useDispatch, useSelector} from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { googleAuthThunk } from "../store";
 
 export const OAuth = ({ children }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   // 1. Create Google auth function
   const handleGoogleClick = async () => {
     const provider = new GoogleAuthProvider();
@@ -15,13 +13,15 @@ export const OAuth = ({ children }) => {
 
     const result = await signInWithPopup(auth, provider);
 
-    dispatch(googleAuthThunk({
+    dispatch(
+      googleAuthThunk({
         name: result.user.displayName,
         email: result.user.email,
         photo: result.user.photoURL,
-    }));
+      })
+    );
   };
-  
+
   return (
     <button
       type="button"

@@ -47,8 +47,10 @@ export const DetailMeal = ({ children }) => {
             {error ? (
               <Alert type="alert-danger" message={error.message} />
             ) : null}
-            <img className="card-img-top" src={meal?.coverImage} alt={slug} />
-            <div className="col-md-6 offset-md-3 mt-5 border rounded-lg">
+            <div className="border rounded-lg p-3">
+              <img className="card-img-top" src={meal?.coverImage} alt={slug} />
+            </div>
+            <div className="col-md-6 offset-md-3 mt-5 border rounded-lg p-4">
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Name:</span>
                 <h4 className="text-center">{meal?.name}</h4>
@@ -60,7 +62,7 @@ export const DetailMeal = ({ children }) => {
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Spice Level:</span>
                 <h4 className="text-center">
-                  {meal?.spiceLevel === 0 ? "Not Spicy" : "On-demand"}{" "}
+                  {meal?.spiceLevel === 0 ? "Not Spicy" : "🌶️"}{" "}
                   <i
                     className="ml-3 fa fa-power-off"
                     aria-hidden="true"
@@ -106,7 +108,7 @@ export const DetailMeal = ({ children }) => {
               <Carousel>
                 {meal?.images?.map((element, index) => {
                   return (
-                    <Carousel.Item key={index}>
+                    <Carousel.Item className="carousel-item" key={index}>
                       <img style={{width: "100%", height: "100%"}} src={element} alt={element} />
                     </Carousel.Item>
                   );
