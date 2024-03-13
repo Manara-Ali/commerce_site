@@ -127,7 +127,7 @@ export const DetailMeal = ({ children }) => {
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Ratings Average:</span>
                 <h4 className="text-center">
-                  {meal?.ratingsQuantity}
+                  {meal?.ratingsAverage}
                   <i
                     className="ml-3 fa fa-star-o"
                     aria-hidden="true"
