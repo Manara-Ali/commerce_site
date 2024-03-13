@@ -25,47 +25,47 @@ export const App = () => {
   const [userLocation, setUserLocation] = useState({});
   const [weatherData, setWeatherData] = useState({});
 
-  // useEffect(() => {
-  //   axios.get("https://api.ipify.org?format=json").then((response) => {
-  //     setUserIp(response.data.ip);
-  //   });
-  // }, []);
+  useEffect(() => {
+    axios.get("https://api.ipify.org?format=json").then((response) => {
+      setUserIp(response.data.ip);
+    });
+  }, []);
 
-  // useEffect(() => {
-  //   const params = {
-  //     // auth: import.meta.env.VITE_GEOCODE_API_KEY,
-  //     locate: userIp,
-  //     json: "1",
-  //   };
+  useEffect(() => {
+    const params = {
+      // auth: import.meta.env.VITE_GEOCODE_API_KEY,
+      locate: userIp,
+      json: "1",
+    };
 
-  //   axios
-  //     .get("https://geocode.xyz", { params })
-  //     .then((response) => {
-  //       console.log(response);
-  //       setUserLocation(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //     });
-  // }, [userIp]);
+    axios
+      .get("https://geocode.xyz", { params })
+      .then((response) => {
+        console.log(response);
+        setUserLocation(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, [userIp]);
 
-  // useEffect(() => {
-  //   const getWeather = async () => {
-  //     const response = await axios({
-  //       url: `https://api.openweathermap.org/data/2.5/weather?lat=${
-  //         userLocation.latt
-  //       }&lon=${userLocation.longt}&appid=${
-  //         import.meta.env.VITE_OPENWEATHER_API_KEY
-  //       }`,
-  //     });
+  useEffect(() => {
+    const getWeather = async () => {
+      const response = await axios({
+        url: `https://api.openweathermap.org/data/2.5/weather?lat=${
+          userLocation.latt
+        }&lon=${userLocation.longt}&appid=${
+          import.meta.env.VITE_OPENWEATHER_API_KEY
+        }`,
+      });
 
-  //     setWeatherData(response.data);
-  //   };
+      setWeatherData(response.data);
+    };
 
-  //   if (userLocation.latt && userLocation.longt) {
-  //     getWeather();
-  //   }
-  // }, [userLocation?.latt, userLocation?.longt]);
+    if (userLocation.latt && userLocation.longt) {
+      getWeather();
+    }
+  }, [userLocation?.latt, userLocation?.longt]);
 
   const { isAuthenticated, user } = useSelector((state) => {
     return state.usersCombinedReducer;
@@ -79,8 +79,8 @@ export const App = () => {
           path="/"
           element={
             <Home>
-              {/* <Greeting />
-              <Weather location={userLocation} weather={weatherData} /> */}
+              <Greeting />
+              <Weather location={userLocation} weather={weatherData} />
             </Home>
           }
         />
@@ -93,8 +93,8 @@ export const App = () => {
           element={
             <Protect url="/login">
               <Profile>
-                {/* <Greeting />
-                <Weather location={userLocation} weather={weatherData} /> */}
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
               </Profile>
             </Protect>
           }
@@ -103,8 +103,8 @@ export const App = () => {
           path="/delete-account"
           element={
             <DeleteAccount>
-              {/* <Greeting />
-              <Weather location={userLocation} weather={weatherData} /> */}
+              <Greeting />
+              <Weather location={userLocation} weather={weatherData} />
             </DeleteAccount>
           }
         />
@@ -113,8 +113,8 @@ export const App = () => {
           element={
             user?.role === "admin" ? (
               <CreateMeal>
-                {/* <Greeting />
-                <Weather location={userLocation} weather={weatherData} /> */}
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
               </CreateMeal>
             ) : (
               <Navigate to={"/"} state={{ from: location }} replace={true} />
@@ -126,8 +126,8 @@ export const App = () => {
           element={
             <Protect url="/login">
               <DetailMeal>
-                {/* <Greeting />
-                <Weather location={userLocation} weather={weatherData} /> */}
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
               </DetailMeal>
             </Protect>
           }
@@ -137,8 +137,8 @@ export const App = () => {
           element={
             <Protect url="/login">
               <UpdateMeal>
-                {/* <Greeting />
-                <Weather location={userLocation} weather={weatherData} /> */}
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
               </UpdateMeal>
             </Protect>
           }
