@@ -25,7 +25,7 @@ export const ImageSlider = ({ slides, parentWidth }) => {
     }
     timerId.current = setTimeout(() => {
       nextSlide();
-    }, 1500);
+    }, 2000);
 
     return () => clearTimeout(timerId.current);
   }, [slideIndex, clicked]);
@@ -49,10 +49,34 @@ export const ImageSlider = ({ slides, parentWidth }) => {
           prevSlide();
         }}
       ></i>
-      <div
-        className="img-slider-div"
-        style={{ backgroundImage: `url(${slides[slideIndex]})` }}
-      ></div>
+      <div style={{ overflow: "hidden", height: "100%" }}>
+        <div
+          style={{
+            height: "100%",
+            display: "flex",
+            width: `${parentWidth}` * `${slides.length}`,
+            transition: "transform ease-out 0.3s",
+            transform: `translateX(${-(slideIndex * parentWidth)}px)`,
+          }}
+        >
+          {slides.map((element, index) => {
+            return (
+              <div
+                key={index}
+                style={{
+                  backgroundImage: `url(${element})`,
+                  backgroundPosition: "center",
+                  backgroundSize: "contain",
+                  backgroundRepeat: "no-repeat",
+                  margin: "auto",
+                  height: "100%",
+                  width: `${parentWidth}px`,
+                }}
+              ></div>
+            );
+          })}
+        </div>
+      </div>
       <i
         className="fa fa-chevron-right fa-2x"
         id="right-arrow"

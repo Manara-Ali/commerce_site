@@ -105,8 +105,8 @@ export const DetailMeal = ({ children }) => {
               </div>
             </div>
                 <div
-                  className="col-md-6 offset-md-3 p-3 mt-5 mb-5 border rounded-lg h-50"
-                  style={{ backgroundColor: "#eee" }}
+                  className="col-md-6 offset-md-3 mt-5 mb-5 border rounded-lg"
+                  style={{ backgroundColor: "#eee", height: "30rem" }}
                 >
                   <ImageSlider slides={meal?.images} parentWidth={500}/>
                 </div>

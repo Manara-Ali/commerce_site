@@ -142,7 +142,7 @@ export const App = () => {
             }
           />
         </Routes>
-        <Footer />
+        {/* <Footer /> */}
       </div>
   );
 };
