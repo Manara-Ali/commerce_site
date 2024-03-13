@@ -12,16 +12,21 @@ export const DetailMeal = ({ children }) => {
   const dispatch = useDispatch();
   const sliderRef = useRef();
 
-  const [windowWidth, setWindowWidth] = useState(window.screen?.width);
+  const getWindowSize = function () {
+    return {
+      width: window?.screen?.width,
+      height: window?.screen?.height,
+    };
+  };
 
-  const [windowHeight, setWindowHeight] = useState(window.screen?.height);
+  const handleWindowSize = function () {
+    setWindowSize(getWindowSize());
+    setSliderWidth(sliderRef.current?.getBoundingClientRect()?.width);
+  };
+
+  const [windowSize, setWindowSize] = useState(getWindowSize());
 
   const [sliderWidth, setSliderWidth] = useState(null);
-
-  window.addEventListener("resize", (e) => {
-    setWindowWidth(window?.screen?.width);
-    setWindowHeight(window?.screen?.height);
-  });
 
   const { loading, error, status, meal } = useSelector((state) => {
     return state.mealsCombinedReducer;
@@ -32,10 +37,10 @@ export const DetailMeal = ({ children }) => {
   }, [slug]);
 
   useEffect(() => {
-    setSliderWidth(sliderRef.current?.getBoundingClientRect()?.width);
-  }, [windowWidth, windowHeight]);
+    window.addEventListener("resize", handleWindowSize);
 
-  console.log({ width: windowWidth, height: windowHeight, sliderWidth });
+    return () => window.removeEventListener("resize", handleWindowSize);
+  }, [windowSize.width, windowSize.height]);
 
   if (loading) {
     return <Spinner />;
