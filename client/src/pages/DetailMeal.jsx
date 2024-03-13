@@ -4,8 +4,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMealThunk, clearState } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
-import Carousel from "react-bootstrap/Carousel";
-// import ExampleCarouselImage from "components/ExampleCarouselImage";
+// import Carousel from "react-bootstrap/Carousel";
+import { ImageSlider } from "../components/ImageSlider";
 
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
@@ -104,17 +104,12 @@ export const DetailMeal = ({ children }) => {
                 </h4>
               </div>
             </div>
-            <div className="col-md-6 offset-md-3 p-3 mt-5 border rounded-lg">
-              <Carousel>
-                {meal?.images?.map((element, index) => {
-                  return (
-                    <Carousel.Item className="carousel-item" key={index}>
-                      <img style={{width: "100%", height: "100%"}} src={element} alt={element} />
-                    </Carousel.Item>
-                  );
-                })}
-              </Carousel>
-            </div>
+                <div
+                  className="col-md-6 offset-md-3 p-3 mt-5 mb-5 border rounded-lg h-50"
+                  style={{ backgroundColor: "#eee" }}
+                >
+                  <ImageSlider slides={meal?.images} parentWidth={500}/>
+                </div>
           </div>
         </div>
       </div>

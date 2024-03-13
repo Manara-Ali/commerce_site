@@ -16,14 +16,14 @@ body {
 
 /* APP CONTAINER */
 .app-container {
-  /* height: 100vh; */
+  /* min-height: auto; */
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
 .container {
-  min-height: 50vh;
+  min-height: 110vh;
   /* height: auto; */
 }
 
@@ -275,4 +275,56 @@ body {
   background-color: #d7456b;
   color: #fff;
   width: 10rem;
+}
+
+/* IMAGE SLIDER */
+.slider-container {
+  height: 100%;
+  width: 100%;
+  position: relative;
+}
+
+.img-slider-div {
+  height: 100%;
+  width: 100%;
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#left-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 1;
+  left: -1rem;
+  color: #d7456b;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+#right-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
+  z-index: 1;
+  right: -1rem;
+  color: #d7456b;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.rectangle {
+  width: 15px;
+  height: 5px;
+  border: 1px solid #d7456b;
+  margin-top: 5px;
+}
+
+.current {
+  background-color: #d7456b;
+}
+
+#left-arrow:active, #right-arrow:active {
+  color: #000;
 }
