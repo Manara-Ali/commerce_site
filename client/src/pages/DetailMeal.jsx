@@ -72,9 +72,9 @@ export const DetailMeal = ({ children }) => {
           <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK
         </button>
       </Link>
-      <div className="container">
-        <div className="row">
-          <div className="col-md-6 offset-md-3">
+      {/* <div className="container"> */}
+        {/* <div className="row"> */}
+          <div className="col-md-9 mx-auto">
             <h1 className="display-3 text-center">Meal Detail</h1>
             {error ? (
               <Alert type="alert-danger" message={error.message} />
@@ -82,7 +82,7 @@ export const DetailMeal = ({ children }) => {
             <div className="border rounded-lg p-3">
               <img className="card-img-top" src={meal?.coverImage} alt={slug} />
             </div>
-            <div className="col-md-6 offset-md-3 mt-5 border rounded-lg p-4">
+            <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
               <div className="d-flex justify-content-between">
                 <span className="lead mr-3">Name:</span>
                 <h4 className="text-center">{meal?.name}</h4>
@@ -137,7 +137,7 @@ export const DetailMeal = ({ children }) => {
               </div>
             </div>
             <div
-              className="col-md-6 offset-md-3 mt-5 mb-5 border rounded-lg w-100"
+              className="col-md-9 mx-auto mt-5 mb-5 border rounded-lg w-100"
               id="slider-ref-div"
               style={{ backgroundColor: "#eee", height: "30rem" }}
               ref={sliderRef}
@@ -147,8 +147,8 @@ export const DetailMeal = ({ children }) => {
               )}
             </div>
           </div>
-        </div>
-      </div>
+        {/* </div> */}
+      {/* </div> */}
     </>
   );
 };
