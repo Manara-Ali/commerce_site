@@ -43,17 +43,23 @@ export const DetailMeal = ({ children }) => {
     dispatch(getMealThunk(slug));
   }, [slug]);
 
-  useEffect(() => {
-    window.addEventListener("load", windowData);
+  // useEffect(() => {
+  //   // window.addEventListener("load", windowData);
 
-    return () => window.removeEventListener("load", windowData);
+  //   // return () => window.removeEventListener("load", windowData);
+  // }, []);
+
+  useEffect(() => {
+    windowData();
   }, []);
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowSize);
 
     return () => window.removeEventListener("resize", handleWindowSize);
-  }, [windowSize.width, windowSize.height, sliderWidth]);
+  }, [loading, windowSize.width, windowSize.height, sliderWidth]);
+
+  console.log({width: windowSize.width, height: windowSize.height, sliderWidth})
 
   if (loading) {
     return <Spinner />;
