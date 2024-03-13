@@ -35,6 +35,10 @@ export const DetailMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
+  const { user, isAuthenticated, message } = useSelector((state) => {
+    return state.usersCombinedReducer;
+  });
+
   useEffect(() => {
     dispatch(getMealThunk(slug));
   }, [slug]);
@@ -73,81 +77,91 @@ export const DetailMeal = ({ children }) => {
         </button>
       </Link>
       {/* <div className="container"> */}
-        {/* <div className="row"> */}
-          <div className="col-md-9 mx-auto">
-            <h1 className="display-3 text-center">Meal Detail</h1>
-            {error ? (
-              <Alert type="alert-danger" message={error.message} />
-            ) : null}
-            <div className="border rounded-lg p-3">
-              <img className="card-img-top" src={meal?.coverImage} alt={slug} />
-            </div>
-            <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
-              <div className="d-flex justify-content-between">
-                <span className="lead mr-3">Name:</span>
-                <h4 className="text-center">{meal?.name}</h4>
-              </div>
-              <div className="d-flex justify-content-between">
-                <span className="lead mr-3">Price:</span>
-                <h4 className="text-center">${meal?.price}</h4>
-              </div>
-              <div className="d-flex justify-content-between">
-                <span className="lead mr-3">Spice Level:</span>
-                <h4 className="text-center">
-                  {meal?.spiceLevel === 0 ? "Not Spicy" : "🌶️"}{" "}
-                  <i
-                    className="ml-3 fa fa-power-off"
-                    aria-hidden="true"
-                    style={{ color: "#d7456b" }}
-                  ></i>
-                </h4>
-              </div>
-              <div className="d-flex justify-content-between">
-                <span className="lead mr-3">Serving(s):</span>
-                <h4 className="text-center">
-                  {meal?.serving}{" "}
-                  <i
-                    className="ml-3 fa fa-user-o"
-                    aria-hidden="true"
-                    style={{ color: "#d7456b", fontWeight: "bolder" }}
-                  ></i>
-                </h4>
-              </div>
-              <div className="d-flex justify-content-between">
-                <span className="lead mr-3">Number Of Ratings:</span>
-                <h4 className="text-center">
-                  {meal?.ratingsQuantity}{" "}
-                  <i
-                    className="ml-3 fa fa-bar-chart"
-                    aria-hidden="true"
-                    style={{ color: "#d7456b", marginRight: "-0.6rem" }}
-                  ></i>
-                </h4>
-              </div>
-              <div className="d-flex justify-content-between">
-                <span className="lead mr-3">Ratings Average:</span>
-                <h4 className="text-center">
-                  {meal?.ratingsAverage}
-                  <i
-                    className="ml-3 fa fa-star-o"
-                    aria-hidden="true"
-                    style={{ color: "#d7456b", fontWeight: "bold" }}
-                  ></i>
-                </h4>
-              </div>
-            </div>
-            <div
-              className="col-md-9 mx-auto mt-5 mb-5 border rounded-lg w-100"
-              id="slider-ref-div"
-              style={{ backgroundColor: "#eee", height: "30rem" }}
-              ref={sliderRef}
-            >
-              {sliderWidth && (
-                <ImageSlider slides={meal?.images} parentWidth={sliderWidth} />
-              )}
-            </div>
+      {/* <div className="row"> */}
+      <div className="col-md-9 mx-auto">
+        <h1 className="display-3 text-center">Meal Detail</h1>
+        {error ? <Alert type="alert-danger" message={error.message} /> : null}
+        <div className="border rounded-lg p-3">
+          <img className="card-img-top" src={meal?.coverImage} alt={slug} />
+        </div>
+        <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
+          <div className="d-flex justify-content-between">
+            <span className="lead mr-3">Name:</span>
+            <h4 className="text-center">{meal?.name}</h4>
           </div>
-        {/* </div> */}
+          <div className="d-flex justify-content-between">
+            <span className="lead mr-3">Price:</span>
+            <h4 className="text-center">${meal?.price}</h4>
+          </div>
+          <div className="d-flex justify-content-between">
+            <span className="lead mr-3">Spice Level:</span>
+            <h4 className="text-center">
+              {meal?.spiceLevel === 0 ? "Not Spicy" : "🌶️"}{" "}
+              <i
+                className="ml-3 fa fa-power-off"
+                aria-hidden="true"
+                style={{ color: "#d7456b" }}
+              ></i>
+            </h4>
+          </div>
+          <div className="d-flex justify-content-between">
+            <span className="lead mr-3">Serving(s):</span>
+            <h4 className="text-center">
+              {meal?.serving}{" "}
+              <i
+                className="ml-3 fa fa-user-o"
+                aria-hidden="true"
+                style={{ color: "#d7456b", fontWeight: "bolder" }}
+              ></i>
+            </h4>
+          </div>
+          <div className="d-flex justify-content-between">
+            <span className="lead mr-3">Number Of Ratings:</span>
+            <h4 className="text-center">
+              {meal?.ratingsQuantity}{" "}
+              <i
+                className="ml-3 fa fa-bar-chart"
+                aria-hidden="true"
+                style={{ color: "#d7456b", marginRight: "-0.6rem" }}
+              ></i>
+            </h4>
+          </div>
+          <div className="d-flex justify-content-between">
+            <span className="lead mr-3">Ratings Average:</span>
+            <h4 className="text-center">
+              {meal?.ratingsAverage}
+              <i
+                className="ml-3 fa fa-star-o"
+                aria-hidden="true"
+                style={{ color: "#d7456b", fontWeight: "bold" }}
+              ></i>
+            </h4>
+          </div>
+        </div>
+        <div
+          className="col-md-9 mx-auto mt-5 mb-5 border rounded-lg w-100"
+          id="slider-ref-div"
+          style={{ backgroundColor: "#eee", height: "30rem" }}
+          ref={sliderRef}
+        >
+          {sliderWidth && (
+            <ImageSlider slides={meal?.images} parentWidth={sliderWidth} />
+          )}
+        </div>
+      </div>
+      {user?.role === "admin" && (
+        <div className="d-flex justify-content-end border rounded-lg mx-4 p-3">
+          <Link to={`/edit/${slug}`}>
+            <span
+              id="span-create-meal"
+              className="font-weight-bold d-inline-block"
+            >
+              Update Meal
+            </span>
+          </Link>
+        </div>
+      )}
+      {/* </div> */}
       {/* </div> */}
     </>
   );
