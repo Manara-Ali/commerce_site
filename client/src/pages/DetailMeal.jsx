@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMealThunk, clearState } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
-// import Carousel from "react-bootstrap/Carousel";
 import { ImageSlider } from "../components/ImageSlider";
 
 export const DetailMeal = ({ children }) => {
@@ -17,6 +16,10 @@ export const DetailMeal = ({ children }) => {
       width: window?.screen?.width,
       height: window?.screen?.height,
     };
+  };
+
+  const windowData = function () {
+    setSliderWidth(sliderRef.current?.getBoundingClientRect()?.width);
   };
 
   const handleWindowSize = function () {
@@ -37,10 +40,16 @@ export const DetailMeal = ({ children }) => {
   }, [slug]);
 
   useEffect(() => {
+    window.addEventListener("load", windowData);
+
+    return () => window.removeEventListener("load", windowData);
+  }, []);
+
+  useEffect(() => {
     window.addEventListener("resize", handleWindowSize);
 
     return () => window.removeEventListener("resize", handleWindowSize);
-  }, [windowSize.width, windowSize.height]);
+  }, [windowSize.width, windowSize.height, sliderWidth]);
 
   if (loading) {
     return <Spinner />;
@@ -129,6 +138,7 @@ export const DetailMeal = ({ children }) => {
             </div>
             <div
               className="col-md-6 offset-md-3 mt-5 mb-5 border rounded-lg w-100"
+              id="slider-ref-div"
               style={{ backgroundColor: "#eee", height: "30rem" }}
               ref={sliderRef}
             >
