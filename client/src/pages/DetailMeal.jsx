@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMealThunk, clearState } from "../store";
@@ -10,6 +10,18 @@ import { ImageSlider } from "../components/ImageSlider";
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
   const dispatch = useDispatch();
+  const sliderRef = useRef();
+
+  const [windowWidth, setWindowWidth] = useState(window.screen?.width);
+
+  const [windowHeight, setWindowHeight] = useState(window.screen?.height);
+
+  const [sliderWidth, setSliderWidth] = useState(null);
+
+  window.addEventListener("resize", (e) => {
+    setWindowWidth(window?.screen?.width);
+    setWindowHeight(window?.screen?.height);
+  });
 
   const { loading, error, status, meal } = useSelector((state) => {
     return state.mealsCombinedReducer;
@@ -18,6 +30,12 @@ export const DetailMeal = ({ children }) => {
   useEffect(() => {
     dispatch(getMealThunk(slug));
   }, [slug]);
+
+  useEffect(() => {
+    setSliderWidth(sliderRef.current?.getBoundingClientRect()?.width);
+  }, [windowWidth, windowHeight]);
+
+  console.log({ width: windowWidth, height: windowHeight, sliderWidth });
 
   if (loading) {
     return <Spinner />;
@@ -104,12 +122,15 @@ export const DetailMeal = ({ children }) => {
                 </h4>
               </div>
             </div>
-                <div
-                  className="col-md-6 offset-md-3 mt-5 mb-5 border rounded-lg"
-                  style={{ backgroundColor: "#eee", height: "30rem" }}
-                >
-                  <ImageSlider slides={meal?.images} parentWidth={500}/>
-                </div>
+            <div
+              className="col-md-6 offset-md-3 mt-5 mb-5 border rounded-lg w-100"
+              style={{ backgroundColor: "#eee", height: "30rem" }}
+              ref={sliderRef}
+            >
+              {sliderWidth && (
+                <ImageSlider slides={meal?.images} parentWidth={sliderWidth} />
+              )}
+            </div>
           </div>
         </div>
       </div>
