@@ -59,7 +59,7 @@ export const DetailMeal = ({ children }) => {
     return () => window.removeEventListener("resize", handleWindowSize);
   }, [loading, windowSize.width, windowSize.height, sliderWidth]);
 
-  console.log({width: windowSize.width, height: windowSize.height, sliderWidth})
+  // console.log({width: windowSize.width, height: windowSize.height, sliderWidth})
 
   if (loading) {
     return <Spinner />;

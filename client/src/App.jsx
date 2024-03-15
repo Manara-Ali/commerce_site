@@ -41,7 +41,7 @@ export const App = () => {
     axios
       .get("https://geocode.xyz", { params })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setUserLocation(response.data);
       })
       .catch((error) => {
