@@ -5,8 +5,8 @@ export const updateMealThunk = createAsyncThunk("meal/update", async (data, {rej
     console.log(data);
     try {
         const response = await axios({
-            // url: `/api/v1/meals/${data}`,
-            url: `https://commerce-site-igmb.onrender.com/api/v1/meals/${data}`,
+            url: `/api/v1/meals/${data}`,
+            // url: `https://commerce-site-igmb.onrender.com/api/v1/meals/${data}`,
             method: "PATCH",
             data,
         },
