@@ -18,6 +18,8 @@ import { Weather } from "./components/Weather";
 import { CreateMeal } from "./pages/CreateMeal";
 import { DetailMeal } from "./pages/DetailMeal";
 import { UpdateMeal } from "./pages/UpdateMeal";
+import { About } from "./pages/About";
+import { Contact } from "./pages/Contact";
 
 export const App = () => {
   const location = useLocation();
@@ -84,6 +86,8 @@ export const App = () => {
             </Home>
           }
         />
+        <Route path="/about" element={<About/>}/>
+        <Route path="/contact" element={<Contact/>}/>
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
