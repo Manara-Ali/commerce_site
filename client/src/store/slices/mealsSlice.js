@@ -50,26 +50,26 @@ const mealsSlice = createSlice({
     builder.addCase(getAllMealsThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.meals = action.payload?.data?.meals;
-      state.status = action.payload.success;
+      state.status = action.payload.status;
     });
 
     builder.addCase(createMealThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.meal = action.payload?.data?.meal;
-      state.status = action.payload.success;
+      state.status = action.payload.status;
     });
 
     builder.addCase(getMealThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.meal = action.payload?.data?.meal;
-      state.status = action.payload.success;
+      state.status = action.payload.status;
     });
 
     builder.addCase(updateMealThunk.fulfilled, (state, action) => {
       console.log(action.payload);
       state.loading = false;
       state.meal = action.payload?.data?.meal;
-      state.status = action.payload.success;
+      state.status = action.payload.status;
     });
 
     ////////////// REJECTED
@@ -95,7 +95,7 @@ const mealsSlice = createSlice({
       console.log(action.payload);
       state.loading = false;
       state.error = { message: action.payload?.message };
-      state.status = action.payload.status;
+      // state.status = action.payload.status;
     });
   },
 });

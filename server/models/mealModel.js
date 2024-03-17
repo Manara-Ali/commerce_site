@@ -29,12 +29,12 @@ const mealSchema = new mongoose.Schema(
     discount: {
       type: Number,
       default: 0,
-      validate: {
-        validator: function (value) {
-          return value < this.price;
-        },
-      },
-      message: "Discount price ({VALUE}) must be less than regular price",
+      // validate: {
+      //   validator: function (value) {
+      //       return value < this.price;
+      //   },
+      //   message: "Discount price ({VALUE}) must be less than regular price",
+      // },
     },
     summary: {
       type: String,

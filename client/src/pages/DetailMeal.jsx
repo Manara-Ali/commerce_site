@@ -54,6 +54,12 @@ export const DetailMeal = ({ children }) => {
   }, []);
 
   useEffect(() => {
+    if(meal) {
+      dispatch(clearState());
+    }
+  }, [meal])
+
+  useEffect(() => {
     window.addEventListener("resize", handleWindowSize);
 
     return () => window.removeEventListener("resize", handleWindowSize);

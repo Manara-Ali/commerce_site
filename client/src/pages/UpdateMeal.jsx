@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import {
   getDownloadURL,
   getStorage,
@@ -8,174 +8,188 @@ import {
   uploadBytesResumable,
 } from "firebase/storage";
 import { app } from "../utils/firebase";
-import { createMealThunk } from "../store";
+import { updateMealThunk, clearState } from "../store";
 import { Alert } from "../components/Alert";
 import { Spinner } from "../components/Spinner";
 
-export const UpdateMeal = ({children}) => {
-    const {slug} = useParams();
-//   const [formData, setFormData] = useState({
-//     images: [],
-//   });
-//   const [checked, setChecked] = useState(false);
-//   const [coverImage, setCoverImage] = useState(null);
-//   const [coverImgUploadPercentage, setCoverImgUploadPercentage] = useState(0);
-//   const [coverImgUploadError, setCoverImgUploadError] = useState(false);
-//   const [imagesUploadError, setImagesUploadError] = useState(false);
-//   const [images, setImages] = useState([]);
-//   const [message, setMessage] = useState("");
-//   const dispatch = useDispatch();
+export const UpdateMeal = ({ children }) => {
+  const { slug } = useParams();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    images: [],
+  });
+  const [checked, setChecked] = useState(false);
+  const [coverImage, setCoverImage] = useState(null);
+  const [coverImgUploadPercentage, setCoverImgUploadPercentage] = useState(0);
+  const [coverImgUploadError, setCoverImgUploadError] = useState(false);
+  const [images, setImages] = useState([]);
+  const [imagesUploadError, setImagesUploadError] = useState(false);
+  const [message, setMessage] = useState("");
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((state) => {
+    return state.usersCombinedReducer;
+  });
 
   const { loading, status, error, meal } = useSelector((state) => {
     return state.mealsCombinedReducer;
   });
 
-//   const handleCoverImageUpload = (file) => {
-//     if (file) {
-//       const storage = getStorage(app);
+  console.log(status);
 
-//       const filename = `${Date.now()}-${user?._id}-${coverImage?.name}`;
+  const handleCoverImageUpload = (file) => {
+    if (file) {
+      const storage = getStorage(app);
 
-//       const storageRef = ref(storage, filename);
+      const filename = `${Date.now()}-${user?._id}-${coverImage?.name}`;
 
-//       const uploadTask = uploadBytesResumable(storageRef, coverImage);
+      const storageRef = ref(storage, filename);
 
-//       uploadTask.on(
-//         "state_changed",
-//         (snapshot) => {
-//           const progress =
-//             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      const uploadTask = uploadBytesResumable(storageRef, coverImage);
 
-//           console.log(progress);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-//           setCoverImgUploadPercentage(Math.round(progress));
-//         },
-//         (error) => {
-//           setCoverImgUploadError(true);
-//         },
+          console.log(progress);
 
-//         () => {
-//           getDownloadURL(uploadTask.snapshot.ref).then((downLoadURL) => {
-//             setFormData({
-//               ...formData,
-//               coverImage: downLoadURL,
-//             });
-//           });
-//         }
-//       );
-//     } else {
-//       console.log("No file selected");
-//     }
-//   };
+          setCoverImgUploadPercentage(Math.round(progress));
+        },
+        (error) => {
+          setCoverImgUploadError(true);
+        },
 
-//   const handleImagesUpload = (files) => {
-//     if (files.length && files.length < 4) {
-//       const promiseArr = [];
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downLoadURL) => {
+            setFormData({
+              ...formData,
+              coverImage: downLoadURL,
+            });
+          });
+        }
+      );
+    } else {
+      console.log("No file selected");
+    }
+  };
 
-//       for (let i = 0; i < files.length; i++) {
-//         promiseArr.push(storeImage(files[i]));
-//       }
+  const handleImagesUpload = (files) => {
+    if (files.length && files.length < 4) {
+      const promiseArr = [];
 
-//       Promise.all(promiseArr).then((urls) => {
-//         setFormData({
-//           ...formData,
-//           images: [...formData.images, ...urls],
-//         });
-//       });
-//     }
-//   };
+      for (let i = 0; i < files.length; i++) {
+        promiseArr.push(storeImage(files[i]));
+      }
 
-//   const storeImage = async (file) => {
-//     return new Promise((resolve, reject) => {
-//       const storage = getStorage(app);
+      Promise.all(promiseArr).then((urls) => {
+        setFormData({
+          ...formData,
+          images: [...formData.images, ...urls],
+        });
+      });
+    }
+  };
 
-//       const filename = `${Date.now()}-${user?._id}-${file?.name}`;
+  const storeImage = async (file) => {
+    return new Promise((resolve, reject) => {
+      const storage = getStorage(app);
 
-//       const storageRef = ref(storage, filename);
+      const filename = `${Date.now()}-${user?._id}-${file?.name}`;
 
-//       const uploadTask = uploadBytesResumable(storageRef, file);
+      const storageRef = ref(storage, filename);
 
-//       uploadTask.on(
-//         "state_changed",
-//         (snapshot) => {
-//           const progress =
-//             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      const uploadTask = uploadBytesResumable(storageRef, file);
 
-//           console.log(progress);
+      uploadTask.on(
+        "state_changed",
+        (snapshot) => {
+          const progress =
+            (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-//           setCoverImgUploadPercentage(Math.round(progress));
-//         },
-//         (error) => {
-//           setImagesUploadError(true);
-//         },
+          console.log(progress);
 
-//         () => {
-//           getDownloadURL(uploadTask.snapshot.ref).then((downLoadURL) => {
-//             resolve(downLoadURL);
-//           });
-//         }
-//       );
-//     });
-//   };
+          setCoverImgUploadPercentage(Math.round(progress));
+        },
+        (error) => {
+          setImagesUploadError(true);
+        },
 
-//   const handleChange = (e) => {
-//     setFormData(() => {
-//         return {
-//             ...formData,
-//             [e.target.name] : e.target.value,
-//         }
-//     });
-//   }
+        () => {
+          getDownloadURL(uploadTask.snapshot.ref).then((downLoadURL) => {
+            resolve(downLoadURL);
+          });
+        }
+      );
+    });
+  };
 
-//   const handleSubmit = (e) => {
-//     e.preventDefault();
-//     dispatch(createMealThunk(formData));
-//     setFormData({
-//         images: [],
-//     });
-//   }
+  const handleChange = (e) => {
+    setFormData(() => {
+      return {
+        ...formData,
+        [e.target.name]: e.target.value,
+      };
+    });
+  };
 
-//   useEffect(() => {
-//       setFormData({...formData, secretMeal: checked})
-//   }, [checked])
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(updateMealThunk(formData));
+    setFormData({
+      images: [],
+    });
+  };
 
-//   if(status === "success") {
-//     setMessage("Your meal was successfully added to the menu!");
+  useEffect(() => {
+    setFormData({ ...formData, secretMeal: checked, slug });
+  }, [checked]);
 
-//     setTimeout(() => {
-//         setMessage("");
-//     }, 5000);
-//   }
+  useEffect(() => {
+    // dispatch(clearState());
+    setFormData({ ...formData, ...meal });
+  }, []);
 
-//   if(loading) {
-//     return <Spinner/>
-//   }
-  
-//   if (error) {
-//     setTimeout(() => {
-//       dispatch(clearErrors());
-//     }, 5000);
-//   }
+  useEffect(() => {
+    if (status === "success") {
+      setMessage("Your meal was successfully added to the menu!");
 
-//   console.log(formData);
+      setTimeout(() => {
+        setMessage("");
+        navigate("/");
+      }, 5000);
+    }
+  }, [status]);
 
-//   if(coverImgUploadError) {
-//     setTimeout(() => {
-//         setCoverImgUploadError(false);
-//     }, 5000)
-//   }
+  if (loading) {
+    return <Spinner />;
+  }
 
-//   if(imagesUploadError) {
-//     setTimeout(() => {
-//         setImagesUploadError(false);
-//     }, 5000)
-//   }
+  if (error) {
+    setTimeout(() => {
+      dispatch(clearState());
+    }, 5000);
+  }
+
+  console.log(formData);
+
+  if (coverImgUploadError) {
+    setTimeout(() => {
+      setCoverImgUploadError(false);
+    }, 5000);
+  }
+
+  if (imagesUploadError) {
+    setTimeout(() => {
+      setImagesUploadError(false);
+    }, 2500);
+  }
 
   return (
     <>
-      <div className="d-flex justify-content-between">{children}
-      </div>
-      <Link style={{width: "15rem"}} to={`/${slug}`}>
+      <div className="d-flex justify-content-between">{children}</div>
+      <Link style={{ width: "15rem" }} to={`/${slug}`}>
         <button
           className="btn m-3 p-3 d-flex align-items-center justify-content-center"
           id="back-btn"
@@ -184,133 +198,159 @@ export const UpdateMeal = ({children}) => {
           <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK
         </button>
       </Link>
-    <div className="container my-5">
-      <div className="row">
-        <div className="col-md-6 offset-md-3">
-          <h1 className="display-3 mb-5 text-center">Update Meal</h1>
-          {/* {error ? <Alert type="alert-danger" message={error.message} /> : null}
-          {message && <p className="lead text-success">{message}</p>} */}
-          <form>
-            <div className="form-group">
-              <label htmlFor="password">Name</label>
-              <input
-                type="text"
-                className="form-control"
-                name="name"
-                id="name"
-                defaultValue={meal.name}
-                // onChange={(e) => handleChange(e)}
-                // value={formData.name || ""}
-                // required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Price</label>
-              <input
-                type="number"
-                className="form-control"
-                name="price"
-                id="price"
-                defaultValue={meal.price}
-                step={0.01}
-                // onChange={handleChange}
-                // value={formData.price || ""}
-                // min={0}
-                // required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Discount</label>
-              <input
-                type="number"
-                className="form-control"
-                name="discount"
-                id="discount"
-                defaultValue={meal.discount}
-                // onChange={handleChange}
-                // value={0 || formData.discount}
-                // min={0}
-                // step={0.01}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Summary</label>
-              <textarea
-                type="text"
-                className="form-control"
-                name="summary"
-                id="summary"
-                defaultValue={meal.summary}
-                // onChange={handleChange}
-                // value={formData.summary || ""}
-                // required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Description</label>
-              <textarea
-                type="text"
-                className="form-control"
-                name="description"
-                id="description"
-                defaultValue={meal.description}
-                // onChange={handleChange}
-                // value={0 ||formData.description}
-                // required
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Spice Level</label>
-              <input
-                type="text"
-                className="form-control"
-                name="spiceLevel"
-                id="spice-level"
-                defaultValue={meal.spiceLevel}
-                // onChange={handleChange}
-                // value={formData.spiceLevel || ""}
-              />
-            </div>
-            <div className="form-group">
-              <label htmlFor="password">Serving</label>
-              <input
-                type="number"
-                className="form-control"
-                name="serving"
-                id="serving"
-                defaultValue={meal.serving}
-                // onChange={handleChange}
-                // value={0 || formData.serving}
-                // min={0}
-                // required
-              />
-            </div>
-            {/* {coverImgUploadError && (
-              <p className="text-center text-danger">
-                An error occured while uploading your image
-              </p>
-            )} */}
-            <div>
-              <div className="form-group d-flex align-items-center border rounded-lg mb-4 p-3 meal-input">
+      <div className="container my-5">
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
+            <h1 className="display-3 mb-5 text-center">Update Meal</h1>
+            {error ? (
+              <Alert type="alert-danger" message={error.message} />
+            ) : null}
+            {message && <Alert type="alert-success" message={message} />}
+            <form onSubmit={handleSubmit}>
+              <div className="form-group">
+                <label htmlFor="password">Name</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="name"
+                  id="name"
+                  value={formData.name}
+                  onChange={(e) => handleChange(e)}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Price</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="price"
+                  id="price"
+                  step={0.01}
+                  min={0}
+                  onChange={handleChange}
+                  value={formData.price}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Discount</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="discount"
+                  id="discount"
+                  value={formData.discount}
+                  min={0}
+                  step={0.01}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Summary</label>
+                <textarea
+                  type="text"
+                  className="form-control"
+                  name="summary"
+                  id="summary"
+                  value={formData.summary}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Description</label>
+                <textarea
+                  type="text"
+                  className="form-control"
+                  name="description"
+                  id="description"
+                  value={formData.description}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Spice Level</label>
+                <input
+                  type="text"
+                  className="form-control"
+                  name="spiceLevel"
+                  id="spice-level"
+                  value={formData.spiceLevel}
+                  onChange={handleChange}
+                />
+              </div>
+              <div className="form-group">
+                <label htmlFor="password">Serving</label>
+                <input
+                  type="number"
+                  className="form-control"
+                  name="serving"
+                  id="serving"
+                  min={0}
+                  value={formData.serving}
+                  onChange={handleChange}
+                />
+              </div>
+              {coverImgUploadError && (
+                <p className="text-center text-danger">
+                  An error occured while uploading your image
+                </p>
+              )}
+              <div>
+                <div className="form-group d-flex align-items-center border rounded-lg mb-4 p-3 meal-input">
+                  <label className="w-100" htmlFor="password">
+                    Image Cover
+                  </label>
+                  <input
+                    type="file"
+                    accept="image/*"
+                    className="form-control"
+                    name="imageCover"
+                    onChange={(e) => setCoverImage(e.target.files[0])}
+                    value={formData.imageCover?.name}
+                  />
+                  {coverImage ? (
+                    <button
+                      type="button"
+                      className="btn btn-outline-success px-5"
+                      onClick={() => handleCoverImageUpload(coverImage)}
+                    >
+                      Edit Cover Image
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn btn-outline-secondary px-5"
+                      disabled
+                    >
+                      Edit Cover Image
+                    </button>
+                  )}
+                </div>
+                {imagesUploadError && (
+                  <p className="text-center text-danger">
+                    An error occured while uploading your images
+                  </p>
+                )}
+              </div>
+              <div className="form-group d-flex border rounded-lg mb-4 p-3 meal-input align-items-center">
                 <label className="w-100" htmlFor="password">
-                  Image Cover
+                  Images
                 </label>
                 <input
                   type="file"
                   accept="image/*"
+                  multiple
                   className="form-control"
-                  name="imageCover"
-                //   onChange={(e) => setCoverImage(e.target.files[0])}
-                  // value={meal.imageCover?.name || ""}
-                //   required
+                  name="images"
+                  // value={formData.images}
+                  onChange={(e) => setImages(e.target.files)}
                 />
-                {/* {coverImage ? (
+                {images.length ? (
                   <button
                     type="button"
                     className="btn btn-outline-success px-5"
-                    onClick={() => handleCoverImageUpload(coverImage)}
+                    onClick={() => handleImagesUpload(images)}
                   >
-                    Upload Cover Image
+                    Edit Images
                   </button>
                 ) : (
                   <button
@@ -318,80 +358,31 @@ export const UpdateMeal = ({children}) => {
                     className="btn btn-outline-secondary px-5"
                     disabled
                   >
-                    Upload Cover Image
+                    Edit Images
                   </button>
-                )} */}
-                <button
-                    type="button"
-                    className="btn btn-outline-success px-5"
-                    // onClick={() => handleCoverImageUpload(coverImage)}
-                  >Edit Cover Image</button>
+                )}
               </div>
-              {/* {
-                imagesUploadError && <p className="text-center text-danger">
-                  An error occured while uploading your images
-                </p>
-              } */}
-            </div>
-            <div className="form-group d-flex border rounded-lg mb-4 p-3 meal-input align-items-center">
-              <label className="w-100" htmlFor="password">
-                Images
-              </label>
-              <input
-                type="file"
-                accept="image/*"
-                multiple
-                className="form-control"
-                name="images"
-                // onChange={(e) => setImages(e.target.files)}
-                // value={meal.images || ""}
-              />
-              {/* {images.length ? (
-                <button
-                  type="button"
-                  className="btn btn-outline-success px-5"
-                  onClick={() => handleImagesUpload(images)}
-                >
-                  Upload Images
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="btn btn-outline-secondary px-5"
-                  disabled
-                >
-                  Upload Images
-                </button>
-              )} */}
-              <button
-                  type="button"
-                  className="btn btn-outline-success px-5"
-                //   onClick={() => handleImagesUpload(images)}
-                >
-                  Edit Images
-                </button>
-            </div>
-            <div className="form-group d-flex">
-              <label className="w-50" htmlFor="password">
-                Secret Meal
-              </label>
-              <input
-                type="checkbox"
-                className="form-control"
-                name="secretMeal"
-                defaultChecked={meal.secretMeal}
-                // checked={checked}
-                // onChange={() => setChecked(!checked)}
-                style={{ width: "7rem" }}
-              />
-            </div>
-            <button id="create-meal-btn" type="submit" className="btn mt-3">
-              Update Meal
-            </button>
-          </form>
+              <div className="form-group d-flex">
+                <label className="w-50" htmlFor="password">
+                  Secret Meal
+                </label>
+                <input
+                  type="checkbox"
+                  className="form-control"
+                  name="secretMeal"
+                  value={formData.secretMeal}
+                  checked={checked}
+                  onChange={() => setChecked(!checked)}
+                  style={{ width: "7rem" }}
+                />
+              </div>
+              <button id="create-meal-btn" type="submit" className="btn mt-3">
+                Update Meal
+              </button>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
     </>
   );
 };
