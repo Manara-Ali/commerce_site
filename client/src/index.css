@@ -200,6 +200,14 @@ body {
   color: #66ba30;
 }
 
+#span-delete-meal {
+  color: #d7456b;
+}
+
+#span-delete-meal:active {
+  color: #000;
+}
+
 /* WEATHER ICON */
 #weather-icon {
   width: 3rem;

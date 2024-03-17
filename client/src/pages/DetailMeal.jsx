@@ -162,7 +162,13 @@ export const DetailMeal = ({ children }) => {
         </div>
       </div>
       {user?.role === "admin" && (
-        <div className="d-flex justify-content-end border rounded-lg mx-4 p-3">
+        <div className="d-flex justify-content-between border rounded-lg mx-4 p-3">
+            <span
+              id="span-delete-meal"
+              className="font-weight-bold d-inline-block"
+            >
+              Delete Meal
+            </span>
           <Link to={`/edit/${slug}`}>
             <span
               id="span-create-meal"
