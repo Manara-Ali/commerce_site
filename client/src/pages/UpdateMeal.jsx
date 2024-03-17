@@ -147,7 +147,9 @@ export const UpdateMeal = ({ children }) => {
   }, [checked]);
 
   useEffect(() => {
-    // dispatch(clearState());
+    if(meal.secretMeal) {
+      setChecked(true);
+    }
     setFormData({ ...formData, ...meal });
   }, []);
 
@@ -158,7 +160,7 @@ export const UpdateMeal = ({ children }) => {
       setTimeout(() => {
         setMessage("");
         navigate("/");
-      }, 5000);
+      }, 2500);
     }
   }, [status]);
 

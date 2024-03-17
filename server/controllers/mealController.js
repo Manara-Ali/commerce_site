@@ -31,7 +31,7 @@ exports.createMeal = catchAsyncFn(async (req, res, next) => {
 exports.getMeal = catchAsyncFn(async (req, res, next) => {
   const { slug } = req.params;
 
-  const meal = await Meal.findOne({ slug });
+  const meal = await Meal.findOne({ slug }).select("+secretMeal");
 
   if (!meal) {
     const applicationError = new ApplicationError(
