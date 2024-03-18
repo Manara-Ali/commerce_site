@@ -54,12 +54,12 @@ export const ImageSlider = ({ slides, parentWidth }) => {
           style={{
             height: "100%",
             display: "flex",
-            width: `${parentWidth}` * `${slides.length}`,
+            width: `${parentWidth || 1}` * `${slides?.length || 1}`,
             transition: "transform ease-out 0.3s",
             transform: `translateX(${-(slideIndex * parentWidth)}px)`,
           }}
         >
-          {slides.map((element, index) => {
+          {slides?.map((element, index) => {
             return (
               <div
                 key={index}
@@ -95,7 +95,7 @@ export const ImageSlider = ({ slides, parentWidth }) => {
           color: "#d7456b",
         }}
       >
-        {slides.map((_, index) => {
+        {slides?.map((_, index) => {
           return (
             <div
               key={index}

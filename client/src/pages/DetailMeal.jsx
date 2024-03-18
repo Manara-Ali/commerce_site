@@ -189,7 +189,9 @@ export const DetailMeal = ({ children }) => {
           </Link>
         </div>
       )}
-      {modalOpen && <ModalWindow>{<Delete />}</ModalWindow>}
+      {modalOpen && (
+        <ModalWindow>{<Delete title={"Meal"} meal={meal} />}</ModalWindow>
+      )}
     </>
   );
 };
