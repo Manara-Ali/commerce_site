@@ -336,3 +336,73 @@ body {
 #left-arrow:active, #right-arrow:active {
   color: #000;
 }
+
+/* MODAL */
+.modal-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 10;
+  border: 3px solid greenyellow;
+  background-color: transparent;
+}
+
+.modal-content {
+  /* border: 1px solid red; */
+  /* height: 50%; */
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background-color: transparent;
+  /* margin: 5rem; */
+}
+
+.modal-message {
+  width: 90%;
+  height: 90%;
+  background-color: rgba(200,200,200, 0.9);
+  /* background-color: rgba(215,69,107, 0.8); */
+  border-radius: 3rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  /* align-items: center; */
+  margin: auto;
+}
+
+.modal-message label {
+  color: rgb(33, 31, 31);
+  font-weight: bold;
+}
+
+.blur {
+  filter: blur(4px);
+}
+
+.delete-text {
+  font-size: 2rem;
+}
+
+.delete-image {
+  /* border: 1px solid red; */
+  width: 15rem;
+  height: 15rem;
+  border-radius: 0.8rem;
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  margin-bottom: 3rem;
+  /* overflow: hidden; */
+}
+
+.button-div {
+  /* border: 1px solid red; */
+  width: 75%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}

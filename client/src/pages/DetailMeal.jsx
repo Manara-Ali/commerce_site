@@ -1,15 +1,19 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMealThunk, clearState } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 import { ImageSlider } from "../components/ImageSlider";
+import { ModalWindow } from "../components/ModalWindow";
+import { ModalContext } from "../context/ModalContext";
+import { Delete } from "../components/Delete";
 
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
   const dispatch = useDispatch();
   const sliderRef = useRef();
+  const { modalOpen, setModalOpen } = useContext(ModalContext);
 
   const getWindowSize = function () {
     return {
@@ -54,10 +58,10 @@ export const DetailMeal = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if(meal) {
+    if (meal) {
       dispatch(clearState());
     }
-  }, [meal])
+  }, [meal]);
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowSize);
@@ -88,8 +92,6 @@ export const DetailMeal = ({ children }) => {
           <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK
         </button>
       </Link>
-      {/* <div className="container"> */}
-      {/* <div className="row"> */}
       <div className="col-md-9 mx-auto">
         <h1 className="display-3 text-center">Meal Detail</h1>
         {error ? <Alert type="alert-danger" message={error.message} /> : null}
@@ -163,12 +165,20 @@ export const DetailMeal = ({ children }) => {
       </div>
       {user?.role === "admin" && (
         <div className="d-flex justify-content-between border rounded-lg mx-4 p-3">
-            <span
-              id="span-delete-meal"
-              className="font-weight-bold d-inline-block"
-            >
-              Delete Meal
-            </span>
+          <span
+            id="span-delete-meal"
+            className="font-weight-bold d-inline-block"
+            onClick={() => {
+              document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+              document.querySelector(".app-container").classList.add("blur");
+
+              setModalOpen(true);
+              // console.log("Hello");
+            }}
+          >
+            Delete Meal
+          </span>
           <Link to={`/edit/${slug}`}>
             <span
               id="span-create-meal"
@@ -179,8 +189,9 @@ export const DetailMeal = ({ children }) => {
           </Link>
         </div>
       )}
-      {/* </div> */}
-      {/* </div> */}
+      {modalOpen && (
+        <ModalWindow>{<Delete title={"Meal"} meal={meal} />}</ModalWindow>
+      )}
     </>
   );
 };

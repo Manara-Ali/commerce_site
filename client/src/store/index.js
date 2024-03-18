@@ -43,5 +43,6 @@ export * from './thunks/mealThunks/getAllMealsThunk';
 export * from './thunks/mealThunks/createMealThunk';
 export * from "./thunks/mealThunks/getMealThunk";
 export * from "./thunks/mealThunks/updateMealThunk";
+export * from "./thunks/mealThunks/deleteMealThunk";
 export * from "./slices/usersSlice";
 export * from "./slices/mealsSlice";
