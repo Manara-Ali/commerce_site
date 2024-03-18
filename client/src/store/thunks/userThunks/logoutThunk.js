@@ -6,8 +6,8 @@ export const logoutThunk = createAsyncThunk(
   async (_, rejectWithValue) => {
     try {
       const response = await axios({
-        // url: "/api/v1/users/logout",
-        url: "https://commerce-site-igmb.onrender.com/api/v1/users/logout",
+        url: "/api/v1/users/logout",
+        // url: "https://commerce-site-igmb.onrender.com/api/v1/users/logout",
         method: "GET",
       });
 
