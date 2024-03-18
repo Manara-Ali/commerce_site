@@ -8,12 +8,15 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "./store/index.js";
 import { App } from "./App.jsx";
 import { store } from "./store/index.js";
+import { CustomProvider } from "./context/ModalContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <App />
+        <CustomProvider>
+          <App />
+        </CustomProvider>
       </PersistGate>
     </Provider>
   </Router>

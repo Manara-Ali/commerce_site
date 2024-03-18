@@ -336,3 +336,40 @@ body {
 #left-arrow:active, #right-arrow:active {
   color: #000;
 }
+
+/* MODAL */
+.modal-container {
+  position: absolute;
+  top: 25%;
+  left: 0;
+  width: 100vw;
+  /* height: 175vh; */
+  height: 50vh;
+  z-index: 10;
+  border: 3px solid greenyellow;
+}
+
+.blur {
+  filter: blur(4px);
+}
+
+.modal-message {
+  border: 1px solid red;
+  width: 70%;
+  height: 175vh;
+  position: absolute;
+  background-color: rgba(170, 170, 170, 0.5);
+  border-radius: 7px;
+  top: 20%;
+  left: 15%;
+  text-align: center;
+  padding-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-message label {
+  color: rgb(33, 31, 31);
+  font-weight: bold;
+}
