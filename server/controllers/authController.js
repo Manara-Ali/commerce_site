@@ -640,7 +640,9 @@ exports.login = catchAsyncFn(async (req, res, next) => {
   }
 
   // 3. Find current user
-  const user = await User.findOne({ email, active: true }).select("+email +password");
+  const user = await User.findOne({ email, active: true }).select(
+    "+email +password"
+  );
 
   // 4. Assuming no user was found with the given email
   if (!user || !(await user.comparePassword(password, user.password))) {
