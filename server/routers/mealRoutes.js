@@ -6,7 +6,11 @@ const router = express.Router();
 
 router
   .route("/")
-  .get(mealController.getAllMeals)
+  .get(
+    authController.checkDisplayAuth,
+    authController.displayTo("admin"),
+    mealController.getAllMeals
+  )
   .post(
     authController.protect,
     authController.restrictTo("admin"),
@@ -15,7 +19,11 @@ router
 
 router
   .route("/:slug")
-  .get(mealController.getMeal)
+  .get(
+    authController.checkDisplayAuth,
+    authController.displayTo("admin"),
+    mealController.getMeal
+  )
   .patch(
     authController.protect,
     authController.restrictTo("admin"),

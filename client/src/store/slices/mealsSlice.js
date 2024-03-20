@@ -67,6 +67,7 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(getMealThunk.fulfilled, (state, action) => {
+      console.log(action.payload);
       state.loading = false;
       state.meal = action.payload?.data?.meal;
       state.status = action.payload.status;
@@ -99,9 +100,11 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(getMealThunk.rejected, (state, action) => {
+      console.log(action.payload);
       state.loading = false;
       state.error = { message: action.payload?.message };
       state.status = action.payload.status;
+      state.meal = null;
     });
 
     builder.addCase(updateMealThunk.rejected, (state, action) => {

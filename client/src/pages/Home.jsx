@@ -36,7 +36,7 @@ export const Home = ({ children }) => {
             return (
               <div
                 key={element._id}
-                className="card p-0 col-md-3 my-4"
+                className={`${element.secretMeal ? "blur hidden-meal" : ""} card p-0 col-md-3 my-4`}
                 id="card"
               >
                 <Link

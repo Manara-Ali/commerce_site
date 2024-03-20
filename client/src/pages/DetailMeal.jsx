@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getMealThunk, clearState } from "../store";
 import { Spinner } from "../components/Spinner";
@@ -12,6 +12,7 @@ import { Delete } from "../components/Delete";
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const sliderRef = useRef();
   const { modalOpen, setModalOpen } = useContext(ModalContext);
 
@@ -38,6 +39,8 @@ export const DetailMeal = ({ children }) => {
   const { loading, error, status, meal } = useSelector((state) => {
     return state.mealsCombinedReducer;
   });
+
+  console.log(error);
 
   const { user, isAuthenticated, message } = useSelector((state) => {
     return state.usersCombinedReducer;
@@ -75,9 +78,10 @@ export const DetailMeal = ({ children }) => {
     return <Spinner />;
   }
 
-  if (error) {
+  if (error || error?.message) {
     setTimeout(() => {
       dispatch(clearState());
+      navigate("/");
     }, 5000);
   }
   return (
@@ -92,8 +96,8 @@ export const DetailMeal = ({ children }) => {
           <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK
         </button>
       </Link>
-      <div className="col-md-9 mx-auto">
         <h1 className="display-3 text-center">Meal Detail</h1>
+      <div className={`${meal.secretMeal ? "blur hidden-meal" : ""} col-md-9 mx-auto`}>
         {error ? <Alert type="alert-danger" message={error.message} /> : null}
         <div className="border rounded-lg p-3">
           <img className="card-img-top" src={meal?.coverImage} alt={slug} />

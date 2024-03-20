@@ -3,7 +3,8 @@ const catchAsyncFn = require("../utils/catchAsyncFn");
 const ApplicationError = require("../utils/applicationError");
 
 exports.getAllMeals = catchAsyncFn(async (req, res) => {
-  const meals = await Meal.find();
+  
+  const meals = await Meal.find(req.showMeals).select("+secretMeal");
 
   res.status(200).json({
     status: "success",
@@ -29,11 +30,14 @@ exports.createMeal = catchAsyncFn(async (req, res, next) => {
 });
 
 exports.getMeal = catchAsyncFn(async (req, res, next) => {
-  const { slug } = req.params;
+  let { slug } = req.params;
+  const isSecretMeal = req.showMeals;
 
-  const meal = await Meal.findOne({ slug}).select(
-    "+secretMeal"
-  );
+  if (isSecretMeal.isSecretMeal) {
+    slug = "undefined";
+  }
+
+  const meal = await Meal.findOne({ slug }).select("+secretMeal");
 
   if (!meal) {
     const applicationError = new ApplicationError(

@@ -789,6 +789,56 @@ exports.restrictTo = (...args) => {
   };
 };
 
+exports.checkDisplayAuth = catchAsyncFn(async (req, res, next) => {
+  // 1. Retrieve cookie
+  let token;
+
+  if (req.headers && req.headers.authorization?.startsWith("Bearer")) {
+    token = req.headers.authorization.split(" ")[1];
+  } else if (req.cookies && req.cookies.jwt) {
+    token = req.cookies.jwt;
+  }
+
+  if (!token) {
+    return next();
+  }
+
+  // 2. Use cookie to find user (Verify token)
+  const decodedPayload = await util.promisify(jwt.verify)(
+    token,
+    process.env.JWT_SECRET_KEY
+  );
+
+  const user = await User.findById(decodedPayload.id).select("+role");
+
+  if (!user) {
+    return next();
+  }
+
+  req.user = user;
+
+  next();
+});
+
+exports.displayTo = (...args) => {
+  return (req, res, next) => {
+    console.log(req?.user?.role);
+    if (!args.includes(req?.user?.role)) {
+      console.log("Herere");
+      req.showMeals = {
+        secretMeal: {
+          $ne: true,
+        },
+      };
+      return next();
+    } else {
+      console.log("Therere");
+      req.showMeals = {};
+      next();
+    }
+  };
+};
+
 exports.forgotPassword = catchAsyncFn(async (req, res, next) => {
   // 1. Retrieve email from user
   const { email } = req.body;
