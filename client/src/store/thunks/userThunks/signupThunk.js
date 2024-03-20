@@ -6,8 +6,8 @@ export const signupThunk = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios({
-        url: "/api/v1/users/signup",
-        // url:  "https://commerce-site-igmb.onrender.com/api/v1/users/signup",
+        // url: "/api/v1/users/signup",
+        url:  "https://commerce-site-igmb.onrender.com/api/v1/users/signup",
         method: "POST",
         data,
       });
