@@ -20,6 +20,7 @@ export const PrivateNavbar = () => {
   useEffect(() => {
     if (status === "success") {
       navigate("/login");
+      window.location.reload();
     }
   }, [status]);
 
