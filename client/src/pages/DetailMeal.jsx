@@ -40,8 +40,6 @@ export const DetailMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
-  console.log(error);
-
   const { user, isAuthenticated, message } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
@@ -49,12 +47,6 @@ export const DetailMeal = ({ children }) => {
   useEffect(() => {
     dispatch(getMealThunk(slug));
   }, [slug]);
-
-  // useEffect(() => {
-  //   // window.addEventListener("load", windowData);
-
-  //   // return () => window.removeEventListener("load", windowData);
-  // }, []);
 
   useEffect(() => {
     windowData();
@@ -97,7 +89,7 @@ export const DetailMeal = ({ children }) => {
         </button>
       </Link>
         <h1 className="display-3 text-center">Meal Detail</h1>
-      <div className={`${meal.secretMeal ? "blur hidden-meal" : ""} col-md-9 mx-auto`}>
+      <div className={`${meal?.secretMeal ? "blur hidden-meal" : ""} col-md-9 mx-auto`}>
         {error ? <Alert type="alert-danger" message={error.message} /> : null}
         <div className="border rounded-lg p-3">
           <img className="card-img-top" src={meal?.coverImage} alt={slug} />

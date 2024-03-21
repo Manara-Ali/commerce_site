@@ -15,6 +15,9 @@ export const PrivateNavbar = () => {
 
   const handleLogout = () => {
     dispatch(logoutThunk());
+    setTimeout(() => {
+      location.reload();
+    }, 500)
   };
 
   useEffect(() => {
