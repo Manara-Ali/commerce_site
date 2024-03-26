@@ -822,7 +822,8 @@ exports.checkDisplayAuth = catchAsyncFn(async (req, res, next) => {
 
 exports.displayTo = (...args) => {
   return (req, res, next) => {
-    console.log(req?.user?.role);
+    // console.log(req?.user?.role);
+    console.log(req.user);
     if (!args.includes(req?.user?.role)) {
       console.log("Herere");
       req.showMeals = {

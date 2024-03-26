@@ -31,6 +31,7 @@ export const Home = ({ children }) => {
       <div className="container">
         <hr />
         <div className="d-flex align-items-center justify-content-between">
+          <i className="fa fa-sliders fa-2x border rounded-lg p-2 pr-3" aria-hidden="true" style={{ color: "#d7456b"}}></i>
           <form className="form-inline my-2 my-lg-0 border rounded-lg p-2">
             <div className="d-flex align-items-center w-100">
               <input
@@ -53,15 +54,16 @@ export const Home = ({ children }) => {
               </button>
             </div>
           </form>
-          <i
-            className="fa fa-shopping-cart fa-2x border rounded-lg p-2 pr-3"
+          <div className="cart-div border rounded-lg p-2 pr-3">
+            <i
+            className="fa fa-shopping-cart fa-2x"
             aria-hidden="true"
             style={{ color: "#d7456b", fontSize: "1.rem" }}
           ></i>
           <span className="badge badge-warning" id="lblCartCount">
-            {/* {cartItems.length > 0 ? cartItems.length : null} */}
-            3
+            {/* {cartItems.length > 0 ? cartItems.length : null} */}3
           </span>
+          </div>
         </div>
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />

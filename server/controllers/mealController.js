@@ -1,10 +1,16 @@
 const Meal = require("../models/mealModel");
 const catchAsyncFn = require("../utils/catchAsyncFn");
 const ApplicationError = require("../utils/applicationError");
+const APIFeatures = require("../utils/apiFeatures");
 
 exports.getAllMeals = catchAsyncFn(async (req, res) => {
-  
-  const meals = await Meal.find(req.showMeals).select("+secretMeal");
+  let apiFeatures = new APIFeatures(Meal.find(), req.query);
+
+  apiFeatures = apiFeatures.filter().sort().fieldLimit().paginate();
+
+  const meals = await apiFeatures.query
+    .find(req.showMeals)
+    .select("+secretMeal");
 
   res.status(200).json({
     status: "success",
