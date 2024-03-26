@@ -410,3 +410,22 @@ body {
 .hidden-meal {
   background-color: rgba(255, 0, 0, 0.8);
 }
+
+/* CART AND BADGE */
+#lblCartCount {
+  font-size: 1.2rem;
+  /* background: #ff0000; */
+  background: #66ba30;
+  color: #171515;
+  padding: 2px 5px;
+  vertical-align: top;
+  margin-left: -100px;
+  margin-top: -33px;
+}
+.badge {
+  padding-left: 9px;
+  padding-right: 9px;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}

@@ -31,21 +31,37 @@ export const Home = ({ children }) => {
       <div className="container">
         <hr />
         <div className="d-flex align-items-center justify-content-between">
-        <form className="form-inline my-2 my-lg-0 border rounded-lg p-2">
-          <div className="d-flex align-items-center w-100">
-            <input
-              className="form-control mr-sm-2"
-              type="search"
-              placeholder="Search Menu"
-              aria-label="Search"
-              style={{ fontSize: "1.5rem"}}
-            />
-            <button className="btn mx-3 my-sm-0 py-0" type="submit" style={{color: "#ececec", backgroundColor: "#d7456b", fontSize: "1.3rem"}}>
-              <i className="fa fa-search fa-2x" aria-hidden="true"></i>
-            </button>
-          </div>
-        </form>
-        <i className="fa fa-shopping-cart fa-2x border rounded-lg p-2 pr-3" aria-hidden="true" style={{color: "#66ba30", fontSize: "1.rem"}}></i>
+          <form className="form-inline my-2 my-lg-0 border rounded-lg p-2">
+            <div className="d-flex align-items-center w-100">
+              <input
+                className="form-control mr-sm-2"
+                type="search"
+                placeholder="Search Menu"
+                aria-label="Search"
+                style={{ fontSize: "1.5rem" }}
+              />
+              <button
+                className="btn mx-3 my-sm-0 py-0"
+                type="submit"
+                style={{
+                  color: "#ececec",
+                  backgroundColor: "#d7456b",
+                  fontSize: "1.3rem",
+                }}
+              >
+                <i className="fa fa-search fa-2x" aria-hidden="true"></i>
+              </button>
+            </div>
+          </form>
+          <i
+            className="fa fa-shopping-cart fa-2x border rounded-lg p-2 pr-3"
+            aria-hidden="true"
+            style={{ color: "#d7456b", fontSize: "1.rem" }}
+          ></i>
+          <span className="badge badge-warning" id="lblCartCount">
+            {/* {cartItems.length > 0 ? cartItems.length : null} */}
+            3
+          </span>
         </div>
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />
