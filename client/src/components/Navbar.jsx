@@ -30,7 +30,7 @@ export const Navbar = () => {
       </button>
 
       <div className="collapse navbar-collapse" id="navbar-content">
-        <form className="form-inline my-2 my-lg-0">
+        {/* <form className="form-inline my-2 my-lg-0">
           <input
             className="form-control mr-sm-2"
             type="search"
@@ -40,7 +40,7 @@ export const Navbar = () => {
           <button className="btn my-2 my-sm-0" type="submit">
             <i className="fa fa-search fa-2x" aria-hidden="true"></i>
           </button>
-        </form>
+        </form> */}
         <ul className="navbar-nav ml-xl-auto">
           <li className="nav-item">
             <Link className="nav-link" to="/">

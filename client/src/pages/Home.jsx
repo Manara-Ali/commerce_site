@@ -29,6 +29,24 @@ export const Home = ({ children }) => {
     <>
       <div className="d-flex justify-content-between">{children}</div>
       <div className="container">
+        <hr />
+        <div className="d-flex align-items-center justify-content-between">
+        <form className="form-inline my-2 my-lg-0 border rounded-lg p-2">
+          <div className="d-flex align-items-center w-100">
+            <input
+              className="form-control mr-sm-2"
+              type="search"
+              placeholder="Search Menu"
+              aria-label="Search"
+              style={{ fontSize: "1.5rem"}}
+            />
+            <button className="btn mx-3 my-sm-0 py-0" type="submit" style={{color: "#ececec", backgroundColor: "#d7456b", fontSize: "1.3rem"}}>
+              <i className="fa fa-search fa-2x" aria-hidden="true"></i>
+            </button>
+          </div>
+        </form>
+        <i className="fa fa-shopping-cart fa-2x border rounded-lg p-2 pr-3" aria-hidden="true" style={{color: "#66ba30", fontSize: "1.rem"}}></i>
+        </div>
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />
         <div className="row" id="dish-div">
@@ -36,31 +54,47 @@ export const Home = ({ children }) => {
             return (
               <div
                 key={element._id}
-                className={`${element.secretMeal ? "blur hidden-meal" : ""} card p-0 col-md-3 my-4`}
+                className={`${
+                  element.secretMeal ? "blur hidden-meal" : ""
+                } card p-0 col-md-3 my-4`}
                 id="card"
               >
                 <Link
-                    to={`/${element.slug}`}
-                    // className="btn w-50"
-                  >
-                    <img
-                  src={element.coverImage}
-                  className="card-img-top"
-                  alt={`${element?.name}-${element?._id}`}
-                />
-                  </Link>
+                  to={`/${element.slug}`}
+                  // className="btn w-50"
+                >
+                  <img
+                    src={element.coverImage}
+                    className="card-img-top"
+                    alt={`${element?.name}-${element?._id}`}
+                  />
+                </Link>
                 <div className="card-body">
                   <h4 className="card-title">{element.name}</h4>
                   <p className="card-text">{element.summary}</p>
-                  <div className="d-flex w-50 mb-3 justify-content-start" id="icons">
+                  <div
+                    className="d-flex w-50 mb-3 justify-content-start"
+                    id="icons"
+                  >
                     <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
-                      <i className="fa fa-comments-o fa-1x mr-2" style={{color: "#d7456b"}} aria-hidden="true">
-                    </i>
-                    <span className="text-muted">{element.ratingsQuantity}</span>
+                      <i
+                        className="fa fa-comments-o fa-1x mr-2"
+                        style={{ color: "#d7456b" }}
+                        aria-hidden="true"
+                      ></i>
+                      <span className="text-muted">
+                        {element.ratingsQuantity}
+                      </span>
                     </div>
                     <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
-                      <i className="fa fa-star-o fa-1x mr-2" style={{color: "#d7456b"}} aria-hidden="true"></i>
-                      <span className="text-muted">{element.ratingsAverage}</span>
+                      <i
+                        className="fa fa-star-o fa-1x mr-2"
+                        style={{ color: "#d7456b" }}
+                        aria-hidden="true"
+                      ></i>
+                      <span className="text-muted">
+                        {element.ratingsAverage}
+                      </span>
                     </div>
                   </div>
                   <Link

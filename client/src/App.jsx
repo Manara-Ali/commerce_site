@@ -86,8 +86,8 @@ export const App = () => {
             </Home>
           }
         />
-        <Route path="/about" element={<About/>}/>
-        <Route path="/contact" element={<Contact/>}/>
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
