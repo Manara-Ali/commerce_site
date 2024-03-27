@@ -170,7 +170,6 @@ export const DetailMeal = ({ children }) => {
               document.querySelector(".app-container").classList.add("blur");
 
               setModalOpen(true);
-              // console.log("Hello");
             }}
           >
             Delete Meal

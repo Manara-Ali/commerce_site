@@ -1,16 +1,17 @@
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
-import {createSelector} from '@reduxjs/toolkit'
+import { createSelector } from "@reduxjs/toolkit";
 import { getAllMealsThunk, clearState } from "../store";
 import { Spinner } from "../components/Spinner";
+import { ModalWindow } from "../components/ModalWindow";
+import { ModalContext } from "../context/ModalContext";
+import { Equalizer } from "../components/Equalizer";
 
 export const Home = ({ children }) => {
   const dispatch = useDispatch();
-  const [searchParams, setSearchParams] = useSearchParams();
-
+  const { modalOpen, setModalOpen } = useContext(ModalContext);
   const [searchTerm, setSearchTerm] = useState("");
-
   const { loading, error, status } = useSelector((state) => {
     return state?.mealsCombinedReducer;
   });
@@ -19,7 +20,8 @@ export const Home = ({ children }) => {
     (state) => state.mealsCombinedReducer.meals,
     (meals) => {
       return meals.filter((element) =>
-        element?.name?.toLowerCase().includes(searchTerm?.toLowerCase()));
+        element?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+      );
     }
   );
 
@@ -47,10 +49,6 @@ export const Home = ({ children }) => {
 
   // console.log(searchParams.get("name"));
 
-  useEffect(() => {
-    dispatch(getAllMealsThunk());
-  }, []);
-
   // useEffect(() => {
   //   if(searchTerm) {
   //     meals.filter((element) => {
@@ -66,6 +64,14 @@ export const Home = ({ children }) => {
   //     dispatch(getAllMealsThunk());
   //   }
   // }, [searchParams.get("name")]);
+
+  // const handleSliderClick = () => {
+  //   console.log("clicked");
+  // };
+
+  useEffect(() => {
+    dispatch(getAllMealsThunk());
+  }, []);
 
   if (loading) {
     return <Spinner />;
@@ -87,6 +93,13 @@ export const Home = ({ children }) => {
             className="fa fa-sliders fa-2x border rounded-lg p-2 pr-3"
             aria-hidden="true"
             style={{ color: "#d7456b" }}
+            onClick={() => {
+              document.body.scrollTop = document.documentElement.scrollTop = 0;
+
+              document.querySelector(".app-container").classList.add("blur");
+
+              setModalOpen(true);
+            }}
           ></i>
           <form
             className="form-inline my-2 my-lg-0 border rounded-lg p-2"
@@ -113,31 +126,34 @@ export const Home = ({ children }) => {
               >
                 <i className="fa fa-search fa-2x" aria-hidden="true"></i>
               </button> */}
-              <div className="dropdown border rounded-lg ml-3" style={{ backgroundColor: "#d7456b", fontSize: "1.rem" }}>
-            <button
-              className="btn"
-              type="button"
-              data-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i
-                className="fa fa-chevron-down fa-2x"
-                aria-hidden="true"
-                style={{ color: "#ececec", fontSize: "1.rem" }}
-              ></i>
-            </button>
-            <div className="dropdown-menu">
-              <a className="dropdown-item" href="#">
-                Food
-              </a>
-              <a className="dropdown-item" href="#">
-                Snacks
-              </a>
-              <a className="dropdown-item" href="#">
-                Drinks
-              </a>
-            </div>
-          </div>
+              <div
+                className="dropdown border rounded-lg ml-3"
+                style={{ backgroundColor: "#d7456b", fontSize: "1.rem" }}
+              >
+                <button
+                  className="btn"
+                  type="button"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i
+                    className="fa fa-chevron-down fa-2x"
+                    aria-hidden="true"
+                    style={{ color: "#ececec", fontSize: "1.rem" }}
+                  ></i>
+                </button>
+                <div className="dropdown-menu">
+                  <a className="dropdown-item" href="#">
+                    Food
+                  </a>
+                  <a className="dropdown-item" href="#">
+                    Snacks
+                  </a>
+                  <a className="dropdown-item" href="#">
+                    Drinks
+                  </a>
+                </div>
+              </div>
             </div>
           </form>
           {/* <div className="dropdown border rounded-lg">
@@ -239,6 +255,9 @@ export const Home = ({ children }) => {
           })}
         </div>
       </div>
+      {modalOpen && (
+        <ModalWindow>{<Equalizer meals={meals}/>}</ModalWindow>
+      )}
     </>
   );
 };

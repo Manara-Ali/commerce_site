@@ -427,3 +427,22 @@ body {
 .dropdown-menu .dropdown-item {
   font-size: 1.8rem;
 }
+
+.button-div-sort {
+  /* border: 1px solid red; */
+  width: 90%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+}
+
+/* #sort-container {
+  height: 70%;
+} */
+
+.modal-message button {
+  font-size: 2rem; 
+  background: #d7456b; 
+  color: #fff;
+  font-weight: 500;
+}

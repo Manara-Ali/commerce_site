@@ -18,8 +18,6 @@ export const Delete = ({ title, meal }) => {
     dispatch(deleteMealThunk(meal.slug));
   }
 
-  console.log({loading, status, error});
-
   useEffect(() => {
     if (status === 204) {
       setModalOpen(false);

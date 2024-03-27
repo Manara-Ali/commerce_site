@@ -67,7 +67,6 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(getMealThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.meal = action.payload?.data?.meal;
       state.status = action.payload.status;
