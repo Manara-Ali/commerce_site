@@ -423,3 +423,7 @@ body {
   font-size: 1.1rem;
   border-radius: 50%;
 }
+
+.dropdown-menu .dropdown-item {
+  font-size: 1.8rem;
+}

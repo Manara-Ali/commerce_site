@@ -55,6 +55,14 @@ const mealSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Each meal must specify how many people it can serve"],
     },
+    category: {
+      type: String,
+      required: [true, "Each item on the menu must have a category! Try again."],
+      enum: {
+        values: ["food", "snacks", "drinks"],
+        message: "Item can only have a category equal to 'food', 'snacks', or 'drinks'."
+      }
+    },
     ratingsQuantity: {
       type: Number,
       default: 0,

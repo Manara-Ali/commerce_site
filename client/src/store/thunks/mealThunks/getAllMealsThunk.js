@@ -2,6 +2,13 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const getAllMealsThunk = createAsyncThunk("meal/get-all", async (_, {rejectWithValue}) => {
+    // let url;
+    // if(data) {
+    //     url = `/api/v1/meals?name=${data}`;
+    // } else {
+    //     url= "/api/v1/meals";
+    // }
+    // console.log(url);
     try {
         const response = await axios({
             url: "/api/v1/meals",
@@ -11,7 +18,6 @@ export const getAllMealsThunk = createAsyncThunk("meal/get-all", async (_, {reje
         {
             withCredentials: true,
         });
-
         return response.data;
     } catch (error) {
         console.log(error);
