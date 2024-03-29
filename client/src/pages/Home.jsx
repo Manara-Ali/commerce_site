@@ -7,10 +7,13 @@ import { Spinner } from "../components/Spinner";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
 import { Equalizer } from "../components/Equalizer";
+import { useMinMax } from "../utils/useMinMax";
 
 export const Home = ({ children }) => {
   const dispatch = useDispatch();
   const { modalOpen, setModalOpen } = useContext(ModalContext);
+  const [min, setMinPrice] = useState(1);
+  const [max, setMaxPrice] = useState(100);
   const [searchTerm, setSearchTerm] = useState("");
   const { loading, error, status } = useSelector((state) => {
     return state?.mealsCombinedReducer;
@@ -71,6 +74,12 @@ export const Home = ({ children }) => {
 
   useEffect(() => {
     dispatch(getAllMealsThunk());
+  }, []);
+
+  useEffect(() => {
+    const { min, max } = useMinMax(meals);
+    setMinPrice(min);
+    setMaxPrice(max);
   }, []);
 
   if (loading) {
@@ -156,31 +165,6 @@ export const Home = ({ children }) => {
               </div>
             </div>
           </form>
-          {/* <div className="dropdown border rounded-lg">
-            <button
-              className="btn"
-              type="button"
-              data-toggle="dropdown"
-              aria-expanded="false"
-            >
-              <i
-                className="fa fa-chevron-down fa-2x"
-                aria-hidden="true"
-                style={{ color: "#d7456b", fontSize: "1.rem" }}
-              ></i>
-            </button>
-            <div className="dropdown-menu">
-              <a className="dropdown-item" href="#">
-                Food
-              </a>
-              <a className="dropdown-item" href="#">
-                Snacks
-              </a>
-              <a className="dropdown-item" href="#">
-                Drinks
-              </a>
-            </div>
-          </div> */}
           <div className="cart-div border rounded-lg p-2 pr-3">
             <i
               className="fa fa-shopping-cart fa-2x"
@@ -206,7 +190,6 @@ export const Home = ({ children }) => {
               >
                 <Link
                   to={`/${element.slug}`}
-                  // className="btn w-50"
                 >
                   <img
                     src={element.coverImage}
@@ -256,7 +239,9 @@ export const Home = ({ children }) => {
         </div>
       </div>
       {modalOpen && (
-        <ModalWindow>{<Equalizer meals={meals}/>}</ModalWindow>
+        <ModalWindow>
+          {<Equalizer meals={meals} min={min} max={max} />}
+        </ModalWindow>
       )}
     </>
   );

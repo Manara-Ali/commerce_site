@@ -35,8 +35,6 @@ export const UpdateMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
-  console.log(status);
-
   const handleCoverImageUpload = (file) => {
     if (file) {
       const storage = getStorage(app);
@@ -53,7 +51,7 @@ export const UpdateMeal = ({ children }) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-          console.log(progress);
+          // console.log(progress);
 
           setCoverImgUploadPercentage(Math.round(progress));
         },
@@ -108,7 +106,7 @@ export const UpdateMeal = ({ children }) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-          console.log(progress);
+          // console.log(progress);
 
           setCoverImgUploadPercentage(Math.round(progress));
         },
@@ -173,8 +171,6 @@ export const UpdateMeal = ({ children }) => {
       dispatch(clearState());
     }, 5000);
   }
-
-  console.log(formData);
 
   if (coverImgUploadError) {
     setTimeout(() => {

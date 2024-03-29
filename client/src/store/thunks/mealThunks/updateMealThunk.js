@@ -20,8 +20,8 @@ export const updateMealThunk = createAsyncThunk("meal/update", async (data, {rej
 
     try {
         const response = await axios({
-            url: `/api/v1/meals/${data.slug}`,
-            // url: `https://commerce-site-igmb.onrender.com/api/v1/meals/${data.slug}`,
+            // url: `/api/v1/meals/${data.slug}`,
+            url: `https://commerce-site-igmb.onrender.com/api/v1/meals/${data.slug}`,
             method: "PATCH",
             data: formData,
         },
@@ -31,7 +31,7 @@ export const updateMealThunk = createAsyncThunk("meal/update", async (data, {rej
 
         return response.data;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return rejectWithValue(error.response?.data);
     }
 });

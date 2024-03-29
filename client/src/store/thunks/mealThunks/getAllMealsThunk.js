@@ -1,26 +1,30 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getAllMealsThunk = createAsyncThunk("meal/get-all", async (_, {rejectWithValue}) => {
-    // let url;
-    // if(data) {
-    //     url = `/api/v1/meals?name=${data}`;
-    // } else {
-    //     url= "/api/v1/meals";
-    // }
+export const getAllMealsThunk = createAsyncThunk("meal/get-all", async (data, {rejectWithValue}) => {
+
+    // console.log(data);
+    let url;
+    if(data) {
+        // url = `/api/v1/meals?sort=${data?.sort}&price[lte]=${data?.price}`;
+        url = `https://commerce-site-igmb.onrender.com/api/v1/meals?sort=${data?.sort}&price[lte]=${data?.price}`;
+    } else {
+        // url = "/api/v1/meals";
+        url = "https://commerce-site-igmb.onrender.com/api/v1/meals";
+    }
     // console.log(url);
     try {
         const response = await axios({
-            url: "/api/v1/meals",
-            // url: "https://commerce-site-igmb.onrender.com/api/v1/meals",
+            url: url,
             method: "GET",
         },
         {
             withCredentials: true,
         });
+        // console.log(response.data);
         return response.data;
     } catch (error) {
-        console.log(error);
+        // console.log(error);
         return rejectWithValue(error.response?.data);
     }
 });

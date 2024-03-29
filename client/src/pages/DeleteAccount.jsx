@@ -24,8 +24,6 @@ export const DeleteAccount = ({children}) => {
     dispatch(deleteAccountThunk({ currentPassword }));
   };
 
-  console.log(currentPassword);
-
   useEffect(() => {
     if (status === "No Content") {
       dispatch(logoutThunk());

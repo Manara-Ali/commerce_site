@@ -45,7 +45,7 @@ export const CreateMeal = ({children}) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-          console.log(progress);
+          // console.log(progress);
 
           setCoverImgUploadPercentage(Math.round(progress));
         },
@@ -100,7 +100,7 @@ export const CreateMeal = ({children}) => {
           const progress =
             (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
 
-          console.log(progress);
+          // console.log(progress);
 
           setCoverImgUploadPercentage(Math.round(progress));
         },
@@ -156,7 +156,7 @@ export const CreateMeal = ({children}) => {
     }, 5000);
   }
 
-  console.log(formData);
+  // console.log(formData);
 
   if(coverImgUploadError) {
     setTimeout(() => {

@@ -1,17 +1,28 @@
-import { useState, useRef } from "react";
-import { useMinMax } from "../utils/useMinMax";
+import { useState, useEffect, useRef, useContext } from "react";
+import { useSearchParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import toggleSortSelected from "../utils/toggleSortSelected";
 import togglePriceSelected from "../utils/togglePriceSelected";
+import { getAllMealsThunk } from "../store/thunks/mealThunks/getAllMealsThunk";
+import { ModalContext } from "../context/ModalContext";
 
-export const Equalizer = ({ meals }) => {
+export const Equalizer = ({ meals, min, max }) => {
   const ascSortRef = useRef();
   const descSortRef = useRef();
   const ascPriceRef = useRef();
   const descPriceRef = useRef();
-  const { minPrice, maxPrice } = useMinMax(meals);
+  const dispatch = useDispatch();
+  const { setModalOpen } = useContext(ModalContext);
+  const [minPrice] = useState(min);
+  const [maxPrice] = useState(max);
   const [desiredPrice, setDesiredPrice] = useState(null);
-  const [sortOrder, setSortOrder] = useState(1);
-  const [priceOrder, setPriceOrder] = useState(1);
+  const [sortOrder, setSortOrder] = useState("name");
+  const [priceOrder, setPriceOrder] = useState("price");
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const { status } = useSelector((state) => {
+    return state.mealsCombinedReducer;
+  });
 
   const handlePriceChange = (e) => {
     setDesiredPrice(e.target.value);
@@ -19,35 +30,58 @@ export const Equalizer = ({ meals }) => {
 
   const handleSortPriceOrder = (e) => {
     if (e.target.name === "sort") {
-      setSortOrder((sortOrder) => -sortOrder);
+      sortOrder === "name" ? setSortOrder("-name") : setSortOrder("name");
     }
 
     if (e.target.name === "price") {
-      setPriceOrder((priceOrder) => -priceOrder);
+      priceOrder === "price" ? setPriceOrder("-price") : setPriceOrder("price");
     }
   };
 
-  console.log({ sortOrder, priceOrder });
+  const handleModalClose = (e) => {
+    document.querySelector(".app-container").classList.remove("blur");
+
+    setModalOpen(false);
+
+    setSearchParams();
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {
+      sort: searchParams.get("sort"),
+      price: searchParams.get("price[lte]"),
+    };
+
+    dispatch(getAllMealsThunk(data));
+
+    handleModalClose();
+  };
+
+  useEffect(() => {
+    setSearchParams(
+      {
+        sort: `${sortOrder},${priceOrder}`,
+        "price[lte]": desiredPrice || minPrice,
+      },
+      { replace: true }
+    );
+  }, [sortOrder, priceOrder, desiredPrice]);
 
   return (
     <div className="modal-message border border-secondary">
-      <form className="w-100">
+      <form className="w-100" onSubmit={handleSubmit}>
         <h1 className="mt-5" style={{ color: "#333" }}>
           Sort, Filter, and More...
         </h1>
-        {/* <div className="d-flex justify-content-center">
-            <div className="delete-image">
-          </div>
-          </div> */}
         <div
-          //   id="sort-container"
           className="d-flex justify-content-center mb-4"
         >
           <div
             id="sort-container"
             className="d-flex justify-content-between w-50 mt-3 align-items-center pb-3"
           >
-            <label for="exampleInputEmail1">Sort</label>
+            <label htmlFor="exampleInputEmail1">Sort</label>
             <input
               ref={ascSortRef}
               hidden
@@ -79,7 +113,7 @@ export const Equalizer = ({ meals }) => {
               onChange={handleSortPriceOrder}
             />
             <i
-              class="fa fa-sort-alpha-desc fa-2x"
+              className="fa fa-sort-alpha-desc fa-2x"
               aria-hidden="true"
               onClick={(e) => {
                 toggleSortSelected(e);
@@ -89,11 +123,13 @@ export const Equalizer = ({ meals }) => {
           </div>
         </div>
         <div
-          //   id="sort-container"
           className="d-flex justify-content-center mb-4"
         >
-          <div id="price-container" className="d-flex justify-content-between w-50 mt-3 align-items-center pb-3">
-            <label className="m-0" for="exampleInputEmail1">
+          <div
+            id="price-container"
+            className="d-flex justify-content-between w-50 mt-3 align-items-center pb-3"
+          >
+            <label className="m-0" htmlFor="exampleInputEmail1">
               Price
             </label>
             <input
@@ -112,7 +148,7 @@ export const Equalizer = ({ meals }) => {
               aria-hidden="true"
               onClick={(e) => {
                 togglePriceSelected(e);
-                ascSortRef.current.click();
+                ascPriceRef.current.click();
               }}
             ></i>
             <input
@@ -131,7 +167,7 @@ export const Equalizer = ({ meals }) => {
               aria-hidden="true"
               onClick={(e) => {
                 togglePriceSelected(e);
-                descSortRef.current.click();
+                descPriceRef.current.click();
               }}
             ></i>
           </div>
@@ -142,7 +178,7 @@ export const Equalizer = ({ meals }) => {
         >
           {/* <div className="w-100 mt-3 mx-5"> */}
           <div className="w-100 mx-5 form-group my-3">
-            <label className="mb-3" for="formControlRange">
+            <label className="mb-3" htmlFor="formControlRange">
               Price Range
             </label>
             <input
@@ -151,7 +187,7 @@ export const Equalizer = ({ meals }) => {
               className="form-control-range"
               min={minPrice}
               max={maxPrice}
-              step={(maxPrice - minPrice) / meals?.length}
+              step={((maxPrice - minPrice) / meals?.length)?.toFixed(2)}
               onChange={handlePriceChange}
               value={desiredPrice || 0}
             />
@@ -168,11 +204,9 @@ export const Equalizer = ({ meals }) => {
               <span style={{ fontWeight: "600" }}>${maxPrice}</span>
             </div>
           </div>
-          {/* </div> */}
         </div>
         <div className="button-div-sort d-flex justify-content-center mt-5">
           <button
-          type="button"
             className="btn py-2 px-5 w-75"
             id="filter-btn"
           >

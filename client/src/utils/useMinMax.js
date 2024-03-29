@@ -6,8 +6,8 @@ export const useMinMax = (arr) => {
     return element.price;
   });
 
-  const minPrice = Math.min(...priceArr);
-  const maxPrice = Math.max(...priceArr);
+  const min = Math.min(...priceArr);
+  const max = Math.max(...priceArr);
 
-  return {minPrice, maxPrice};
+  return {min, max};
 };

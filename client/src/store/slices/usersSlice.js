@@ -153,7 +153,7 @@ const usersSlice = createSlice({
     });
 
     builder.addCase(updatePasswordThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.loading = false;
       state.user = action.payload.data.user;
       state.status = action.payload.status;
@@ -203,7 +203,7 @@ const usersSlice = createSlice({
     });
 
     builder.addCase(logoutThunk.rejected, (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.loading = false;
       state.error = action.payload;
       // state.status = action.payload.status;

@@ -99,7 +99,7 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(getMealThunk.rejected, (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.loading = false;
       state.error = { message: action.payload?.message };
       state.status = action.payload.status;
@@ -107,14 +107,14 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(updateMealThunk.rejected, (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.loading = false;
       state.error = { message: action.payload?.message };
       // state.status = action.payload.status;
     });
 
     builder.addCase(deleteMealThunk.rejected, (state, action) => {
-      console.log(action.payload);
+      // console.log(action.payload);
       state.loading = false;
       state.error = { message: action.payload?.message };
       // state.status = action.payload.status;
