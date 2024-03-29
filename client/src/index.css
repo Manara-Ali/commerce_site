@@ -497,3 +497,12 @@ input[type="range"]::-webkit-slider-thumb {
   border-radius: 50%;
   box-shadow: -207px 0 0 200px #d7456b;
 }
+
+#filter-btn {
+  color: #fff;
+}
+
+#filter-btn:active {
+  transform: translate(5px, 5px);
+  color: #fff;
+}

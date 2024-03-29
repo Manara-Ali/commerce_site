@@ -172,7 +172,9 @@ export const Equalizer = ({ meals }) => {
         </div>
         <div className="button-div-sort d-flex justify-content-center mt-5">
           <button
+          type="button"
             className="btn py-2 px-5 w-75"
+            id="filter-btn"
           >
             Apply Filter
           </button>
