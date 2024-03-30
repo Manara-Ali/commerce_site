@@ -127,9 +127,9 @@ export const Equalizer = ({ meals, min, max }) => {
         >
           <div
             id="price-container"
-            className="d-flex justify-content-between w-50 mt-2 align-items-center pb-3"
+            className="d-flex justify-content-between w-50 mt-1 align-items-center pb-3"
           >
-            <label className="m-0" style={{marginRight: "-3px"}} htmlFor="exampleInputEmail1">
+            <label className="m-0" style={{marginRight: "-30px"}} htmlFor="exampleInputEmail1">
               Price
             </label>
             <input
@@ -205,7 +205,7 @@ export const Equalizer = ({ meals, min, max }) => {
             </div>
           </div>
         </div>
-        <div className="button-div-sort d-flex justify-content-center my-5">
+        <div className="button-div-sort d-flex justify-content-center mt-3">
           <button
             className="btn py-2 px-5 w-75"
             id="filter-btn"
