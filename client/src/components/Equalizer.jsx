@@ -71,7 +71,7 @@ export const Equalizer = ({ meals, min, max }) => {
   return (
     <div className="modal-message border border-secondary">
       <form className="w-100" onSubmit={handleSubmit}>
-        <h1 className="mt-5" style={{ color: "#333" }}>
+        <h1 className="mt-3" style={{ color: "#333" }}>
           Sort, Filter, and More...
         </h1>
         <div
@@ -79,7 +79,7 @@ export const Equalizer = ({ meals, min, max }) => {
         >
           <div
             id="sort-container"
-            className="d-flex justify-content-between w-50 mt-3 align-items-center pb-3"
+            className="d-flex justify-content-between w-50 mt-2 align-items-center pb-3"
           >
             <label htmlFor="exampleInputEmail1">Sort</label>
             <input
@@ -127,7 +127,7 @@ export const Equalizer = ({ meals, min, max }) => {
         >
           <div
             id="price-container"
-            className="d-flex justify-content-between w-50 mt-3 align-items-center pb-3"
+            className="d-flex justify-content-between w-50 mt-2 align-items-center pb-3"
           >
             <label className="m-0" htmlFor="exampleInputEmail1">
               Price
@@ -177,8 +177,8 @@ export const Equalizer = ({ meals, min, max }) => {
           className="d-flex justify-content-center mb-4"
         >
           {/* <div className="w-100 mt-3 mx-5"> */}
-          <div className="w-100 mx-5 form-group my-3">
-            <label className="mb-3" htmlFor="formControlRange">
+          <div className="w-100 mx-5 form-group my-2">
+            <label className="mb-2" htmlFor="formControlRange">
               Price Range
             </label>
             <input
@@ -205,7 +205,7 @@ export const Equalizer = ({ meals, min, max }) => {
             </div>
           </div>
         </div>
-        <div className="button-div-sort d-flex justify-content-center mt-5">
+        <div className="button-div-sort d-flex justify-content-center mt-4">
           <button
             className="btn py-2 px-5 w-75"
             id="filter-btn"
