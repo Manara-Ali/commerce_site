@@ -71,7 +71,7 @@ export const Equalizer = ({ meals, min, max }) => {
   return (
     <div className="modal-message border border-secondary">
       <form className="w-100" onSubmit={handleSubmit}>
-        <h1 className="mt-5" style={{ color: "#333" }}>
+        <h1 className="mt-4" style={{ color: "#333" }}>
           Sort, Filter, and More...
         </h1>
         <div
@@ -81,7 +81,7 @@ export const Equalizer = ({ meals, min, max }) => {
             id="sort-container"
             className="d-flex justify-content-between w-50 mt-2 align-items-center pb-3"
           >
-            <label htmlFor="exampleInputEmail1">Sort</label>
+            <label htmlFor="exampleInputEmail1">Sort:</label>
             <input
               ref={ascSortRef}
               hidden
@@ -129,8 +129,8 @@ export const Equalizer = ({ meals, min, max }) => {
             id="price-container"
             className="d-flex justify-content-between w-50 mt-1 align-items-center pb-3"
           >
-            <label className="m-0" style={{marginRight: "-30px"}} htmlFor="exampleInputEmail1">
-              Price
+            <label className="m-0" htmlFor="exampleInputEmail1">
+              Price:
             </label>
             <input
               ref={ascPriceRef}
