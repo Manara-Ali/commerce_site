@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import axios from "axios";
 import { Navbar } from "./components/Navbar";
 import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
@@ -20,12 +19,18 @@ import { DetailMeal } from "./pages/DetailMeal";
 import { UpdateMeal } from "./pages/UpdateMeal";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
+import { getMealsCountThunk } from "./store";
 
 export const App = () => {
   const location = useLocation();
+  const dispatch = useDispatch();
   const [userIp, setUserIp] = useState(null);
   const [userLocation, setUserLocation] = useState({});
   const [weatherData, setWeatherData] = useState({});
+
+  useEffect(() => {
+    dispatch(getMealsCountThunk());
+  }, [])
 
   // useEffect(() => {
   //   axios.get("https://api.ipify.org?format=json").then((response) => {

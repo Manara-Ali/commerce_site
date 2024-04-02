@@ -35,6 +35,18 @@ exports.createMeal = catchAsyncFn(async (req, res, next) => {
   });
 });
 
+
+exports.countDocuments = catchAsyncFn(async (req, res, next) => {
+  const count = await Meal.countDocuments();
+
+  res.status(200).json({
+    status: "success",
+    data: {
+      count,
+    },
+  });
+})
+
 exports.getMeal = catchAsyncFn(async (req, res, next) => {
   let { slug } = req.params;
   const isSecretMeal = req.showMeals;

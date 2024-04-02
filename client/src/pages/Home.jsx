@@ -1,4 +1,4 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect, useContext, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { createSelector } from "@reduxjs/toolkit";
@@ -8,13 +8,20 @@ import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
 import { Equalizer } from "../components/Equalizer";
 import { useMinMax } from "../utils/useMinMax";
+import { usePagination } from "../utils/usePagination";
 
 export const Home = ({ children }) => {
+  // const searchInputRef = useRef();
   const dispatch = useDispatch();
   const { modalOpen, setModalOpen } = useContext(ModalContext);
   const [min, setMinPrice] = useState(1);
   const [max, setMaxPrice] = useState(100);
   const [searchTerm, setSearchTerm] = useState("");
+  const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [pageNumber, setPageNumber] = useState(1);
+
+  usePagination(debouncedSearchTerm, pageNumber);
+
   const { loading, error, status } = useSelector((state) => {
     return state?.mealsCombinedReducer;
   });
@@ -23,7 +30,9 @@ export const Home = ({ children }) => {
     (state) => state.mealsCombinedReducer.meals,
     (meals) => {
       return meals.filter((element) =>
-        element?.name?.toLowerCase().includes(searchTerm?.toLowerCase())
+        element?.name
+          ?.toLowerCase()
+          .includes(debouncedSearchTerm?.toLowerCase())
       );
     }
   );
@@ -35,12 +44,11 @@ export const Home = ({ children }) => {
     //   setSearchParams();
     // }
     setSearchTerm(e.target.value);
+    setPageNumber(1);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(searchTerm);
 
     // setSearchTerm("");
 
@@ -72,9 +80,17 @@ export const Home = ({ children }) => {
   //   console.log("clicked");
   // };
 
+  // useEffect(() => {
+  //   dispatch(getAllMealsThunk());
+  // }, []);
+
   useEffect(() => {
-    dispatch(getAllMealsThunk());
-  }, []);
+    const timerId = setTimeout(() => {
+      setDebouncedSearchTerm(searchTerm);
+    }, 750);
+
+    return () => clearTimeout(timerId);
+  }, [searchTerm]);
 
   useEffect(() => {
     const { min, max } = useMinMax(meals);
@@ -84,7 +100,7 @@ export const Home = ({ children }) => {
 
   if (loading) {
     return <Spinner />;
-  }
+  } 
 
   if (error) {
     setTimeout(() => {
@@ -116,6 +132,7 @@ export const Home = ({ children }) => {
           >
             <div className="d-flex align-items-center w-100">
               <input
+                // ref={searchInputRef}
                 className="form-control mr-sm-2"
                 type="search"
                 placeholder="Search Menu"
@@ -188,9 +205,7 @@ export const Home = ({ children }) => {
                 } card p-0 col-md-3 my-4`}
                 id="card"
               >
-                <Link
-                  to={`/${element.slug}`}
-                >
+                <Link to={`/${element.slug}`}>
                   <img
                     src={element.coverImage}
                     className="card-img-top"
@@ -199,7 +214,9 @@ export const Home = ({ children }) => {
                 </Link>
                 <div className="card-body">
                   <h4 className="card-title">{element.name}</h4>
-                  <p className="card-text">{element.summary}</p>
+                  <p className="card-text">
+                    {element.summary.slice(0, 235) + "..."}
+                  </p>
                   <div
                     className="d-flex w-50 mb-3 justify-content-start"
                     id="icons"

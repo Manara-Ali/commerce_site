@@ -4,12 +4,14 @@ import { createMealThunk } from "../thunks/mealThunks/createMealThunk";
 import { getMealThunk } from "../thunks/mealThunks/getMealThunk";
 import { updateMealThunk } from "../thunks/mealThunks/updateMealThunk";
 import { deleteMealThunk } from "../thunks/mealThunks/deleteMealThunk";
+import { getMealsCountThunk } from "../thunks/mealThunks/getMealsCountThunk";
 
 const mealsSlice = createSlice({
   name: "meals",
   initialState: {
     loading: false,
     meals: [],
+    mealsCount: null,
     meal: {},
     error: null,
     status: "",
@@ -24,6 +26,12 @@ const mealsSlice = createSlice({
   extraReducers(builder) {
     ////////////// PENDING
     builder.addCase(getAllMealsThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.status = "";
+    });
+
+    builder.addCase(getMealsCountThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
       state.status = "";
@@ -59,6 +67,12 @@ const mealsSlice = createSlice({
       state.meals = action.payload?.data?.meals;
       state.status = action.payload.status;
     });
+    builder.addCase(getMealsCountThunk.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      state.loading = false;
+      state.mealsCount = action.payload?.results;
+      state.status = action.payload.status;
+    });
 
     builder.addCase(createMealThunk.fulfilled, (state, action) => {
       state.loading = false;
@@ -87,6 +101,12 @@ const mealsSlice = createSlice({
 
     ////////////// REJECTED
     builder.addCase(getAllMealsThunk.rejected, (state, action) => {
+      state.loading = false;
+      state.error = action.payload?.data;
+      state.status = action.payload?.status;
+    });
+
+    builder.addCase(getMealsCountThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.data;
       state.status = action.payload.status;

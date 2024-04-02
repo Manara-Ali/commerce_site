@@ -40,6 +40,7 @@ export * from "./thunks/userThunks/googleAuthThunk";
 export * from "./thunks/userThunks/logoutThunk";
 export * from "./thunks/userThunks/deleteAccountThunk";
 export * from './thunks/mealThunks/getAllMealsThunk';
+export * from './thunks/mealThunks/getMealsCountThunk';
 export * from './thunks/mealThunks/createMealThunk';
 export * from "./thunks/mealThunks/getMealThunk";
 export * from "./thunks/mealThunks/updateMealThunk";
