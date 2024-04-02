@@ -6,11 +6,11 @@ export const getAllMealsThunk = createAsyncThunk("meal/get-all", async (data, {r
     // console.log(data);
     let url;
     if(data) {
-        // url = `/api/v1/meals?sort=${data?.sort}&price[lte]=${data?.price}`;
-        url = `https://commerce-site-igmb.onrender.com/api/v1/meals?sort=${data?.sort}&price[lte]=${data?.price}`;
+        url = `/api/v1/meals?sort=${data?.sort}&price[lte]=${data?.price}`;
+        // url = `https://commerce-site-igmb.onrender.com/api/v1/meals?sort=${data?.sort}&price[lte]=${data?.price}`;
     } else {
-        // url = "/api/v1/meals";
-        url = "https://commerce-site-igmb.onrender.com/api/v1/meals";
+        url = "/api/v1/meals";
+        // url = "https://commerce-site-igmb.onrender.com/api/v1/meals";
     }
     // console.log(url);
     try {
