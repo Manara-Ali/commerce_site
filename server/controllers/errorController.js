@@ -62,7 +62,7 @@ const handleDuplicateError = (error) => {
 const handleValidationError = (error) => {
   const errorArr = Object.values(error.errors);
 
-  const errorMsgArr = errorArr.map((element) => {
+  const errorMsgArr = errorArr?.map((element) => {
     return element.message;
   });
 
