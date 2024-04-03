@@ -1,13 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getMealsCountThunk = createAsyncThunk("meal/count", async (_, {rejectWithValue}) => {
-
+export const getPaginatedMealsThunk = createAsyncThunk("meal/pagination", async (data, {rejectWithValue}) => {
     try {
         const response = await axios({
-            // url: "/api/v1/meals",
-            url: "https://commerce-site-igmb.onrender.com/api/v1/meals",
             method: "GET",
+            // url: `/api/v1/meals?page=${data.pageNumber}&limit=4`,
+            
+            url: `https://commerce-site-igmb.onrender.com/api/v1/meals?page=${data.pageNumber}&limit=4`,
         },
         {
             withCredentials: true,

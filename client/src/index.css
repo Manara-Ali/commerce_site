@@ -165,6 +165,13 @@ body {
   /* color: #d7456b; */
 }
 
+#pagination-spinner {
+  width: 8rem;
+  height: 8rem;
+  /* color: #66ba30; */
+  /* color: #d7456b; */
+}
+
 #spinner-text {
   font-size: 2.5rem;
   /* color: #66ba30; */

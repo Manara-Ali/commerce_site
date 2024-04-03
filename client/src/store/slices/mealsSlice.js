@@ -5,12 +5,15 @@ import { getMealThunk } from "../thunks/mealThunks/getMealThunk";
 import { updateMealThunk } from "../thunks/mealThunks/updateMealThunk";
 import { deleteMealThunk } from "../thunks/mealThunks/deleteMealThunk";
 import { getMealsCountThunk } from "../thunks/mealThunks/getMealsCountThunk";
+import { getPaginatedMealsThunk } from "../thunks/mealThunks/getPaginatedMealsThunk";
 
 const mealsSlice = createSlice({
   name: "meals",
   initialState: {
     loading: false,
     meals: [],
+    paginatedMeals: [],
+    totalMeals: [],
     mealsCount: null,
     meal: {},
     error: null,
@@ -20,13 +23,37 @@ const mealsSlice = createSlice({
     clearState(state) {
       state.error = null;
       state.status = "";
+      state.totalMeals = [];
     },
+    storePagination(state) {
+      // console.log("Here");
+      // if(!state.totalMeals?.length) return;
+      
+      // console.log("There");
+      if(state.totalMeals) {
+        const idArr = state.totalMeals?.map((element) => element._id);
+  
+        state?.paginatedMeals?.forEach((element) => {
+          if (!idArr?.includes(element._id)) {
+            state.totalMeals = [...state.totalMeals, element];
+          }
+        });
+      } else {
+        state.totalMeals = state.paginatedMeals;
+      }
+    }
   },
 
   extraReducers(builder) {
     ////////////// PENDING
     builder.addCase(getAllMealsThunk.pending, (state) => {
       state.loading = true;
+      state.error = null;
+      state.status = "";
+    });
+
+    builder.addCase(getPaginatedMealsThunk.pending, (state) => {
+      state.loadingPagination = true;
       state.error = null;
       state.status = "";
     });
@@ -65,8 +92,17 @@ const mealsSlice = createSlice({
     builder.addCase(getAllMealsThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.meals = action.payload?.data?.meals;
+      state.totalMeals = action.payload?.data?.meals;
       state.status = action.payload.status;
     });
+
+    builder.addCase(getPaginatedMealsThunk.fulfilled, (state, action) => {
+      // console.log(action.payload);
+      state.loadingPagination = false;
+      state.paginatedMeals = action.payload?.data?.meals;
+      state.status = action.payload.status;
+    });
+
     builder.addCase(getMealsCountThunk.fulfilled, (state, action) => {
       // console.log(action.payload);
       state.loading = false;
@@ -106,6 +142,13 @@ const mealsSlice = createSlice({
       state.status = action.payload?.status;
     });
 
+    builder.addCase(getPaginatedMealsThunk.rejected, (state, action) => {
+      console.log(action.payload);
+      state.loadingPagination = false;
+      state.error = action.payload?.data;
+      state.status = action.payload.status;
+    });
+
     builder.addCase(getMealsCountThunk.rejected, (state, action) => {
       state.loading = false;
       state.error = action.payload?.data;
@@ -142,5 +185,5 @@ const mealsSlice = createSlice({
   },
 });
 
-export const { clearState } = mealsSlice.actions;
+export const { clearState, storePagination } = mealsSlice.actions;
 export const mealsCombinedReducer = mealsSlice.reducer;

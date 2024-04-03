@@ -1,9 +1,10 @@
-import { useState, useEffect, useContext, useRef } from "react";
+import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { createSelector } from "@reduxjs/toolkit";
 import { getAllMealsThunk, clearState } from "../store";
 import { Spinner } from "../components/Spinner";
+import { PaginationSpinner } from "../components/PaginationSpinner";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
 import { Equalizer } from "../components/Equalizer";
@@ -11,7 +12,7 @@ import { useMinMax } from "../utils/useMinMax";
 import { usePagination } from "../utils/usePagination";
 
 export const Home = ({ children }) => {
-  // const searchInputRef = useRef();
+  const observer = useRef();
   const dispatch = useDispatch();
   const { modalOpen, setModalOpen } = useContext(ModalContext);
   const [min, setMinPrice] = useState(1);
@@ -20,16 +21,38 @@ export const Home = ({ children }) => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
 
-  usePagination(debouncedSearchTerm, pageNumber);
+  const { totalMeals, paginatedMeals } = usePagination(
+    debouncedSearchTerm,
+    pageNumber
+  );
 
-  const { loading, error, status } = useSelector((state) => {
-    return state?.mealsCombinedReducer;
-  });
+  const { loading, loadingPagination, error, mealsCount, status } = useSelector(
+    (state) => {
+      return state?.mealsCombinedReducer;
+    }
+  );
+
+  const lastMealElementRef = useCallback(
+    (node) => {
+      if (loadingPagination) return;
+
+      if (observer.current) observer.current.disconnect();
+
+      observer.current = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && mealsCount - totalMeals.length > 0) {
+          setPageNumber((pageNumber) => pageNumber + 1);
+        }
+      });
+
+      if (node) observer.current.observe(node);
+    },
+    [loadingPagination, totalMeals, mealsCount]
+  );
 
   const memoizedMeals = createSelector(
-    (state) => state.mealsCombinedReducer.meals,
+    (state) => totalMeals,
     (meals) => {
-      return meals.filter((element) =>
+      return totalMeals.filter((element) =>
         element?.name
           ?.toLowerCase()
           .includes(debouncedSearchTerm?.toLowerCase())
@@ -40,54 +63,18 @@ export const Home = ({ children }) => {
   const meals = useSelector(memoizedMeals);
 
   const handleInputChange = (e) => {
-    // if (searchParams.size) {
-    //   setSearchParams();
-    // }
     setSearchTerm(e.target.value);
     setPageNumber(1);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    // setSearchTerm("");
-
-    // if (searchTerm) {
-    //   setSearchParams({ name: searchTerm });
-    //   setSearchTerm("");
-    // }
   };
-
-  // console.log(searchParams.get("name"));
-
-  // useEffect(() => {
-  //   if(searchTerm) {
-  //     meals.filter((element) => {
-
-  //     })
-  //   }
-  // }, [searchTerm]);
-
-  // useEffect(() => {
-  //   if (searchParams.get("name")) {
-  //     dispatch(getAllMealsThunk(searchParams.get("name")));
-  //   } else {
-  //     dispatch(getAllMealsThunk());
-  //   }
-  // }, [searchParams.get("name")]);
-
-  // const handleSliderClick = () => {
-  //   console.log("clicked");
-  // };
-
-  // useEffect(() => {
-  //   dispatch(getAllMealsThunk());
-  // }, []);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
       setDebouncedSearchTerm(searchTerm);
-    }, 750);
+    }, 250);
 
     return () => clearTimeout(timerId);
   }, [searchTerm]);
@@ -100,7 +87,7 @@ export const Home = ({ children }) => {
 
   if (loading) {
     return <Spinner />;
-  } 
+  }
 
   if (error) {
     setTimeout(() => {
@@ -132,7 +119,6 @@ export const Home = ({ children }) => {
           >
             <div className="d-flex align-items-center w-100">
               <input
-                // ref={searchInputRef}
                 className="form-control mr-sm-2"
                 type="search"
                 placeholder="Search Menu"
@@ -196,62 +182,128 @@ export const Home = ({ children }) => {
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />
         <div className="row" id="dish-div">
-          {meals?.map((element) => {
-            return (
-              <div
-                key={element._id}
-                className={`${
-                  element.secretMeal ? "blur hidden-meal" : ""
-                } card p-0 col-md-3 my-4`}
-                id="card"
-              >
-                <Link to={`/${element.slug}`}>
-                  <img
-                    src={element.coverImage}
-                    className="card-img-top"
-                    alt={`${element?.name}-${element?._id}`}
-                  />
-                </Link>
-                <div className="card-body">
-                  <h4 className="card-title">{element.name}</h4>
-                  <p className="card-text">
-                    {element.summary.slice(0, 235) + "..."}
-                  </p>
+          {meals?.map((element, index) => {
+            if (meals?.length === index + 1) {
+              return (
+                <>
+                  {
+                   loadingPagination && <PaginationSpinner/>
+                  }
                   <div
-                    className="d-flex w-50 mb-3 justify-content-start"
-                    id="icons"
+                    ref={lastMealElementRef}
+                    key={element._id}
+                    className={`${
+                      element.secretMeal ? "blur hidden-meal" : ""
+                    } card p-0 col-md-3 my-4`}
+                    id="card"
                   >
-                    <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
-                      <i
-                        className="fa fa-comments-o fa-1x mr-2"
-                        style={{ color: "#d7456b" }}
-                        aria-hidden="true"
-                      ></i>
-                      <span className="text-muted">
-                        {element.ratingsQuantity}
-                      </span>
-                    </div>
-                    <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
-                      <i
-                        className="fa fa-star-o fa-1x mr-2"
-                        style={{ color: "#d7456b" }}
-                        aria-hidden="true"
-                      ></i>
-                      <span className="text-muted">
-                        {element.ratingsAverage}
-                      </span>
+                    <Link to={`/${element.slug}`}>
+                      <img
+                        src={element.coverImage}
+                        className="card-img-top"
+                        alt={`${element?.name}-${element?._id}`}
+                      />
+                    </Link>
+                    <div className="card-body">
+                      <h4 className="card-title">{element.name}</h4>
+                      <p className="card-text">
+                        {element.summary.slice(0, 235) + "..."}
+                      </p>
+                      <div
+                        className="d-flex w-50 mb-3 justify-content-start"
+                        id="icons"
+                      >
+                        <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
+                          <i
+                            className="fa fa-comments-o fa-1x mr-2"
+                            style={{ color: "#d7456b" }}
+                            aria-hidden="true"
+                          ></i>
+                          <span className="text-muted">
+                            {element.ratingsQuantity}
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
+                          <i
+                            className="fa fa-star-o fa-1x mr-2"
+                            style={{ color: "#d7456b" }}
+                            aria-hidden="true"
+                          ></i>
+                          <span className="text-muted">
+                            {element.ratingsAverage}
+                          </span>
+                        </div>
+                      </div>
+                      <Link
+                        to={`/${element.slug}`}
+                        className="btn w-50"
+                        id="read-more-btn"
+                      >
+                        Read More
+                      </Link>
                     </div>
                   </div>
-                  <Link
-                    to={`/${element.slug}`}
-                    className="btn w-50"
-                    id="read-more-btn"
+                </>
+              );
+            } else {
+              return (
+                <>
+                  <div
+                    key={element._id}
+                    className={`${
+                      element.secretMeal ? "blur hidden-meal" : ""
+                    } card p-0 col-md-3 my-4`}
+                    id="card"
                   >
-                    Read More
-                  </Link>
-                </div>
-              </div>
-            );
+                    <Link to={`/${element.slug}`}>
+                      <img
+                        src={element.coverImage}
+                        className="card-img-top"
+                        alt={`${element?.name}-${element?._id}`}
+                      />
+                    </Link>
+                    <div className="card-body">
+                      <h4 className="card-title">{element.name}</h4>
+                      <p className="card-text">
+                        {element.summary.slice(0, 235) + "..."}
+                      </p>
+                      <div
+                        className="d-flex w-50 mb-3 justify-content-start"
+                        id="icons"
+                      >
+                        <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
+                          <i
+                            className="fa fa-comments-o fa-1x mr-2"
+                            style={{ color: "#d7456b" }}
+                            aria-hidden="true"
+                          ></i>
+                          <span className="text-muted">
+                            {element.ratingsQuantity}
+                          </span>
+                        </div>
+                        <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
+                          <i
+                            className="fa fa-star-o fa-1x mr-2"
+                            style={{ color: "#d7456b" }}
+                            aria-hidden="true"
+                          ></i>
+                          <span className="text-muted">
+                            {element.ratingsAverage}
+                          </span>
+                        </div>
+                      </div>
+                      <Link
+                        to={`/${element.slug}`}
+                        className="btn w-50"
+                        id="read-more-btn"
+                      >
+                        Read More
+                      </Link>
+                    </div>
+                  </div>
+                </>
+              );
+            }
           })}
         </div>
       </div>
