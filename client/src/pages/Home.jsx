@@ -83,7 +83,7 @@ export const Home = ({ children }) => {
     const { min, max } = useMinMax(meals);
     setMinPrice(min);
     setMaxPrice(max);
-  }, []);
+  }, [meals]);
 
   if (loading) {
     return <Spinner />;

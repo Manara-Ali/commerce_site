@@ -6,13 +6,9 @@ export const useMinMax = (arr) => {
   //   return element.price;
   // });
 
-  let priceArr = [];
-
-  useEffect(() => {
-    priceArr = arr?.map((element) => {
+  const priceArr = arr?.map((element) => {
     return element.price;
   });
-  }, [arr]);
 
   const min = Math.min(...priceArr);
   const max = Math.max(...priceArr);
