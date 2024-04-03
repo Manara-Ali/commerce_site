@@ -52,7 +52,7 @@ export const Home = ({ children }) => {
   const memoizedMeals = createSelector(
     (state) => totalMeals,
     (meals) => {
-      return totalMeals.filter((element) =>
+      return totalMeals?.filter((element) =>
         element?.name
           ?.toLowerCase()
           .includes(debouncedSearchTerm?.toLowerCase())
