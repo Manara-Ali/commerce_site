@@ -11,6 +11,8 @@ export const getAllMealsThunk = createAsyncThunk("meal/get-all", async (data, {r
         url = "/api/v1/meals";
         // url = "https://commerce-site-igmb.onrender.com/api/v1/meals";
     }
+
+    console.log(url);
     try {
         const response = await axios({
             url: url,
@@ -19,7 +21,7 @@ export const getAllMealsThunk = createAsyncThunk("meal/get-all", async (data, {r
         {
             withCredentials: true,
         });
-        // console.log(response.data);
+        console.log(response.data);
         return response.data;
     } catch (error) {
         // console.log(error);

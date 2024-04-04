@@ -28,12 +28,14 @@ export const App = () => {
   const [userIp, setUserIp] = useState(null);
   const [userLocation, setUserLocation] = useState({});
   const [weatherData, setWeatherData] = useState({});
+  const [pageNumber, setPageNumber] = useState(1);
 
-  // useEffect(() => {
-  //   dispatch(getMealsCountThunk());
-  //   dispatch(clearState());
-  //   dispatch(storePagination());
-  // }, []);
+  useEffect(() => {
+    dispatch(getMealsCountThunk());
+    dispatch(clearState());
+    dispatch(storePagination());
+    setPageNumber(1);
+  }, []);
 
   // useEffect(() => {
   //   axios.get("https://api.ipify.org?format=json").then((response) => {
@@ -89,8 +91,8 @@ export const App = () => {
           path="/"
           element={
             <Home>
-              <Greeting />
-              <Weather location={userLocation} weather={weatherData} />
+              <Greeting  pageNumber={pageNumber} setPageNumber={setPageNumber}/>
+              <Weather location={userLocation} weather={weatherData}/>
             </Home>
           }
         />

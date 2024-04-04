@@ -12,6 +12,7 @@ const mealsSlice = createSlice({
   initialState: {
     loading: false,
     meals: [],
+    sortedMeals: [],
     paginatedMeals: [],
     totalMeals: [],
     mealsCount: null,
@@ -25,12 +26,17 @@ const mealsSlice = createSlice({
       state.status = "";
       state.totalMeals = [];
     },
+    resetSortedMeals(state) {
+      state.error = null;
+      state.status = "";
+      state.sortedMeals = [];
+    },
     storePagination(state) {
       // console.log("Here");
       // if(!state.totalMeals?.length) return;
       
       // console.log("There");
-      if(state.totalMeals) {
+      if(state.totalMeals.length) {
         const idArr = state.totalMeals?.map((element) => element._id);
   
         state?.paginatedMeals?.forEach((element) => {
@@ -92,7 +98,7 @@ const mealsSlice = createSlice({
     builder.addCase(getAllMealsThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.meals = action.payload?.data?.meals;
-      state.totalMeals = action.payload?.data?.meals;
+      state.sortedMeals = action.payload?.data?.meals;
       state.status = action.payload.status;
     });
 
@@ -185,5 +191,5 @@ const mealsSlice = createSlice({
   },
 });
 
-export const { clearState, storePagination } = mealsSlice.actions;
+export const { clearState, resetSortedMeals, storePagination } = mealsSlice.actions;
 export const mealsCombinedReducer = mealsSlice.reducer;

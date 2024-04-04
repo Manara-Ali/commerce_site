@@ -2,7 +2,7 @@ import { useState, useEffect, useContext, useRef, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useSearchParams } from "react-router-dom";
 import { createSelector } from "@reduxjs/toolkit";
-import { getAllMealsThunk, clearState } from "../store";
+import { getAllMealsThunk, clearState, resetSortedMeals } from "../store";
 import { Spinner } from "../components/Spinner";
 import { PaginationSpinner } from "../components/PaginationSpinner";
 import { ModalWindow } from "../components/ModalWindow";
@@ -12,25 +12,33 @@ import { useMinMax } from "../utils/useMinMax";
 import { usePagination } from "../utils/usePagination";
 
 export const Home = ({ children }) => {
+  const { pageNumber, setPageNumber } = children[0].props;
   const observer = useRef();
   const dispatch = useDispatch();
+  const [searchParams, setSearchParams] = useSearchParams();
   const { modalOpen, setModalOpen } = useContext(ModalContext);
   const [min, setMinPrice] = useState(1);
   const [max, setMaxPrice] = useState(100);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
-  const [pageNumber, setPageNumber] = useState(1);
 
   const { totalMeals, paginatedMeals } = usePagination(
     debouncedSearchTerm,
     pageNumber
   );
 
-  const { loading, loadingPagination, error, mealsCount, status } = useSelector(
-    (state) => {
-      return state?.mealsCombinedReducer;
-    }
-  );
+  // console.log("pagenumber =", pageNumber);
+
+  let {
+    loading,
+    loadingPagination,
+    error,
+    mealsCount,
+    sortedMeals,
+    status,
+  } = useSelector((state) => {
+    return state?.mealsCombinedReducer;
+  });
 
   const lastMealElementRef = useCallback(
     (node) => {
@@ -52,15 +60,31 @@ export const Home = ({ children }) => {
   const memoizedMeals = createSelector(
     (state) => totalMeals,
     (meals) => {
+      if (sortedMeals?.length) {
+        return sortedMeals?.filter((element) =>
+          element?.name
+            ?.toLowerCase()
+            .includes(debouncedSearchTerm?.toLowerCase())
+        );
+      }
       return totalMeals?.filter((element) =>
         element?.name
           ?.toLowerCase()
           .includes(debouncedSearchTerm?.toLowerCase())
       );
+      // return totalMeals?.filter((element) =>
+      //   element?.name
+      //     ?.toLowerCase()
+      //     .includes(debouncedSearchTerm?.toLowerCase())
+      // );
     }
   );
 
   const meals = useSelector(memoizedMeals);
+
+  // console.log("total", totalMeals);
+  // console.log("sortedMeals", sortedMeals);
+  // console.log("paginated", paginatedMeals);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -80,10 +104,10 @@ export const Home = ({ children }) => {
   }, [searchTerm]);
 
   useEffect(() => {
-    const { min, max } = useMinMax(meals);
+    const { min, max } = useMinMax(totalMeals);
     setMinPrice(min);
     setMaxPrice(max);
-  }, [meals]);
+  }, []);
 
   if (loading) {
     return <Spinner />;
@@ -101,6 +125,14 @@ export const Home = ({ children }) => {
       <div className="container">
         <hr />
         <div className="d-flex align-items-center justify-content-between">
+          <i
+            className="fa fa-home fa-2x border rounded-lg p-2 pr-3"
+            aria-hidden="true"
+            style={{ color: "#d7456b" }}
+            onClick={() => {
+              dispatch(resetSortedMeals());
+            }}
+          ></i>
           <i
             className="fa fa-sliders fa-2x border rounded-lg p-2 pr-3"
             aria-hidden="true"
@@ -186,68 +218,71 @@ export const Home = ({ children }) => {
             if (meals?.length === index + 1) {
               return (
                 <>
-                  {
-                   loadingPagination && <PaginationSpinner/>
-                  }
-                  <div
-                    ref={lastMealElementRef}
-                    key={element._id}
-                    className={`${
-                      element.secretMeal ? "blur hidden-meal" : ""
-                    } card p-0 col-md-3 my-4`}
-                    id="card"
-                  >
-                    <Link to={`/${element.slug}`}>
-                      <img
-                        src={element.coverImage}
-                        className="card-img-top"
-                        alt={`${element?.name}-${element?._id}`}
-                      />
-                    </Link>
-                    <div className="card-body">
-                      <h4 className="card-title">{element.name}</h4>
-                      <p className="card-text">
-                        {element.summary.slice(0, 235) + "..."}
-                      </p>
-                      <div
-                        className="d-flex w-50 mb-3 justify-content-start"
-                        id="icons"
-                      >
-                        <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
-                          <i
-                            className="fa fa-comments-o fa-1x mr-2"
-                            style={{ color: "#d7456b" }}
-                            aria-hidden="true"
-                          ></i>
-                          <span className="text-muted">
-                            {element.ratingsQuantity}
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
-                          <i
-                            className="fa fa-star-o fa-1x mr-2"
-                            style={{ color: "#d7456b" }}
-                            aria-hidden="true"
-                          ></i>
-                          <span className="text-muted">
-                            {element.ratingsAverage}
-                          </span>
-                        </div>
-                      </div>
-                      <Link
-                        to={`/${element.slug}`}
-                        className="btn w-50"
-                        id="read-more-btn"
-                      >
-                        Read More
+                  {loadingPagination && <PaginationSpinner />}
+                  {loadingPagination ? null : (
+                    <div
+                      ref={lastMealElementRef}
+                      key={element._id}
+                      className={`${
+                        element.secretMeal ? "blur hidden-meal" : ""
+                      } card p-0 col-md-3 my-4`}
+                      id="card"
+                    >
+                      <Link to={`/${element.slug}`}>
+                        <img
+                          src={element.coverImage}
+                          className="card-img-top"
+                          alt={`${element?.name}-${element?._id}`}
+                        />
                       </Link>
+                      <div className="card-body">
+                        <h4 className="card-title">{element.name}</h4>
+                        <p className="card-text">
+                          {element.summary.slice(0, 235) + "..."}
+                        </p>
+                        <div
+                          className="d-flex w-50 mb-3 justify-content-start"
+                          id="icons"
+                        >
+                          <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
+                            <i
+                              className="fa fa-comments-o fa-1x mr-2"
+                              style={{ color: "#d7456b" }}
+                              aria-hidden="true"
+                            ></i>
+                            <span className="text-muted">
+                              {element.ratingsQuantity}
+                            </span>
+                          </div>
+                          <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
+                            <i
+                              className="fa fa-star-o fa-1x mr-2"
+                              style={{ color: "#d7456b" }}
+                              aria-hidden="true"
+                            ></i>
+                            <span className="text-muted">
+                              {element.ratingsAverage}
+                            </span>
+                          </div>
+                        </div>
+                        <Link
+                          to={`/${element.slug}`}
+                          className="btn w-50"
+                          id="read-more-btn"
+                        >
+                          Read More
+                        </Link>
+                      </div>
                     </div>
-                  </div>
+                  )}
                 </>
               );
             } else {
               return (
                 <>
+                  {
+                    // <PaginationSpinner/>
+                  }
                   <div
                     key={element._id}
                     className={`${
@@ -309,7 +344,8 @@ export const Home = ({ children }) => {
       </div>
       {modalOpen && (
         <ModalWindow>
-          {<Equalizer meals={meals} min={min} max={max} />}
+          {<Equalizer totalMeals={totalMeals} min={min} max={max} />}
+          {/* {<Equalizer meals={meals} min={min} max={max} />} */}
         </ModalWindow>
       )}
     </>

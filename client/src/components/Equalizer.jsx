@@ -6,18 +6,22 @@ import togglePriceSelected from "../utils/togglePriceSelected";
 import { getAllMealsThunk } from "../store/thunks/mealThunks/getAllMealsThunk";
 import { ModalContext } from "../context/ModalContext";
 
-export const Equalizer = ({ meals, min, max }) => {
+export const Equalizer = ({ totalMeals, min, max }) => {
   const ascSortRef = useRef();
   const descSortRef = useRef();
   const ascPriceRef = useRef();
   const descPriceRef = useRef();
+
   const dispatch = useDispatch();
+
   const { setModalOpen } = useContext(ModalContext);
+
   const [minPrice] = useState(min);
   const [maxPrice] = useState(max);
   const [desiredPrice, setDesiredPrice] = useState(null);
   const [sortOrder, setSortOrder] = useState("name");
   const [priceOrder, setPriceOrder] = useState("price");
+  
   const [searchParams, setSearchParams] = useSearchParams();
 
   const { status } = useSelector((state) => {
@@ -187,7 +191,7 @@ export const Equalizer = ({ meals, min, max }) => {
               className="form-control-range"
               min={minPrice}
               max={maxPrice}
-              step={((maxPrice - minPrice) / meals?.length)?.toFixed(2)}
+              step={((maxPrice - minPrice) / totalMeals?.length)?.toFixed(2)}
               onChange={handlePriceChange}
               value={desiredPrice || 0}
             />
