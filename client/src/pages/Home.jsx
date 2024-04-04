@@ -170,7 +170,7 @@ export const Home = ({ children }) => {
               >
                 <i className="fa fa-search fa-2x" aria-hidden="true"></i>
               </button> */}
-              <div
+              {/* <div
                 className="dropdown border rounded-lg ml-3"
                 style={{ backgroundColor: "#d7456b", fontSize: "1.rem" }}
               >
@@ -197,9 +197,39 @@ export const Home = ({ children }) => {
                     Drinks
                   </a>
                 </div>
-              </div>
+              </div> */}
             </div>
           </form>
+          <div className="border rounded-lg p-2">
+            <div
+                className="dropdown"
+                style={{ backgroundColor: "#d7456b", fontSize: "1.rem" }}
+              >
+                <button
+                  className="btn"
+                  type="button"
+                  data-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  <i
+                    className="fa fa-chevron-down fa-2x"
+                    aria-hidden="true"
+                    style={{ color: "#ececec", fontSize: "1.rem" }}
+                  ></i>
+                </button>
+                <div className="dropdown-menu">
+                  <a className="dropdown-item" href="#">
+                    Food
+                  </a>
+                  <a className="dropdown-item" href="#">
+                    Snacks
+                  </a>
+                  <a className="dropdown-item" href="#">
+                    Drinks
+                  </a>
+                </div>
+              </div>
+          </div>
           <div className="cart-div border rounded-lg p-2 pr-3">
             <i
               className="fa fa-shopping-cart fa-2x"
