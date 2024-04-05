@@ -3,16 +3,18 @@ import { createPortal } from "react-dom";
 import { ModalContext } from "../context/ModalContext";
 
 export const ModalWindow = ({ children }) => {
-  const { setModalOpen } = useContext(ModalContext);
+  const { setModalOpen, setReviewModalOpen } = useContext(ModalContext);
 
   const handleModalClose = (e) => {
     if (
       e.target === document.querySelector(".modal-container") ||
+      e.target === document.querySelector(".app-container") ||
       e.target === document.querySelector(".modal-message")
     ) {
       document.querySelector(".app-container").classList.remove("blur");
 
       setModalOpen(false);
+      setReviewModalOpen(false);
     }
   };
 
