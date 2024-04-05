@@ -8,6 +8,7 @@ import { ImageSlider } from "../components/ImageSlider";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
 import { Delete } from "../components/Delete";
+import { Review } from "../components/Review";
 
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
@@ -151,13 +152,15 @@ export const DetailMeal = ({ children }) => {
         <div
           className="col-md-9 mx-auto mt-5 mb-5 border rounded-lg w-100"
           id="slider-ref-div"
-          style={{ backgroundColor: "#eee", height: "30rem" }}
+          style={{ backgroundColor: "#eee", height: "30rem"}}
           ref={sliderRef}
         >
           {sliderWidth && (
             <ImageSlider slides={meal?.images} parentWidth={sliderWidth} />
           )}
         </div>
+        <div style={{marginTop: "50px"}}></div>
+      <Review/>
       </div>
       {user?.role === "admin" && (
         <div className="d-flex justify-content-between border rounded-lg mx-4 p-3">
