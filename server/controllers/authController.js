@@ -2187,3 +2187,10 @@ exports.logout = (req, res, next) => {
     next(error);
   }
 };
+
+exports.compareId = function (Model, asyncFn) {
+  return (req, res, next) => {
+    req.Model = Model;
+    return asyncFn(req, res, next).catch((error) => next(error));
+  };
+};

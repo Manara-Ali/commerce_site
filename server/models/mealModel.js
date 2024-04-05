@@ -70,6 +70,9 @@ const mealSchema = new mongoose.Schema(
     ratingsAverage: {
       type: Number,
       default: 4.5,
+      set: function (value) {
+        return Math.round(value * 10) / 10;
+      },
     },
     coverImage: {
       type: String,
@@ -95,6 +98,14 @@ const mealSchema = new mongoose.Schema(
     toObject: { virtuals: true },
   }
 );
+
+mealSchema.index({slug: 1});
+
+mealSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "mealId",
+})
 
 /// Create a document middleware to update slug
 mealSchema.pre("save", function (next) {

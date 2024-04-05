@@ -55,7 +55,10 @@ exports.getMeal = catchAsyncFn(async (req, res, next) => {
     slug = "undefined";
   }
 
-  const meal = await Meal.findOne({ slug }).select("+secretMeal");
+  const meal = await Meal.findOne({ slug }).select("+secretMeal")
+  .populate({
+    path: "reviews",
+  });
 
   if (!meal) {
     const applicationError = new ApplicationError(

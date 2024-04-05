@@ -1,6 +1,7 @@
 const express = require("express");
 const mealController = require("../controllers/mealController");
 const authController = require("../controllers/authController");
+const reviewRouter = require("./reviewRoutes")
 
 const router = express.Router();
 
@@ -34,5 +35,7 @@ router
     authController.restrictTo("admin"),
     mealController.deleteMeal
   );
+
+router.use("/:slug/reviews", reviewRouter);
 
 module.exports = router;
