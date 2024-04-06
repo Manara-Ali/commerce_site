@@ -15,7 +15,7 @@ export const Review = () => {
 
   const slug = location.pathname.slice(1);
 
-  const { loading, error, reviews, status } = useSelector((state) => {
+  const { loading, error, reviews, review, status } = useSelector((state) => {
     return state.reviewsCombinedReducer;
   });
 
@@ -40,7 +40,7 @@ export const Review = () => {
           createReviewThunk({
             slug,
             review: userInput,
-            rating: 4.4,
+            rating: 3.2,
           })
         );
         setUserInput("");
@@ -51,6 +51,10 @@ export const Review = () => {
   useEffect(() => {
     dispatch(getAllReviewsByMealThunk({ slug }));
   }, []);
+
+  useEffect(() => {
+    dispatch(getAllReviewsByMealThunk({ slug }));
+  }, [review])
 
   return (
     <>
@@ -74,8 +78,7 @@ export const Review = () => {
           </ModalWindow>
         )}
       </div>
-      {/* {reviews?.length ? <ReviewList reviews={reviews} /> : null} */}
-       <ReviewList reviews={reviews}/>
+      {reviews?.length ? <ReviewList reviews={reviews} /> : null}
     </>
   );
 };

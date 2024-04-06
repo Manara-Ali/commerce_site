@@ -7,7 +7,7 @@ const reviewsSlice = createSlice({
   initialState: {
     loading: false,
     reviews: [],
-    review: {},
+    review: null,
     error: null,
     status: "",
   },
@@ -41,7 +41,6 @@ const reviewsSlice = createSlice({
     });
 
     builder.addCase(getAllReviewsByMealThunk.fulfilled, (state, action) => {
-      console.log((action.payload))
       state.loading = false;
       state.reviews = action.payload?.data?.reviews;
       state.status = action.payload.status;
