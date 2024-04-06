@@ -40,6 +40,10 @@ export const Home = ({ children }) => {
     return state?.mealsCombinedReducer;
   });
 
+  const {review} = useSelector((state) => {
+    return state?.reviewsCombinedReducer;
+  });
+
   const lastMealElementRef = useCallback(
     (node) => {
       if (loadingPagination) return;
@@ -94,6 +98,10 @@ export const Home = ({ children }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
   };
+
+  useEffect(() => {
+    dispatch(getAllMealsThunk());
+  }, [review])
 
   useEffect(() => {
     const timerId = setTimeout(() => {

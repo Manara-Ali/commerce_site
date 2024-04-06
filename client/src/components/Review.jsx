@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+import { Rate } from "antd";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
 import { DiscardReview } from "./DiscardReview";
@@ -11,6 +12,7 @@ export const Review = () => {
   const location = useLocation();
   const dispatch = useDispatch();
   const [userInput, setUserInput] = useState("");
+  const [rating, setRating] = useState(1);
   const { reviewModalOpen, setReviewModalOpen } = useContext(ModalContext);
 
   const slug = location.pathname.slice(1);
@@ -39,11 +41,12 @@ export const Review = () => {
         dispatch(
           createReviewThunk({
             slug,
+            rating,
             review: userInput,
-            rating: 3.2,
           })
         );
         setUserInput("");
+        setRating(1);
       }
     }
   };
@@ -54,15 +57,23 @@ export const Review = () => {
 
   useEffect(() => {
     dispatch(getAllReviewsByMealThunk({ slug }));
-  }, [review])
+  }, [review]);
 
   return (
     <>
       <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
         <textarea
+          className="mb-4"
           placeholder="Add a review"
           value={userInput}
           onChange={handleInputChange}
+        />
+        <Rate
+          value={rating}
+          allowHalf
+          allowClear={false}
+          style={{ color: "#d7456b" }}
+          onChange={(value) => setRating(value)}
         />
         <div className="btn-container">
           <button name="cancel" className="btn" onClick={handleButtonClick}>
