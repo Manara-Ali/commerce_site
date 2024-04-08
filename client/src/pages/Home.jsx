@@ -51,7 +51,8 @@ export const Home = ({ children }) => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && mealsCount - totalMeals.length > 0) {
+        console.log(mealsCount, totalMeals.length)
+        if (entries[0].isIntersecting &&  totalMeals.length !== mealsCount && paginatedMeals.length > 0) {
           setPageNumber((pageNumber) => pageNumber + 1);
         }
       });
@@ -86,8 +87,10 @@ export const Home = ({ children }) => {
 
   const meals = useSelector(memoizedMeals);
 
-  // console.log("total", totalMeals);
   // console.log("sortedMeals", sortedMeals);
+  // console.log(pageNumber);
+  // console.log("total", totalMeals);
+  // console.log("mealsCount", mealsCount);
   // console.log("paginated", paginatedMeals);
 
   const handleInputChange = (e) => {
@@ -252,8 +255,8 @@ export const Home = ({ children }) => {
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />
         <div className="row" id="dish-div">
-          {meals?.map((element, index) => {
-            if (meals?.length === index + 1) {
+          {totalMeals?.map((element, index) => {
+            if (totalMeals?.length === index + 1) {
               return (
                 <>
                   {loadingPagination && <PaginationSpinner />}
