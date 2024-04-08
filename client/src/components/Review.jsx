@@ -68,13 +68,16 @@ export const Review = () => {
           value={userInput}
           onChange={handleInputChange}
         />
-        <Rate
+        <div className="d-flex align-items-center">
+          <Rate
           value={rating}
           allowHalf
           allowClear={false}
           style={{ color: "#d7456b" }}
           onChange={(value) => setRating(value)}
         />
+        <span className="lead text-muted ml-3">( {rating} / 5 stars )</span>
+        </div>
         <div className="btn-container">
           <button name="cancel" className="btn" onClick={handleButtonClick}>
             Cancel
