@@ -158,6 +158,7 @@ export const Home = ({ children }) => {
             style={{ color: "#d7456b" }}
             onClick={() => {
               dispatch(resetSortedMeals());
+              dispatch(getAllMealsThunk());
             }}
           ></i>
           <i
