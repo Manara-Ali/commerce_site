@@ -53,7 +53,7 @@ export const Home = ({ children }) => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        console.log(mealsCount, totalMeals.length)
+        // console.log(mealsCount, totalMeals.length)
         if (entries[0].isIntersecting &&  totalMeals.length !== mealsCount && paginatedMeals.length > 0) {
           setPageNumber((pageNumber) => pageNumber + 1);
         }
@@ -68,7 +68,6 @@ export const Home = ({ children }) => {
     (state) => totalMeals,
     (meals) => {
       if (isSorted.length) {
-        console.log("Here");
         return isSorted?.filter((element) =>
           element?.name
             ?.toLowerCase()
@@ -76,7 +75,6 @@ export const Home = ({ children }) => {
         );
       }
       return totalMeals?.filter((element) =>{
-      console.log("There");
         return element?.name
           ?.toLowerCase()
           .includes(debouncedSearchTerm?.toLowerCase())
@@ -92,12 +90,12 @@ export const Home = ({ children }) => {
   const meals = useSelector(memoizedMeals);
 
   // console.log("pageNumber", pageNumber);
-  console.log("sortedMeals", sortedMeals);
-  console.log("total", totalMeals);
+  // console.log("sortedMeals", sortedMeals);
+  // console.log("total", totalMeals);
   // console.log("mealsCount", mealsCount);
   // console.log("paginated", paginatedMeals);
-  console.log(applySort);
-  console.log(isSorted);
+  // console.log(applySort);
+  // console.log(isSorted);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
@@ -131,6 +129,8 @@ export const Home = ({ children }) => {
   useEffect(() => {
     if(applySort && status === "success") {
       setIsSorted(sortedMeals);
+    } else if(searchTerm) {
+      setIsSorted(meals);
     } else {
       setIsSorted(totalMeals);
     }
