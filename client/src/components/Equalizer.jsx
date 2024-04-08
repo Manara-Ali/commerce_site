@@ -6,7 +6,7 @@ import togglePriceSelected from "../utils/togglePriceSelected";
 import { getAllMealsThunk } from "../store/thunks/mealThunks/getAllMealsThunk";
 import { ModalContext } from "../context/ModalContext";
 
-export const Equalizer = ({ totalMeals, min, max }) => {
+export const Equalizer = ({ totalMeals, min, max, setApplySort }) => {
   const ascSortRef = useRef();
   const descSortRef = useRef();
   const ascPriceRef = useRef();
@@ -60,6 +60,7 @@ export const Equalizer = ({ totalMeals, min, max }) => {
     dispatch(getAllMealsThunk(data));
 
     handleModalClose();
+    setApplySort(true);
   };
 
   useEffect(() => {
