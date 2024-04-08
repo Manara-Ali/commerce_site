@@ -66,17 +66,17 @@ export const Home = ({ children }) => {
     (state) => totalMeals,
     (meals) => {
       if (sortedMeals?.length) {
-        return sortedMeals?.filter((element) =>
-          element?.name
+        return sortedMeals?.filter((element) =>{
+          return element?.name
             ?.toLowerCase()
             .includes(debouncedSearchTerm?.toLowerCase())
-        );
+        });
       }
-      return totalMeals?.filter((element) =>
-        element?.name
+      return totalMeals?.filter((element) => {
+        return element?.name
           ?.toLowerCase()
           .includes(debouncedSearchTerm?.toLowerCase())
-      );
+      });
       // return totalMeals?.filter((element) =>
       //   element?.name
       //     ?.toLowerCase()
