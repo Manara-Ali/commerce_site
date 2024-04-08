@@ -21,6 +21,8 @@ export const Home = ({ children }) => {
   const [max, setMaxPrice] = useState(100);
   const [searchTerm, setSearchTerm] = useState("");
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
+  const [applySort, setApplySort] = useState(false);
+  const [isSorted, setIsSorted] = useState([]);
 
   const { totalMeals, paginatedMeals } = usePagination(
     debouncedSearchTerm,
@@ -51,7 +53,7 @@ export const Home = ({ children }) => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        console.log(mealsCount, totalMeals.length)
+        // console.log(mealsCount, totalMeals.length)
         if (entries[0].isIntersecting &&  totalMeals.length !== mealsCount && paginatedMeals.length > 0) {
           setPageNumber((pageNumber) => pageNumber + 1);
         }
@@ -65,18 +67,18 @@ export const Home = ({ children }) => {
   const memoizedMeals = createSelector(
     (state) => totalMeals,
     (meals) => {
-      if (sortedMeals?.length) {
-        return sortedMeals?.filter((element) =>{
+      if (isSorted.length) {
+        return isSorted?.filter((element) => {
           return element?.name
             ?.toLowerCase()
             .includes(debouncedSearchTerm?.toLowerCase())
         });
       }
-      return totalMeals?.filter((element) => {
+      return totalMeals?.filter((element) =>{
         return element?.name
           ?.toLowerCase()
           .includes(debouncedSearchTerm?.toLowerCase())
-      });
+    });
       // return totalMeals?.filter((element) =>
       //   element?.name
       //     ?.toLowerCase()
@@ -87,15 +89,19 @@ export const Home = ({ children }) => {
 
   const meals = useSelector(memoizedMeals);
 
+  // console.log("pageNumber", pageNumber);
   // console.log("sortedMeals", sortedMeals);
-  // console.log(pageNumber);
   // console.log("total", totalMeals);
   // console.log("mealsCount", mealsCount);
   // console.log("paginated", paginatedMeals);
+  // console.log(applySort);
+  // console.log(isSorted);
 
   const handleInputChange = (e) => {
     setSearchTerm(e.target.value);
     setPageNumber(1);
+    setApplySort(false);
+    setIsSorted([]);
   };
 
   const handleSubmit = (e) => {
@@ -119,6 +125,16 @@ export const Home = ({ children }) => {
     setMinPrice(min);
     setMaxPrice(max);
   }, []);
+
+  useEffect(() => {
+    if(applySort && status === "success") {
+      setIsSorted(sortedMeals);
+    } else if(searchTerm) {
+      setIsSorted(meals);
+    } else {
+      setIsSorted(totalMeals);
+    }
+  }, [applySort, status, totalMeals])
 
   if (loading) {
     return <Spinner />;
@@ -255,7 +271,7 @@ export const Home = ({ children }) => {
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />
         <div className="row" id="dish-div">
-          {totalMeals?.map((element, index) => {
+          {isSorted?.map((element, index) => {
             if (totalMeals?.length === index + 1) {
               return (
                 <>
@@ -385,7 +401,7 @@ export const Home = ({ children }) => {
       </div>
       {modalOpen && (
         <ModalWindow>
-          {<Equalizer totalMeals={totalMeals} min={min} max={max} />}
+          {<Equalizer totalMeals={totalMeals} min={min} max={max} setApplySort={setApplySort}/>}
           {/* {<Equalizer meals={meals} min={min} max={max} />} */}
         </ModalWindow>
       )}
