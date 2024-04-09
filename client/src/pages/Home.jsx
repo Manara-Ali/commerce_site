@@ -121,9 +121,15 @@ export const Home = ({ children }) => {
   }, [searchTerm]);
 
   useEffect(() => {
-    const { min, max } = useMinMax(totalMeals);
-    setMinPrice(min);
-    setMaxPrice(max);
+    if(totalMeals.length) {
+      const { min, max } = useMinMax(totalMeals);
+      setMinPrice(min);
+      setMaxPrice(max);
+    } else {
+      const { min, max } = useMinMax(sortedMeals);
+      setMinPrice(min);
+      setMaxPrice(max);
+    }
   }, []);
 
   useEffect(() => {
