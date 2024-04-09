@@ -76,7 +76,7 @@ export const Review = () => {
 
   return (
     <>
-      <div style={{ marginTop: "7rem" }}>
+      <div style={{ marginTop: "7rem", background: "#f0f0f0" }}>
         {!reviewUserIds.includes(user._id) && (
           <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
             <textarea

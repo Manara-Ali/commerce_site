@@ -45,7 +45,7 @@ export const ReviewList = ({ reviews, slug }) => {
   });
 
   return (
-    <div className="border rounded-lg p-3 mb-5" style={{ marginTop: "6rem" }}>
+    <div className="border rounded-lg p-3 mb-5" style={{ marginTop: "6rem", background: "#f0f0f0" }}>
       {reversedArr?.map((element, index) => {
         const firstName = reversedArr[index]?.userId?.name.split(" ")[0];
 
