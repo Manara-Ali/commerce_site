@@ -18,7 +18,7 @@ export const Review = () => {
 
   const slug = location.pathname.slice(1);
 
-  const {user} = useSelector((state) => {
+  const { user } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
 
@@ -65,46 +65,53 @@ export const Review = () => {
   }, [review]);
 
   useEffect(() => {
-    if(reviews.length) {
+    if (reviews.length) {
       reviews.forEach((element) => {
         setUserIds((prev) => [...prev, element.userId._id]);
-      })
+      });
     }
-  }, [reviews.length])
+  }, [reviews.length]);
 
   return (
     <>
-      {!userIds.includes(user._id) && <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
-        <textarea
-          className="mb-4"
-          placeholder="Add a review"
-          value={userInput}
-          onChange={handleInputChange}
-        />
-        <div className="d-flex align-items-center">
-          <Rate
-          value={rating}
-          allowHalf
-          allowClear={false}
-          style={{ color: "#d7456b" }}
-          onChange={(value) => setRating(value)}
-        />
-        <span className="lead text-muted ml-3">( {rating} / 5 stars )</span>
-        </div>
-        <div className="btn-container">
-          <button name="cancel" className="btn" onClick={handleButtonClick}>
-            Cancel
-          </button>
-          <button name="review" className="btn" onClick={handleButtonClick}>
-            Review
-          </button>
-        </div>
-        {reviewModalOpen && (
-          <ModalWindow style={{ backgroundColor: "red" }}>
-            <DiscardReview setUserInput={setUserInput} />
-          </ModalWindow>
+      <div style={{ marginTop: "7rem" }}>
+        {!userIds.includes(user._id) && (
+          <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
+            <textarea
+              className="mb-4"
+              placeholder="Add a review"
+              value={userInput}
+              onChange={handleInputChange}
+            />
+            <div className="d-flex align-items-center">
+              <Rate
+                value={rating}
+                allowHalf
+                allowClear={false}
+                style={{ color: "#d7456b" }}
+                onChange={(value) => setRating(value)}
+              />
+              <span className="lead text-muted ml-3">
+                ( {rating} / 5 stars )
+              </span>
+            </div>
+            <div className="btn-container">
+              <button name="cancel" className="btn" onClick={handleButtonClick}>
+                Cancel
+              </button>
+              <button name="review" className="btn" onClick={handleButtonClick}>
+                Review
+              </button>
+            </div>
+            {reviewModalOpen && (
+              <ModalWindow style={{ backgroundColor: "red" }}>
+                <DiscardReview setUserInput={setUserInput} />
+              </ModalWindow>
+            )}
+          </div>
         )}
-      </div>}
+        {/* {reviews?.length ? <ReviewList reviews={reviews} /> : null} */}
+      </div>
       {reviews?.length ? <ReviewList reviews={reviews} /> : null}
     </>
   );
