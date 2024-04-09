@@ -132,9 +132,9 @@ export const Home = ({ children }) => {
     } else if(searchTerm) {
       setIsSorted(meals);
     } else {
-      setIsSorted(totalMeals);
+      totalMeals.length && setIsSorted(totalMeals) || setIsSorted(sortedMeals);
     }
-  }, [applySort, status, totalMeals])
+  }, [applySort, status, totalMeals, sortedMeals])
 
   if (loading) {
     return <Spinner />;

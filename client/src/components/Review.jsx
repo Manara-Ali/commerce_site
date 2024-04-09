@@ -13,9 +13,14 @@ export const Review = () => {
   const dispatch = useDispatch();
   const [userInput, setUserInput] = useState("");
   const [rating, setRating] = useState(1);
+  const [userIds, setUserIds] = useState([]);
   const { reviewModalOpen, setReviewModalOpen } = useContext(ModalContext);
 
   const slug = location.pathname.slice(1);
+
+  const {user} = useSelector((state) => {
+    return state.usersCombinedReducer;
+  });
 
   const { loading, error, reviews, review, status } = useSelector((state) => {
     return state.reviewsCombinedReducer;
@@ -59,9 +64,17 @@ export const Review = () => {
     dispatch(getAllReviewsByMealThunk({ slug }));
   }, [review]);
 
+  useEffect(() => {
+    if(reviews.length) {
+      reviews.forEach((element) => {
+        setUserIds((prev) => [...prev, element.userId._id]);
+      })
+    }
+  }, [reviews.length])
+
   return (
     <>
-      <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
+      {!userIds.includes(user._id) && <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
         <textarea
           className="mb-4"
           placeholder="Add a review"
@@ -91,7 +104,7 @@ export const Review = () => {
             <DiscardReview setUserInput={setUserInput} />
           </ModalWindow>
         )}
-      </div>
+      </div>}
       {reviews?.length ? <ReviewList reviews={reviews} /> : null}
     </>
   );
