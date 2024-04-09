@@ -13,7 +13,7 @@ export const Review = () => {
   const dispatch = useDispatch();
   const [userInput, setUserInput] = useState("");
   const [rating, setRating] = useState(1);
-  const [userIds, setUserIds] = useState([]);
+  const [reviewUserIds, setReviewUserIds] = useState([]);
   const { reviewModalOpen, setReviewModalOpen } = useContext(ModalContext);
 
   const slug = location.pathname.slice(1);
@@ -66,16 +66,18 @@ export const Review = () => {
 
   useEffect(() => {
     if (reviews.length) {
-      reviews.forEach((element) => {
-        setUserIds((prev) => [...prev, element.userId._id]);
+      const ids = reviews.map((element) => {
+        return element?.userId._id;
       });
+
+      setReviewUserIds(ids);
     }
   }, [reviews.length]);
 
   return (
     <>
       <div style={{ marginTop: "7rem" }}>
-        {!userIds.includes(user._id) && (
+        {!reviewUserIds.includes(user._id) && (
           <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
             <textarea
               className="mb-4"
@@ -96,10 +98,12 @@ export const Review = () => {
               </span>
             </div>
             <div className="btn-container">
-              <button name="cancel" className="btn" onClick={handleButtonClick}>
+              <button name="cancel" className="btn" onClick={handleButtonClick}
+              disabled={!userInput}>
                 Cancel
               </button>
-              <button name="review" className="btn" onClick={handleButtonClick}>
+              <button name="review" className="btn" onClick={handleButtonClick}
+              disabled={!userInput}>
                 Review
               </button>
             </div>
@@ -110,9 +114,8 @@ export const Review = () => {
             )}
           </div>
         )}
-        {/* {reviews?.length ? <ReviewList reviews={reviews} /> : null} */}
       </div>
-      {reviews?.length ? <ReviewList reviews={reviews} /> : null}
+      {reviews?.length ? <ReviewList reviews={reviews} slug={slug} /> : null}
     </>
   );
 };

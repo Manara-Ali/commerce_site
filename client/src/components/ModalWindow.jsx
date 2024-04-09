@@ -3,7 +3,7 @@ import { createPortal } from "react-dom";
 import { ModalContext } from "../context/ModalContext";
 
 export const ModalWindow = ({ children }) => {
-  const { setModalOpen, setReviewModalOpen } = useContext(ModalContext);
+  const { setModalOpen, setReviewModalOpen, setDeleteModalOpen } = useContext(ModalContext);
 
   const handleModalClose = (e) => {
     if (
@@ -15,6 +15,7 @@ export const ModalWindow = ({ children }) => {
 
       setModalOpen(false);
       setReviewModalOpen(false);
+      setDeleteModalOpen(false);
     }
   };
 
