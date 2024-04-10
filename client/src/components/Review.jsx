@@ -81,7 +81,7 @@ export const Review = () => {
           <div className="col-md-9 my-5 pt-2 border rounded-lg w-100">
             <textarea
               className="mb-4"
-              placeholder="Add a review"
+              placeholder="Leave a review"
               value={userInput}
               onChange={handleInputChange}
             />
