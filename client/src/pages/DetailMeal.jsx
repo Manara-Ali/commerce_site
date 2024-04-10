@@ -45,9 +45,13 @@ export const DetailMeal = ({ children }) => {
     return state.usersCombinedReducer;
   });
 
+  const {review} = useSelector((state) => {
+    return state.reviewsCombinedReducer;
+  });
+
   useEffect(() => {
     dispatch(getMealThunk(slug));
-  }, [slug]);
+  }, [slug, review]);
 
   useEffect(() => {
     windowData();

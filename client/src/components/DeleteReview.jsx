@@ -20,7 +20,6 @@ export const DeleteReview = ({ setUserInput, slug, reviewId }) => {
     }
 
     if (e.target.name === "delete") {
-      console.log("Delete");
 
       setDeleteModalOpen(false);
 

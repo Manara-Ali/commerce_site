@@ -2,7 +2,6 @@ import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const deleteReviewThunk = createAsyncThunk("review/delete", async (data, {rejectWithValue}) => {
-    console.log(data);
     try {
         const response = await axios({
             // url: `/api/v1/meals/${data.slug}/reviews/${data.reviewId}`,
@@ -12,8 +11,6 @@ export const deleteReviewThunk = createAsyncThunk("review/delete", async (data, 
         {
             withCredentials: true,
         });
-
-        console.log(response);
 
         return response;
     } catch (error) {
