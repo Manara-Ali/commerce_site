@@ -24,8 +24,8 @@ const reviewSchema = new mongoose.Schema(
       min: [1, "Rating must be at least 1"],
       max: [5, "Rating cannot exceed 5"],
     },
-    timestamps: true,
   },
+  { timestamps: true },
   {
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
