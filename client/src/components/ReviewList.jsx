@@ -106,7 +106,6 @@ export const ReviewList = ({ reviews, slug }) => {
                   >
                     {firstName} {lastNameInitial}.
                   </p>
-                  {console.log(dateStrToTimestamp(reversedArr[index]?.createdAt))}
                   <Rating value={reversedArr[index]?.rating} />
                   <ReactTimeAgo date={dateStrToTimestamp(reversedArr[index]?.createdAt)} locale="en-US"/>
                 </div>
