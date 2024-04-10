@@ -149,7 +149,6 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(getPaginatedMealsThunk.rejected, (state, action) => {
-      console.log(action.payload);
       state.loadingPagination = false;
       state.error = action.payload?.data;
       state.status = action.payload.status;
