@@ -24,10 +24,7 @@ const reviewSchema = new mongoose.Schema(
       min: [1, "Rating must be at least 1"],
       max: [5, "Rating cannot exceed 5"],
     },
-    createdAt: {
-      type: Date,
-      default: Date.now(),
-    },
+    timestamps: true,
   },
   {
     toJSON: { virtuals: true },
