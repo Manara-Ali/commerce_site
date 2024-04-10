@@ -2,10 +2,18 @@ import { useState, useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Rate } from "antd";
 import { Rating } from "./Rating";
+import TimeAgo from "javascript-time-ago";
+import en from "javascript-time-ago/locale/en";
+import ru from "javascript-time-ago/locale/ru";
+import ReactTimeAgo from "react-time-ago";
 import { DeleteReview } from "./DeleteReview";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
 import { updateReviewThunk } from "../store";
+import { dateStrToTimestamp } from "../utils/dateStrToTimestamp";
+
+TimeAgo.addDefaultLocale(en);
+TimeAgo.addLocale(ru);
 
 export const ReviewList = ({ reviews, slug }) => {
   const reviewCopy = [...reviews];
@@ -13,6 +21,7 @@ export const ReviewList = ({ reviews, slug }) => {
   const reversedArr = reviewCopy?.reverse();
 
   const dispatch = useDispatch();
+
 
   const [rating, setRating] = useState(1);
   const [reviewId, setReviewId] = useState(null);
@@ -36,25 +45,12 @@ export const ReviewList = ({ reviews, slug }) => {
     }
 
     if (e.target.textContent === "Edit") {
-      // if (userInput) {
-      //   dispatch(
-      //     createReviewThunk({
-      //       slug,
-      //       rating,
-      //       review: userInput,
-      //     })
-      //   );
-      //   setUserInput("");
-      //   setRating(1);
-      // }
-      console.log("Edit");
       setUpdateTextArea(true);
       setReviewId(review?._id);
       setUserInput(review.review);
     }
     
     if(e.target.textContent === "Update") {
-      console.log("Update");
       dispatch(updateReviewThunk({userInput, slug, rating, reviewId}));
     }
   };
@@ -88,14 +84,11 @@ export const ReviewList = ({ reviews, slug }) => {
             <div key={element._id} className="review-div">
               <div style={{ display: "flex" }}>
                 <div
-                  // key={element._id}
                   style={{
-                    // border: "1px solid red",
                     backgroundImage: `url(${reversedArr[index]?.userId?.photo})`,
                     backgroundPosition: "center",
                     backgroundSize: "contain",
                     backgroundRepeat: "no-repeat",
-                    // margin: "auto",
                     height: "50px",
                     width: "50px",
                     marginBottom: "20px",
@@ -114,6 +107,7 @@ export const ReviewList = ({ reviews, slug }) => {
                     {firstName} {lastNameInitial}.
                   </p>
                   <Rating value={reversedArr[index]?.rating} />
+                  <ReactTimeAgo date={dateStrToTimestamp(reversedArr[index]?.createdAt)} locale="en-US"/>
                 </div>
               </div>
               {updateTextArea ? (
@@ -189,6 +183,7 @@ export const ReviewList = ({ reviews, slug }) => {
                     {firstName} {lastNameInitial}.
                   </p>
                   <Rating value={reversedArr[index]?.rating} />
+                  <ReactTimeAgo date={dateStrToTimestamp(reversedArr[index]?.createdAt)} locale="en-US"/>
                 </div>
               </div>
               <p>{reversedArr[index]?.review}</p>
