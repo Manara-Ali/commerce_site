@@ -281,12 +281,12 @@ export const Home = ({ children }) => {
           {isSorted?.map((element, index) => {
             if (totalMeals?.length === index + 1) {
               return (
-                <>
+                <div key={element._id}>
                   {loadingPagination && <PaginationSpinner />}
                   {loadingPagination ? null : (
                     <div
                       ref={lastMealElementRef}
-                      key={element._id}
+                      // key={element._id}
                       className={`${
                         element.secretMeal ? "blur hidden-meal" : ""
                       } card p-0 col-md-3 my-4`}
@@ -339,16 +339,16 @@ export const Home = ({ children }) => {
                       </div>
                     </div>
                   )}
-                </>
+                </div>
               );
             } else {
               return (
-                <>
+                <div key={element._id}>
                   {
                     // <PaginationSpinner/>
                   }
                   <div
-                    key={element._id}
+                    // key={element._id}
                     className={`${
                       element.secretMeal ? "blur hidden-meal" : ""
                     } card p-0 col-md-3 my-4`}
@@ -400,7 +400,7 @@ export const Home = ({ children }) => {
                       </Link>
                     </div>
                   </div>
-                </>
+                </div>
               );
             }
           })}

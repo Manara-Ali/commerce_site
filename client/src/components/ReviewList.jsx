@@ -1,30 +1,41 @@
-import { useState, useContext } from "react";
-import { useSelector } from "react-redux";
+import { useState, useContext, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Rate } from "antd";
 import { Rating } from "./Rating";
 import { DeleteReview } from "./DeleteReview";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
+import { updateReviewThunk } from "../store";
 
 export const ReviewList = ({ reviews, slug }) => {
   const reviewCopy = [...reviews];
 
   const reversedArr = reviewCopy?.reverse();
 
+  const dispatch = useDispatch();
+
+  const [rating, setRating] = useState(1);
   const [reviewId, setReviewId] = useState(null);
+  const [updateTextArea, setUpdateTextArea] = useState(false);
+  const [userInput, setUserInput] = useState("");
 
   const { deleteModalOpen, setDeleteModalOpen } = useContext(ModalContext);
 
   const handleButtonClick = (e, review) => {
-    if (e.target.name === "delete") {
+    if (e.target.textContent === "Delete") {
       document.body.scrollTop = document.documentElement.scrollTop = 0;
 
       document.querySelector(".app-container").classList.add("blur");
 
       setDeleteModalOpen(true);
-      setReviewId(review._id);
+      setReviewId(review?._id);
     }
 
-    if (e.target.name === "update") {
+    if(e.target.textContent === "Cancel") {
+      setUpdateTextArea(false);
+    }
+
+    if (e.target.textContent === "Edit") {
       // if (userInput) {
       //   dispatch(
       //     createReviewThunk({
@@ -36,7 +47,15 @@ export const ReviewList = ({ reviews, slug }) => {
       //   setUserInput("");
       //   setRating(1);
       // }
+      console.log("Edit");
+      setUpdateTextArea(true);
+      setReviewId(review?._id);
+      setUserInput(review.review);
+    }
+    
+    if(e.target.textContent === "Update") {
       console.log("Update");
+      dispatch(updateReviewThunk({userInput, slug, rating, reviewId}));
     }
   };
 
@@ -44,8 +63,19 @@ export const ReviewList = ({ reviews, slug }) => {
     return state.usersCombinedReducer;
   });
 
+  const { review, status } = useSelector((state) => {
+    return state.reviewsCombinedReducer;
+  });
+
+  useEffect(() => {
+      setUpdateTextArea(false);
+  }, [review]);
+
   return (
-    <div className="border rounded-lg p-3 mb-5" style={{ marginTop: "6rem", background: "#f0f0f0" }}>
+    <div
+      className="border rounded-lg p-3 mb-5"
+      style={{ marginTop: "6rem", background: "#f0f0f0" }}
+    >
       {reversedArr?.map((element, index) => {
         const firstName = reversedArr[index]?.userId?.name.split(" ")[0];
 
@@ -86,21 +116,44 @@ export const ReviewList = ({ reviews, slug }) => {
                   <Rating value={reversedArr[index]?.rating} />
                 </div>
               </div>
-              <p>{reversedArr[index]?.review}</p>
+              {updateTextArea ? (
+                <div className="col-md-9 mb-5 mt-3 pt-2 border rounded-lg w-100">
+                  <textarea
+                    className="mb-4"
+                    placeholder="Add a review"
+                    value={userInput}
+                    onChange={(e) => setUserInput(e.target.value)}
+                  />
+                  <div className="d-flex align-items-center">
+                    <Rate
+                      value={rating}
+                      allowHalf
+                      allowClear={false}
+                      style={{ color: "#d7456b" }}
+                      onChange={(value) => setRating(value)}
+                    />
+                    <span className="lead text-muted ml-3">
+                      ( {rating} / 5 stars )
+                    </span>
+                  </div>
+                </div>
+              ) : (
+                <p>{reversedArr[index]?.review}</p>
+              )}
               <div className="btn-container">
                 <button
-                  name="delete"
+                  // name="delete"
                   className="btn"
                   onClick={(e) => handleButtonClick(e, element)}
                 >
-                  Delete
+                  {updateTextArea ? "Cancel" : "Delete"}
                 </button>
                 <button
-                  name="update"
+                  // name="update"
                   className="btn"
-                  onClick={(e, element) => handleButtonClick(e, element)}
+                  onClick={(e) => handleButtonClick(e, element)}
                 >
-                  Update
+                  {updateTextArea ? "Update" : "Edit"}
                 </button>
               </div>
             </div>

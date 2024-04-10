@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getAllReviewsByMealThunk = createAsyncThunk("review/get-all/meal", async (data, {rejectWithValue}) => {
+export const getAllReviewsByMealThunk = createAsyncThunk("review/get-all", async (data, {rejectWithValue}) => {
     try {
         const response = await axios({
             url: `/api/v1/meals/${data.slug}/reviews`,
