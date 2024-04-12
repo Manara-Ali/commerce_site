@@ -5,11 +5,13 @@ import storage from "redux-persist/lib/storage";
 import { usersCombinedReducer } from "./slices/usersSlice";
 import { mealsCombinedReducer } from "./slices/mealsSlice";
 import { reviewsCombinedReducer } from "./slices/reviewsSlice";
+import { cartsCombinedReducer } from "./slices/cartSlice";
 
 const combinedReducers = combineReducers({
   usersCombinedReducer,
   mealsCombinedReducer,
   reviewsCombinedReducer,
+  cartsCombinedReducer,
 });
 
 const persistConfig = {
@@ -54,3 +56,4 @@ export * from "./thunks/reviewThunks/deleteReviewThunk";
 export * from "./thunks/reviewThunks/updateReviewThunk";
 export * from "./slices/usersSlice";
 export * from "./slices/mealsSlice";
+export * from './slices/cartSlice';

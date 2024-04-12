@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getMealThunk, clearState } from "../store";
+import { getMealThunk, clearState, addToCartRequest, addToCartSuccess, clearCartState } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 import { ImageSlider } from "../components/ImageSlider";
@@ -38,6 +38,7 @@ export const DetailMeal = ({ children }) => {
   const [sliderWidth, setSliderWidth] = useState(null);
 
   const [quantity, setQuantity] = useState(1);
+  const [addedToCart, setAddedToCart] = useState(false);
 
   const { loading, error, status, meal } = useSelector((state) => {
     return state.mealsCombinedReducer;
@@ -51,9 +52,21 @@ export const DetailMeal = ({ children }) => {
     return state.reviewsCombinedReducer;
   });
 
+  const {loading: cartLoading, error: cartError, status: cartStatus, cartItems} = useSelector((state) => {
+    return state?.cartsCombinedReducer;
+  });
+
+  console.log(cartLoading)
+
   const handleQuantityChange = (e) => {
     setQuantity(Number(e.target.value));
   };
+
+  const handleAddToCart = (qty) => {
+    dispatch(addToCartRequest());
+    dispatch(addToCartSuccess({...meal, qty}));
+    setAddedToCart(true);
+  }
 
   useEffect(() => {
     dispatch(getMealThunk(slug));
@@ -74,6 +87,12 @@ export const DetailMeal = ({ children }) => {
 
     return () => window.removeEventListener("resize", handleWindowSize);
   }, [loading, windowSize.width, windowSize.height, sliderWidth]);
+
+  useEffect(() => {
+      setTimeout(() => {
+        setAddedToCart(false)
+      }, 2000)
+  }, [addedToCart]);
 
   // console.log({width: windowSize.width, height: windowSize.height, sliderWidth})
 
@@ -109,6 +128,9 @@ export const DetailMeal = ({ children }) => {
         <div className="border rounded-lg p-3">
           <img className="card-img-top" src={meal?.coverImage} alt={slug} />
         </div>
+        <div className="message-alert mt-5">
+            {addedToCart && <Alert type="alert-success" message="Your item was added to the cart"/>}
+          </div>
         <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
           <div className="d-flex justify-content-between">
             <span className="lead mr-3">Name:</span>
@@ -176,8 +198,10 @@ export const DetailMeal = ({ children }) => {
               </select>
             </div>
             <div className="d-flex flex-row-reverse my-3 pl-4">
-              <button className="btn w-100 font-weight-bold" id="cart-btn">
-                Add To Cart
+              <button className="btn w-100 font-weight-bold" id="cart-btn"
+              disabled={addedToCart}
+              onClick={() => handleAddToCart(quantity)}>
+                {cartLoading ? "Loading..." : "Add To Cart"}
               </button>
             </div>
           </div>

@@ -427,8 +427,9 @@ body {
   top: -0.8rem;
   right: -0.8rem;
   background-color: #66ba30;
-  font-size: 1.1rem;
-  border-radius: 50%;
+  font-size: 1.2rem;
+  width: 2rem;
+  /* border-radius: 50%; */
 }
 
 .dropdown-menu .dropdown-item {

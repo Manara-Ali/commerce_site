@@ -2,7 +2,7 @@ import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/silver-spoon-logo.png";
 import { useDispatch, useSelector } from "react-redux";
-import { logoutThunk } from "../store";
+import { logoutThunk, clearCart } from "../store";
 
 export const PrivateNavbar = () => {
   const navRef = useRef();
@@ -15,6 +15,7 @@ export const PrivateNavbar = () => {
 
   const handleLogout = () => {
     dispatch(logoutThunk());
+    dispatch(clearCart());
     setTimeout(() => {
       location.reload();
     }, 500)

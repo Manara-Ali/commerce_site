@@ -10,6 +10,7 @@ import { ModalContext } from "../context/ModalContext";
 import { Equalizer } from "../components/Equalizer";
 import { useMinMax } from "../utils/useMinMax";
 import { usePagination } from "../utils/usePagination";
+import { calcItemsInCart } from "../utils/calcItemsInCart";
 
 export const Home = ({ children }) => {
   const { pageNumber, setPageNumber } = children[0].props;
@@ -42,8 +43,17 @@ export const Home = ({ children }) => {
     return state?.mealsCombinedReducer;
   });
 
-  const {review} = useSelector((state) => {
+  const { review } = useSelector((state) => {
     return state?.reviewsCombinedReducer;
+  });
+
+  const {
+    loading: cartLoading,
+    error: cartError,
+    status: cartStatus,
+    cartItems,
+  } = useSelector((state) => {
+    return state?.cartsCombinedReducer;
   });
 
   const lastMealElementRef = useCallback(
@@ -54,7 +64,11 @@ export const Home = ({ children }) => {
 
       observer.current = new IntersectionObserver((entries) => {
         // console.log(mealsCount, totalMeals.length)
-        if (entries[0].isIntersecting &&  totalMeals.length !== mealsCount && paginatedMeals.length > 0) {
+        if (
+          entries[0].isIntersecting &&
+          totalMeals.length !== mealsCount &&
+          paginatedMeals.length > 0
+        ) {
           setPageNumber((pageNumber) => pageNumber + 1);
         }
       });
@@ -71,14 +85,14 @@ export const Home = ({ children }) => {
         return isSorted?.filter((element) => {
           return element?.name
             ?.toLowerCase()
-            .includes(debouncedSearchTerm?.toLowerCase())
+            .includes(debouncedSearchTerm?.toLowerCase());
         });
       }
-      return totalMeals?.filter((element) =>{
+      return totalMeals?.filter((element) => {
         return element?.name
           ?.toLowerCase()
-          .includes(debouncedSearchTerm?.toLowerCase())
-    });
+          .includes(debouncedSearchTerm?.toLowerCase());
+      });
       // return totalMeals?.filter((element) =>
       //   element?.name
       //     ?.toLowerCase()
@@ -110,7 +124,7 @@ export const Home = ({ children }) => {
 
   useEffect(() => {
     dispatch(getAllMealsThunk());
-  }, [review])
+  }, [review]);
 
   useEffect(() => {
     const timerId = setTimeout(() => {
@@ -121,7 +135,7 @@ export const Home = ({ children }) => {
   }, [searchTerm]);
 
   useEffect(() => {
-    if(totalMeals.length) {
+    if (totalMeals.length) {
       const { min, max } = useMinMax(totalMeals);
       setMinPrice(min);
       setMaxPrice(max);
@@ -133,14 +147,15 @@ export const Home = ({ children }) => {
   }, []);
 
   useEffect(() => {
-    if(applySort && status === "success") {
+    if (applySort && status === "success") {
       setIsSorted(sortedMeals);
-    } else if(searchTerm) {
+    } else if (searchTerm) {
       setIsSorted(meals);
     } else {
-      totalMeals.length && setIsSorted(totalMeals) || setIsSorted(sortedMeals);
+      (totalMeals.length && setIsSorted(totalMeals)) ||
+        setIsSorted(sortedMeals);
     }
-  }, [applySort, status, totalMeals, sortedMeals])
+  }, [applySort, status, totalMeals, sortedMeals]);
 
   if (loading) {
     return <Spinner />;
@@ -193,76 +208,37 @@ export const Home = ({ children }) => {
                 value={searchTerm}
                 onChange={handleInputChange}
               />
-              {/* <button
-                className="btn ml-3 my-sm-0 py-0"
-                type="submit"
-                style={{
-                  color: "#ececec",
-                  backgroundColor: "#d7456b",
-                  fontSize: "1.3rem",
-                }}
-              >
-                <i className="fa fa-search fa-2x" aria-hidden="true"></i>
-              </button> */}
-              {/* <div
-                className="dropdown border rounded-lg ml-3"
-                style={{ backgroundColor: "#d7456b", fontSize: "1.rem" }}
-              >
-                <button
-                  className="btn"
-                  type="button"
-                  data-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i
-                    className="fa fa-chevron-down fa-2x"
-                    aria-hidden="true"
-                    style={{ color: "#ececec", fontSize: "1.rem" }}
-                  ></i>
-                </button>
-                <div className="dropdown-menu">
-                  <a className="dropdown-item" href="#">
-                    Food
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Snacks
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Drinks
-                  </a>
-                </div>
-              </div> */}
             </div>
           </form>
           <div className="border rounded-lg p-2">
             <div
-                className="dropdown"
-                style={{ backgroundColor: "#d7456b", fontSize: "1.rem" }}
+              className="dropdown"
+              style={{ backgroundColor: "#d7456b", fontSize: "1.rem" }}
+            >
+              <button
+                className="btn"
+                type="button"
+                data-toggle="dropdown"
+                aria-expanded="false"
               >
-                <button
-                  className="btn"
-                  type="button"
-                  data-toggle="dropdown"
-                  aria-expanded="false"
-                >
-                  <i
-                    className="fa fa-chevron-down fa-2x"
-                    aria-hidden="true"
-                    style={{ color: "#ececec", fontSize: "1.rem" }}
-                  ></i>
-                </button>
-                <div className="dropdown-menu">
-                  <a className="dropdown-item" href="#">
-                    Food
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Snacks
-                  </a>
-                  <a className="dropdown-item" href="#">
-                    Drinks
-                  </a>
-                </div>
+                <i
+                  className="fa fa-chevron-down fa-2x"
+                  aria-hidden="true"
+                  style={{ color: "#ececec", fontSize: "1.rem" }}
+                ></i>
+              </button>
+              <div className="dropdown-menu">
+                <a className="dropdown-item" href="#">
+                  Food
+                </a>
+                <a className="dropdown-item" href="#">
+                  Snacks
+                </a>
+                <a className="dropdown-item" href="#">
+                  Drinks
+                </a>
               </div>
+            </div>
           </div>
           <div className="cart-div border rounded-lg p-2 pr-3">
             <i
@@ -270,8 +246,26 @@ export const Home = ({ children }) => {
               aria-hidden="true"
               style={{ color: "#d7456b", fontSize: "1.rem" }}
             ></i>
-            <span className="badge badge-warning" id="lblCartCount">
-              {/* {cartItems.length > 0 ? cartItems.length : null} */}3
+            <span
+              className="badge badge-warning"
+              id="lblCartCount"
+              style={{
+                paddingRight: `${
+                  calcItemsInCart(cartItems) < 10
+                    ? "0.5rem"
+                    : calcItemsInCart(cartItems) === 10
+                    ? "1.7rem"
+                    : "2.2rem"
+                }`,
+              }}
+            >
+              {/* {cartItems.length > 0 ? cartItems.length <= 10 ? cartItems.length : "10+" : null} */}
+
+              {calcItemsInCart(cartItems) > 0
+                ? calcItemsInCart(cartItems) <= 10
+                  ? calcItemsInCart(cartItems)
+                  : "10+"
+                : null}
             </span>
           </div>
         </div>
@@ -408,7 +402,14 @@ export const Home = ({ children }) => {
       </div>
       {modalOpen && (
         <ModalWindow>
-          {<Equalizer totalMeals={totalMeals} min={min} max={max} setApplySort={setApplySort}/>}
+          {
+            <Equalizer
+              totalMeals={totalMeals}
+              min={min}
+              max={max}
+              setApplySort={setApplySort}
+            />
+          }
           {/* {<Equalizer meals={meals} min={min} max={max} />} */}
         </ModalWindow>
       )}
