@@ -56,7 +56,7 @@ export const DetailMeal = ({ children }) => {
   };
 
   useEffect(() => {
-    // dispatch(getMealThunk(slug));
+    dispatch(getMealThunk(slug));
   }, [slug, review]);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ export const DetailMeal = ({ children }) => {
 
   useEffect(() => {
     if (meal) {
-      // dispatch(clearState());
+      dispatch(clearState());
     }
   }, [meal]);
 
@@ -83,7 +83,7 @@ export const DetailMeal = ({ children }) => {
 
   if (error || error?.message) {
     setTimeout(() => {
-      // dispatch(clearState());
+      dispatch(clearState());
       navigate("/");
     }, 5000);
   }
