@@ -477,7 +477,7 @@ body {
 
 input[type="range"] {
   -webkit-appearance: none;
-  appearance: none; 
+  appearance: none;
   width: 100%;
   cursor: pointer;
   outline: none;
@@ -497,7 +497,7 @@ input[type="range"]::-moz-range-track {
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  appearance: none; 
+  appearance: none;
   height: 12px;
   width: 12px;
   background-color: #66ba30;
@@ -527,17 +527,17 @@ textarea {
 
 .btn-container {
   /* border: 1px solid red; */
-  margin:  1.5rem 43%;
+  margin: 1.5rem 43%;
   width: 56%;
   display: flex;
   justify-content: flex-end;
 }
 
 .btn-container .btn {
- padding: 0.5rem 2rem;
- border-radius: 3rem;
- font-size: 1.3rem;
- font-weight: 600;
+  padding: 0.5rem 2rem;
+  border-radius: 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
 }
 
 .btn-container .btn:first-of-type {
@@ -559,11 +559,11 @@ textarea {
 
 #disregard-cancel-btn {
   padding: 0.5rem 2rem;
- border-radius: 3rem;
- font-size: 1.3rem;
- font-weight: 600;
- background-color: #252525;
- color: #fff;
+  border-radius: 3rem;
+  font-size: 1.3rem;
+  font-weight: 600;
+  background-color: #252525;
+  color: #fff;
 }
 
 #disregard-disregard-btn {
@@ -582,4 +582,17 @@ textarea {
 .review-div:last-of-type {
   /* border-bottom: none; */
   border-bottom: none;
+}
+
+/* CART */
+#cart-btn:active {
+  outline: none;
+  transform: translate(0.5rem, 0.5rem);
+}
+
+#cart-btn {
+  font-size: 1.3rem;
+  background: #67ba30;
+  color: #f4f4f4;
+  border-radius: 1.5rem;
 }

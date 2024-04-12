@@ -37,6 +37,8 @@ export const DetailMeal = ({ children }) => {
 
   const [sliderWidth, setSliderWidth] = useState(null);
 
+  const [quantity, setQuantity] = useState(1);
+
   const { loading, error, status, meal } = useSelector((state) => {
     return state.mealsCombinedReducer;
   });
@@ -45,12 +47,16 @@ export const DetailMeal = ({ children }) => {
     return state.usersCombinedReducer;
   });
 
-  const {review} = useSelector((state) => {
+  const { review } = useSelector((state) => {
     return state.reviewsCombinedReducer;
   });
 
+  const handleQuantityChange = (e) => {
+    setQuantity(Number(e.target.value));
+  };
+
   useEffect(() => {
-    dispatch(getMealThunk(slug));
+    // dispatch(getMealThunk(slug));
   }, [slug, review]);
 
   useEffect(() => {
@@ -59,7 +65,7 @@ export const DetailMeal = ({ children }) => {
 
   useEffect(() => {
     if (meal) {
-      dispatch(clearState());
+      // dispatch(clearState());
     }
   }, [meal]);
 
@@ -77,7 +83,7 @@ export const DetailMeal = ({ children }) => {
 
   if (error || error?.message) {
     setTimeout(() => {
-      dispatch(clearState());
+      // dispatch(clearState());
       navigate("/");
     }, 5000);
   }
@@ -93,8 +99,12 @@ export const DetailMeal = ({ children }) => {
           <i className="fa fa-arrow-left fa-2x mr-3" aria-hidden="true"></i>BACK
         </button>
       </Link>
-        <h1 className="display-3 text-center">Meal Detail</h1>
-      <div className={`${meal?.secretMeal ? "blur hidden-meal" : ""} col-md-9 mx-auto`}>
+      <h1 className="display-3 text-center">Meal Detail</h1>
+      <div
+        className={`${
+          meal?.secretMeal ? "blur hidden-meal" : ""
+        } col-md-9 mx-auto`}
+      >
         {error ? <Alert type="alert-danger" message={error.message} /> : null}
         <div className="border rounded-lg p-3">
           <img className="card-img-top" src={meal?.coverImage} alt={slug} />
@@ -152,19 +162,38 @@ export const DetailMeal = ({ children }) => {
               ></i>
             </h4>
           </div>
+          <div className="mt-5 mx-auto border rounded-lg pr-4">
+            <div className="d-flex justify-content-between align-items-center">
+              <p className="pt-3 text-muted font-weight-bold col-md-6">
+                Quantity:
+              </p>
+              <select className=" custom-select" style={{ fontSize: "1.3rem" }} onChange={handleQuantityChange}>
+                {Array.from({ length: 5 }, (_, index) => {
+                  return ++index;
+                }).map((element) => {
+                  return <option value={element}>{element}</option>;
+                })}
+              </select>
+            </div>
+            <div className="d-flex flex-row-reverse my-3 pl-4">
+              <button className="btn w-100 font-weight-bold" id="cart-btn">
+                Add To Cart
+              </button>
+            </div>
+          </div>
         </div>
         <div
           className="col-md-9 mx-auto mt-5 mb-5 border rounded-lg w-100"
           id="slider-ref-div"
-          style={{ backgroundColor: "#eee", height: "30rem"}}
+          style={{ backgroundColor: "#eee", height: "30rem" }}
           ref={sliderRef}
         >
           {sliderWidth && (
             <ImageSlider slides={meal?.images} parentWidth={sliderWidth} />
           )}
         </div>
-        <div style={{marginTop: "50px"}}></div>
-      <Review/>
+        <div style={{ marginTop: "50px" }}></div>
+        <Review />
       </div>
       {user?.role === "admin" && (
         <div className="d-flex justify-content-between border rounded-lg mx-4 p-3">
