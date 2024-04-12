@@ -171,7 +171,7 @@ export const DetailMeal = ({ children }) => {
                 {Array.from({ length: 5 }, (_, index) => {
                   return ++index;
                 }).map((element) => {
-                  return <option value={element}>{element}</option>;
+                  return <option key={element} value={element}>{element}</option>;
                 })}
               </select>
             </div>
