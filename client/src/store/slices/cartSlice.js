@@ -9,7 +9,7 @@ const cartSlice = createSlice({
     error: null,
 
     cartItems: localStorage.getItem("cart")
-      ? JSON.parse(localStorage.getItem("cart"))
+      ? JSON.parse(localStorage.getItem("cart"))?.cartItems
       : [],
   },
   reducers: {
@@ -50,7 +50,7 @@ const cartSlice = createSlice({
 
       state.totalPrice = formatPrice(state.itemsPrice + state.taxPrice);
 
-      localStorage.setItem("cart", JSON.stringify(state));
+      localStorage.setItem("cart", JSON.stringify(state.cartItems));
     },
     addToCartFail(state, action) {
       state.loading = false;
@@ -67,6 +67,8 @@ const cartSlice = createSlice({
     },
   },
 });
+
+console.log(cartSlice.getInitialState());
 
 export const {
   addToCartRequest,
