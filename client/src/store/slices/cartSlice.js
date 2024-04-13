@@ -22,7 +22,6 @@ const cartSlice = createSlice({
       state.status = "pending";
     },
     addToCartSuccess(state, action) {
-      console.log(action.payload);
       const payloadItem = action.payload;
 
       const alreadyInCart = state.cartItems.find((element) => {
@@ -59,8 +58,8 @@ const cartSlice = createSlice({
       state.error = action.payload;
     },
     removeFromCart(state, action) {
-      cartItems = state.cartItems.filter((element) => {
-        return element._id !== action.payload;
+      state.cartItems = state.cartItems.filter((element) => {
+        return element._id !== action.payload._id;
       });
     },
     clearCart(state, action) {
@@ -75,7 +74,7 @@ export const {
   addToCartFail,
   removeFromCart,
   clearCart,
-  clearCartState
+  clearCartState,
 } = cartSlice.actions;
 
 export const cartsCombinedReducer = cartSlice.reducer;

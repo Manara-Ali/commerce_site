@@ -34,9 +34,7 @@ export const Review = () => {
     if (e.target.name === "cancel") {
       if (userInput) {
         document.body.scrollTop = document.documentElement.scrollTop = 0;
-
         document.querySelector(".app-container").classList.add("blur");
-
         setReviewModalOpen(true);
       }
     }
@@ -108,7 +106,7 @@ export const Review = () => {
               </button>
             </div>
             {reviewModalOpen && (
-              <ModalWindow style={{ backgroundColor: "red" }}>
+              <ModalWindow>
                 <DiscardReview setUserInput={setUserInput} />
               </ModalWindow>
             )}

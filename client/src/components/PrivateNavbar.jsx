@@ -91,7 +91,7 @@ export const PrivateNavbar = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/cart">
-              <div className="cart-div border rounded-lg border-dark p-2 pr-3 mb-4">
+              <div className="cart-div rounded-lg p-2 pr-3 mb-4" style={{border: "1px solid #fff"}}>
             <i
               className="fa fa-shopping-cart fa-2x"
               aria-hidden="true"

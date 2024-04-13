@@ -109,7 +109,7 @@ export const DetailMeal = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setAddedToCart(false);
-    }, 2000);
+    }, 1500);
   }, [addedToCart]);
 
   useEffect(() => {

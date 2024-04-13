@@ -1,21 +1,38 @@
-import { useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { addToCartRequest, addToCartSuccess } from "../store";
+import {
+  addToCartRequest,
+  addToCartSuccess,
+  clearCart,
+} from "../store";
 import { Alert } from "../components/Alert";
+import { RemoveFromCart } from "../components/RemoveFromCart";
 import { QuantityContext } from "../context/QuantityContext";
+import { ModalWindow } from "../components/ModalWindow";
+import { ModalContext } from "../context/ModalContext";
 
 export const Cart = ({ children }) => {
   const dispatch = useDispatch();
   const { quantity } = useContext(QuantityContext);
+  const [itemToRemove, setItemToRemove] = useState(null);
 
   const { loading, error, status, cartItems } = useSelector((state) => {
     return state?.cartsCombinedReducer;
   });
 
+  const { cartModalOpen, setCartModalOpen } = useContext(ModalContext);
+
   const handleQuantityChange = (e, item) => {
     dispatch(addToCartRequest());
     dispatch(addToCartSuccess({ ...item, qty: Number(e.target.value) }));
+  };
+
+  const handleItemRemoveRequest = (item) => {
+    document.body.scrollTop = document.documentElement.scrollTop = 0;
+    document.querySelector(".app-container").classList.add("blur");
+    setCartModalOpen(true);
+    setItemToRemove(item);
   };
 
   return (
@@ -58,8 +75,9 @@ export const Cart = ({ children }) => {
                 <div className="col-4 d-flex align-items-center">
                   <Link to={`/${item.slug}`} className="d-flex">
                     <div className="row d-flex align-items-center">
-                      <p className="text-dark font-weight-bold col-10" 
-                      style={{textDecoration: "underline"}}
+                      <p
+                        className="text-dark font-weight-bold col-10"
+                        style={{ textDecoration: "underline" }}
                       >
                         {item.name}
                       </p>
@@ -69,6 +87,8 @@ export const Cart = ({ children }) => {
                     className="fa fa-trash-o fa-2x mb-4"
                     aria-hidden="true"
                     style={{ color: "#d7456b" }}
+                    // onClick={() => dispatch(removeFromCart(item))}
+                    onClick={() => handleItemRemoveRequest(item)}
                   ></i>
                 </div>
                 <div className="col-2 d-flex justify-content-center align-items-center p-0">
@@ -98,38 +118,56 @@ export const Cart = ({ children }) => {
           );
         })}
       </div>
-      <div className="row mt-5 ml-0">
-        <div className="list-group list-group-flush col">
-          <h2 className="list-group-item text-center display-5 mb-1 p-5 border rounded-lg text-uppercase">
-            Subtotal
-          </h2>
-          <div
-            className="list-group-item text-center mb-1 p-3 border"
-            style={{ fontSize: "1.8rem" }}
-          >
-            Number of Items: (<span className="font-weight-bold">
-            {cartItems.reduce((accumulator, element) => {
-              return (accumulator += element.qty);
-            }, 0)}
-            </span>) Items
+      {cartItems.length ? (
+        <div className="row mt-5 ml-0">
+          <div className="list-group list-group-flush col">
+            <h2 className="list-group-item text-center display-5 mb-1 p-5 border rounded-lg text-uppercase">
+              Subtotal
+            </h2>
+            <div
+              className="list-group-item text-center mb-1 p-3 border"
+              style={{ fontSize: "1.8rem" }}
+            >
+              Number of Items: (
+              <span className="font-weight-bold">
+                {cartItems.reduce((accumulator, element) => {
+                  return (accumulator += element.qty);
+                }, 0)}
+              </span>
+              ) Items
+            </div>
+            <div
+              className="list-group-item text-center mb-3 p-3 border"
+              style={{ fontSize: "1.8rem" }}
+            >
+              Items Total:{" "}
+              <span className="font-weight-bold">
+                $
+                {cartItems
+                  .reduce((accumulator, element) => {
+                    return (accumulator += element.price * element.qty);
+                  }, 0)
+                  .toFixed(2)}
+              </span>
+            </div>
+            <button className="btn w-100 p-3" id="checkout-btn">
+              <h2 className="display-6 mb-0">
+                Checkout{" "}
+                <i
+                  className="fa fa-credit-card"
+                  style={{ color: "" }}
+                  aria-hidden="true"
+                ></i>
+              </h2>
+            </button>
           </div>
-          <div
-            className="list-group-item text-center mb-3 p-3 border"
-            style={{ fontSize: "1.8rem" }}
-          >
-            Items Total: <span className="font-weight-bold">
-            ${(cartItems.reduce((accumulator, element) => {
-              return (accumulator += element.price * element.qty);
-
-            }, 0)).toFixed(2)
-            }
-            </span>
-          </div>
-          <button className="btn w-100 p-3" id="checkout-btn">
-            <h2 className="display-6 mb-0">Checkout <i className="fa fa-credit-card" style={{color: ""}} aria-hidden="true"></i></h2>
-          </button>
         </div>
-      </div>
+      ) : null}
+      {cartModalOpen && (
+        <ModalWindow>
+          <RemoveFromCart itemToRemove={itemToRemove} />
+        </ModalWindow>
+      )}
     </div>
   );
 };

@@ -6,6 +6,7 @@ export const CustomProvider = ({children}) => {
     const [modalOpen, setModalOpen] = useState(false);
     const [reviewModalOpen, setReviewModalOpen] = useState(false);
     const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+    const [cartModalOpen, setCartModalOpen] = useState(false);
 
     const obj = {
         modalOpen,
@@ -13,7 +14,9 @@ export const CustomProvider = ({children}) => {
         reviewModalOpen,
         setReviewModalOpen,
         deleteModalOpen,
-        setDeleteModalOpen
+        setDeleteModalOpen,
+        cartModalOpen,
+        setCartModalOpen,
     }
 
     return(
