@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/silver-spoon-logo.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk, clearCart } from "../store";
+import { calcItemsInCart } from "../utils/calcItemsInCart";
 
 export const PrivateNavbar = () => {
   const navRef = useRef();
@@ -11,6 +12,15 @@ export const PrivateNavbar = () => {
 
   const { user, status, loading, isAuthenticated } = useSelector((state) => {
     return state.usersCombinedReducer;
+  });
+
+  const {
+    loading: cartLoading,
+    error: cartError,
+    status: cartStatus,
+    cartItems,
+  } = useSelector((state) => {
+    return state?.cartsCombinedReducer;
   });
 
   const handleLogout = () => {
@@ -77,6 +87,37 @@ export const PrivateNavbar = () => {
           <li className="nav-item">
             <Link className="nav-link" to="/contact">
               Contact
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link className="nav-link" to="/cart">
+              <div className="cart-div border rounded-lg border-dark p-2 pr-3 mb-4">
+            <i
+              className="fa fa-shopping-cart fa-2x"
+              aria-hidden="true"
+              style={{ color: "#fff", fontSize: "1.rem" }}
+            ></i>
+            <span
+              className="badge badge-warning"
+              id="lblCartCountNav"
+              style={{
+                paddingRight: `${
+                  calcItemsInCart(cartItems) < 10
+                    ? "0.5rem"
+                    : calcItemsInCart(cartItems) === 10
+                    ? "1.7rem"
+                    : "2.2rem"
+                }`,
+              }}
+            >
+
+              {calcItemsInCart(cartItems) > 0
+                ? calcItemsInCart(cartItems) <= 10
+                  ? calcItemsInCart(cartItems)
+                  : "10+"
+                : null}
+            </span>
+          </div>
             </Link>
           </li>
           <li className="nav-item" id="profile-img-item">

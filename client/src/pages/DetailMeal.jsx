@@ -1,12 +1,19 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getMealThunk, clearState, addToCartRequest, addToCartSuccess, clearCartState } from "../store";
+import {
+  getMealThunk,
+  clearState,
+  addToCartRequest,
+  addToCartSuccess,
+  clearCartState,
+} from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
 import { ImageSlider } from "../components/ImageSlider";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
+import { QuantityContext } from "../context/QuantityContext";
 import { Delete } from "../components/Delete";
 import { Review } from "../components/Review";
 
@@ -16,6 +23,7 @@ export const DetailMeal = ({ children }) => {
   const navigate = useNavigate();
   const sliderRef = useRef();
   const { modalOpen, setModalOpen } = useContext(ModalContext);
+  const { quantity, setQuantity } = useContext(QuantityContext);
 
   const getWindowSize = function () {
     return {
@@ -37,7 +45,6 @@ export const DetailMeal = ({ children }) => {
 
   const [sliderWidth, setSliderWidth] = useState(null);
 
-  const [quantity, setQuantity] = useState(1);
   const [addedToCart, setAddedToCart] = useState(false);
 
   const { loading, error, status, meal } = useSelector((state) => {
@@ -52,11 +59,14 @@ export const DetailMeal = ({ children }) => {
     return state.reviewsCombinedReducer;
   });
 
-  const {loading: cartLoading, error: cartError, status: cartStatus, cartItems} = useSelector((state) => {
+  const {
+    loading: cartLoading,
+    error: cartError,
+    status: cartStatus,
+    cartItems,
+  } = useSelector((state) => {
     return state?.cartsCombinedReducer;
   });
-
-  console.log(cartLoading)
 
   const handleQuantityChange = (e) => {
     setQuantity(Number(e.target.value));
@@ -64,9 +74,17 @@ export const DetailMeal = ({ children }) => {
 
   const handleAddToCart = (qty) => {
     dispatch(addToCartRequest());
-    dispatch(addToCartSuccess({...meal, qty}));
+    dispatch(addToCartSuccess({ ...meal, qty }));
     setAddedToCart(true);
-  }
+  };
+
+  const checkForMealInCart = (meal) => {
+    cartItems.forEach((element) => {
+      if (meal._id === element._id) {
+        setQuantity(element.qty);
+      }
+    });
+  };
 
   useEffect(() => {
     dispatch(getMealThunk(slug));
@@ -89,10 +107,14 @@ export const DetailMeal = ({ children }) => {
   }, [loading, windowSize.width, windowSize.height, sliderWidth]);
 
   useEffect(() => {
-      setTimeout(() => {
-        setAddedToCart(false)
-      }, 2000)
+    setTimeout(() => {
+      setAddedToCart(false);
+    }, 2000);
   }, [addedToCart]);
+
+  useEffect(() => {
+    checkForMealInCart(meal);
+  }, [meal]);
 
   // console.log({width: windowSize.width, height: windowSize.height, sliderWidth})
 
@@ -129,8 +151,13 @@ export const DetailMeal = ({ children }) => {
           <img className="card-img-top" src={meal?.coverImage} alt={slug} />
         </div>
         <div className="message-alert mt-5">
-            {addedToCart && <Alert type="alert-success" message="Your item was added to the cart"/>}
-          </div>
+          {addedToCart && (
+            <Alert
+              type="alert-success"
+              message="Your item was added to the cart"
+            />
+          )}
+        </div>
         <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
           <div className="d-flex justify-content-between">
             <span className="lead mr-3">Name:</span>
@@ -189,20 +216,40 @@ export const DetailMeal = ({ children }) => {
               <p className="pt-3 text-muted font-weight-bold col-md-6">
                 Quantity:
               </p>
-              <select className=" custom-select" style={{ fontSize: "1.3rem" }} onChange={handleQuantityChange}>
+              <select
+                className=" custom-select"
+                style={{ fontSize: "1.3rem" }}
+                onChange={handleQuantityChange}
+                value={quantity}
+              >
                 {Array.from({ length: 5 }, (_, index) => {
                   return ++index;
                 }).map((element) => {
-                  return <option key={element} value={element}>{element}</option>;
+                  return (
+                    <option key={element} value={element}>
+                      {element}
+                    </option>
+                  );
                 })}
               </select>
             </div>
             <div className="d-flex flex-row-reverse my-3 pl-4">
-              <button className="btn w-100 font-weight-bold" id="cart-btn"
-              disabled={addedToCart}
-              onClick={() => handleAddToCart(quantity)}>
-                {cartLoading ? "Loading..." : "Add To Cart"}
+              <button
+                className="btn w-100 btn-secondary font-weight-bold ml-2"
+                disabled={addedToCart}
+              >
+                <Link to="/cart" style={{color: "#f4f4f4"}}>
+                {cartLoading ? "Loading..." : "Go To Cart"}
+                </Link>
               </button>
+                <button
+                  className="btn w-100 font-weight-bold btn-success mr-2"
+                  // id="cart-btn"
+                  disabled={addedToCart}
+                  onClick={() => handleAddToCart(quantity)}
+                  >
+                  {cartLoading ? "Loading..." : "Add To Cart"}
+                </button>
             </div>
           </div>
         </div>

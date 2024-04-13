@@ -241,11 +241,13 @@ export const Home = ({ children }) => {
             </div>
           </div>
           <div className="cart-div border rounded-lg p-2 pr-3">
-            <i
+            <Link to="/cart">
+              <i
               className="fa fa-shopping-cart fa-2x"
               aria-hidden="true"
-              style={{ color: "#d7456b", fontSize: "1.rem" }}
+              style={{ color: "#d7456b", fontSize: "1.rem", cursor: "pointer" }}
             ></i>
+            </Link>
             <span
               className="badge badge-warning"
               id="lblCartCount"

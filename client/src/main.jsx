@@ -9,13 +9,16 @@ import { persistor } from "./store/index.js";
 import { App } from "./App.jsx";
 import { store } from "./store/index.js";
 import { CustomProvider } from "./context/ModalContext.jsx";
+import { CustomQuantityProvider } from "./context/QuantityContext.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
         <CustomProvider>
-          <App />
+          <CustomQuantityProvider>
+            <App />
+          </CustomQuantityProvider>
         </CustomProvider>
       </PersistGate>
     </Provider>

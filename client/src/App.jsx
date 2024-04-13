@@ -20,6 +20,7 @@ import { DetailMeal } from "./pages/DetailMeal";
 import { UpdateMeal } from "./pages/UpdateMeal";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
+import { Cart } from "./pages/Cart";
 import { getMealsCountThunk, clearState, storePagination, resetSortedMeals } from "./store";
 
 export const App = () => {
@@ -111,6 +112,17 @@ export const App = () => {
                 <Greeting />
                 <Weather location={userLocation} weather={weatherData} />
               </Profile>
+            </Protect>
+          }
+        />
+        <Route
+          path="/cart"
+          element={
+            <Protect url="/login">
+              <Cart>
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
+              </Cart>
             </Protect>
           }
         />
