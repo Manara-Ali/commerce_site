@@ -68,8 +68,6 @@ const cartSlice = createSlice({
   },
 });
 
-console.log(cartSlice.getInitialState());
-
 export const {
   addToCartRequest,
   addToCartSuccess,

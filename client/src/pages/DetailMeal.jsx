@@ -79,11 +79,12 @@ export const DetailMeal = ({ children }) => {
   };
 
   const checkForMealInCart = (meal) => {
-    cartItems.forEach((element) => {
-      if (meal._id === element._id) {
-        setQuantity(element.qty);
-      }
+    const mealInCart = cartItems?.find((element) => {
+      return element._id === meal._id;
     });
+
+    if(mealInCart) setQuantity(mealInCart.qty);
+    else setQuantity(1);
   };
 
   useEffect(() => {
@@ -109,7 +110,7 @@ export const DetailMeal = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setAddedToCart(false);
-    }, 1500);
+    }, 1000);
   }, [addedToCart]);
 
   useEffect(() => {
