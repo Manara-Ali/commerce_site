@@ -597,7 +597,7 @@ textarea {
 }
 
 /* CART */
-#cart-btn:active {
+#cart-btn:active, #clear-cart-btn:active {
   outline: none;
   transform: translate(0.5rem, 0.5rem);
 }

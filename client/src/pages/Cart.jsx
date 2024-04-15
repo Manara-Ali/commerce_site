@@ -35,6 +35,10 @@ export const Cart = ({ children }) => {
     setItemToRemove(item);
   };
 
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  }
+
   return (
     <div className="container">
       <div className="d-flex justify-content-between">{children}</div>
@@ -117,6 +121,9 @@ export const Cart = ({ children }) => {
             </div>
           );
         })}
+        {cartItems.length ? <div className="d-flex justify-content-end">
+          <button className="btn btn-danger w-25 text-uppercase font-weight-bold" id="clear-cart-btn" onClick={handleClearCart}>Clear Cart</button>
+        </div> : null}
       </div>
       {cartItems.length ? (
         <div className="row mt-5 ml-0">

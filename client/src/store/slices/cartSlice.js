@@ -58,12 +58,21 @@ const cartSlice = createSlice({
       state.error = action.payload;
     },
     removeFromCart(state, action) {
+      state.itemsPrice = formatPrice(state.itemsPrice - action.payload.price);
+      state.taxPrice = formatPrice(state.taxPrice - action.payload.price * 0.1);
+      state.totalPrice = formatPrice(
+        state.totalPrice - (action.payload.price + action.payload.price * 0.1)
+      );
+      
       state.cartItems = state.cartItems.filter((element) => {
         return element._id !== action.payload._id;
       });
     },
     clearCart(state, action) {
       state.cartItems = [];
+      state.itemsPrice = 0;
+      state.taxPrice = 0;
+      state.totalPrice = 0;
     },
   },
 });
