@@ -5,7 +5,8 @@ const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 const userRouter = require("./routers/userRoutes");
 const mealRouter = require("./routers/mealRoutes");
-const reviewRouter = require("./routers/reviewRoutes")
+const reviewRouter = require("./routers/reviewRoutes");
+const stripeRouter = require("./routers/stripeRoutes");
 const errorController = require("./controllers/errorController");
 const ApplicationError = require("./utils/applicationError");
 
@@ -31,6 +32,8 @@ app.use("/api/v1/users", userRouter);
 app.use("/api/v1/meals", mealRouter);
 
 app.use("/api/v1/reviews", reviewRouter);
+
+app.use("/api/v1/stripe", stripeRouter);
 
 // const __dirname = path.resolve();
 

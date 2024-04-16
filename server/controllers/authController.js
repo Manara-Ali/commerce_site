@@ -689,7 +689,7 @@ exports.protect = catchAsyncFn(async (req, res, next) => {
   );
 
   const user = await User.findById(decodedPayload.id).select(
-    "+role +passwordChangedAt"
+    "+email +role +passwordChangedAt"
   );
 
   // 3. Verify that the user was not deleted after token was sent
