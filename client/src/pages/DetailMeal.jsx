@@ -110,7 +110,7 @@ export const DetailMeal = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setAddedToCart(false);
-    }, 1000);
+    }, 750);
   }, [addedToCart]);
 
   useEffect(() => {
