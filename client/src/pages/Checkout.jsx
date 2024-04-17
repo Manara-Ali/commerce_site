@@ -149,12 +149,13 @@ export const Checkout = ({ children }) => {
                 style={{
                   backgroundImage: `url(${item.coverImage})`,
                   backgroundPosition: "center",
-                  backgroundSize: "contain",
+                  backgroundSize: "cover",
                   backgroundRepeat: "no-repeat",
                   height: "8rem",
                   //   width: "40rem",
                   border: "2px solid #939393",
                   borderRadius: "1rem",
+                  marginRight: "1rem"
                 }}
               ></div>
               <div
