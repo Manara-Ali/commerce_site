@@ -1,11 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  addToCartRequest,
-  addToCartSuccess,
-  clearCart,
-} from "../store";
+import { addToCartRequest, addToCartSuccess, clearCart } from "../store";
 import { Alert } from "../components/Alert";
 import { RemoveFromCart } from "../components/RemoveFromCart";
 import { QuantityContext } from "../context/QuantityContext";
@@ -37,7 +33,7 @@ export const Cart = ({ children }) => {
 
   const handleClearCart = () => {
     dispatch(clearCart());
-  }
+  };
 
   return (
     <div className="container">
@@ -121,9 +117,17 @@ export const Cart = ({ children }) => {
             </div>
           );
         })}
-        {cartItems.length ? <div className="d-flex justify-content-end">
-          <button className="btn btn-danger w-25 text-uppercase font-weight-bold" id="clear-cart-btn" onClick={handleClearCart}>Clear Cart</button>
-        </div> : null}
+        {cartItems.length ? (
+          <div className="d-flex justify-content-end">
+            <button
+              className="btn btn-danger w-25 text-uppercase font-weight-bold"
+              id="clear-cart-btn"
+              onClick={handleClearCart}
+            >
+              Clear Cart
+            </button>
+          </div>
+        ) : null}
       </div>
       {cartItems.length ? (
         <div className="row mt-5 ml-0">
@@ -157,16 +161,18 @@ export const Cart = ({ children }) => {
                   .toFixed(2)}
               </span>
             </div>
-            <button className="btn w-100 p-3" id="checkout-btn">
-              <h2 className="display-6 mb-0">
-                Checkout{" "}
-                <i
-                  className="fa fa-credit-card"
-                  style={{ color: "" }}
-                  aria-hidden="true"
-                ></i>
-              </h2>
-            </button>
+            <Link to="/checkout">
+              <button className="btn w-100 p-3" id="checkout-btn">
+                <h2 className="display-6 mb-0">
+                  Checkout{" "}
+                  <i
+                    className="fa fa-credit-card"
+                    style={{ color: "" }}
+                    aria-hidden="true"
+                  ></i>
+                </h2>
+              </button>
+            </Link>
           </div>
         </div>
       ) : null}

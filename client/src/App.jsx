@@ -21,6 +21,8 @@ import { UpdateMeal } from "./pages/UpdateMeal";
 import { About } from "./pages/About";
 import { Contact } from "./pages/Contact";
 import { Cart } from "./pages/Cart";
+import { Checkout } from "./pages/Checkout";
+import { VerifyPayment } from "./pages/VerifyPayment";
 import { getMealsCountThunk, clearState, storePagination, resetSortedMeals } from "./store";
 
 export const App = () => {
@@ -116,17 +118,6 @@ export const App = () => {
           }
         />
         <Route
-          path="/cart"
-          element={
-            <Protect url="/login">
-              <Cart>
-                <Greeting />
-                <Weather location={userLocation} weather={weatherData} />
-              </Cart>
-            </Protect>
-          }
-        />
-        <Route
           path="/delete-account"
           element={
             <DeleteAccount>
@@ -167,6 +158,39 @@ export const App = () => {
                 <Greeting />
                 <Weather location={userLocation} weather={weatherData} />
               </UpdateMeal>
+            </Protect>
+          }
+        />
+      <Route
+          path="/cart"
+          element={
+            <Protect url="/login">
+              <Cart>
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
+              </Cart>
+            </Protect>
+          }
+        />
+      <Route
+          path="/checkout"
+          element={
+            <Protect url="/login">
+              <Checkout>
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
+              </Checkout>
+            </Protect>
+          }
+        />
+      <Route
+          path="/payment/success"
+          element={
+            <Protect url="/login">
+              <VerifyPayment>
+                <Greeting />
+                <Weather location={userLocation} weather={weatherData} />
+              </VerifyPayment>
             </Protect>
           }
         />

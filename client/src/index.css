@@ -622,3 +622,11 @@ textarea {
   color: #f4f4f4;
   text-transform: uppercase;
 }
+
+.list-group .cart-border.order-item {
+  padding-bottom: 2rem;
+}
+
+#verify-payment-container {
+  height: 50vh !important;
+}

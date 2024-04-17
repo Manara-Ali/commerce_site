@@ -6,12 +6,14 @@ import { usersCombinedReducer } from "./slices/usersSlice";
 import { mealsCombinedReducer } from "./slices/mealsSlice";
 import { reviewsCombinedReducer } from "./slices/reviewsSlice";
 import { cartsCombinedReducer } from "./slices/cartSlice";
+import { paymentsCombinedReducer } from "./slices/paymentSlice";
 
 const combinedReducers = combineReducers({
   usersCombinedReducer,
   mealsCombinedReducer,
   reviewsCombinedReducer,
   cartsCombinedReducer,
+  paymentsCombinedReducer,
 });
 
 const persistConfig = {
@@ -54,6 +56,9 @@ export * from "./thunks/reviewThunks/createReviewThunk";
 export * from "./thunks/reviewThunks/getAllReviewsByMealThunk";
 export * from "./thunks/reviewThunks/deleteReviewThunk";
 export * from "./thunks/reviewThunks/updateReviewThunk";
+export * from "./thunks/paymentThunks/checkoutPaymentThunk";
+export * from "./thunks/paymentThunks/verifyPaymentThunk";
 export * from "./slices/usersSlice";
 export * from "./slices/mealsSlice";
 export * from './slices/cartSlice';
+export * from "./slices/paymentSlice";
