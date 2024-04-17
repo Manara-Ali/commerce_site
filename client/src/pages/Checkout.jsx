@@ -84,7 +84,7 @@ export const Checkout = ({ children }) => {
           elements,
           clientSecret,
           confirmParams: {
-            return_url: "http://localhost:5173/payment/success",
+            return_url: "https://commerce-site-igmb.onrender.com/payment/success",
           },
         });
 
@@ -230,7 +230,7 @@ export const Checkout = ({ children }) => {
         >
           Pay
         </button>
-        <div className="row" style={{ border: "1px solid red" }}>
+        <div className="row">
           {errorMessage && <Alert type="alert-danger" message={errorMessage} />}
         </div>
       </form>
