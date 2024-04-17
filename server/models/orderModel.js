@@ -19,7 +19,7 @@ const orderSchema = new mongoose.Schema(
         },
         qty: {
           type: Number,
-          // required: true,
+          required: true,
         },
         image: {
           type: String,

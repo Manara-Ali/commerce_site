@@ -56,7 +56,7 @@ exports.verifyPayment = catchAsyncFn(async (req, res, next) => {
   try {
     const paymentIntent = await stripe.paymentIntents.retrieve(paymentId);
 
-    if (paymentIntent.status !== "succeeded") {
+    if (paymentIntent.status === "succeeded") {
       const {
         userId,
         userEmail,
