@@ -6,8 +6,8 @@ export const updatePasswordThunk = createAsyncThunk(
   async (data, { rejectWithValue }) => {
     try {
       const response = await axios({
-        // url: "/api/v1/users/update/password",
-        url:  "https://commerce-site-igmb.onrender.com/api/v1/users/update/password",
+        url: "/api/v1/users/update/password",
+        // url:  "https://commerce-site-igmb.onrender.com/api/v1/users/update/password",
         method: "PATCH",
         data,
       });

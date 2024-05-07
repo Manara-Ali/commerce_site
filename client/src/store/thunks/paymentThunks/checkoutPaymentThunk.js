@@ -5,8 +5,8 @@ export const checkoutPaymentThunk = createAsyncThunk("checkout/payment", async (
     console.log(data);
     try {
         const response = await axios({
-            // url: "/api/v1/stripe/checkout",
-            url: "https://commerce-site-igmb.onrender.com/api/v1/stripe/checkout",
+            url: "/api/v1/stripe/checkout",
+            // url: "https://commerce-site-igmb.onrender.com/api/v1/stripe/checkout",
             method: "POST",
             data,
         },
