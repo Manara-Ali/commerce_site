@@ -51,6 +51,8 @@ export const DetailMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
+  console.log(error);
+
   const { user, isAuthenticated, message } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
@@ -83,7 +85,7 @@ export const DetailMeal = ({ children }) => {
       return element._id === meal._id;
     });
 
-    if(mealInCart) setQuantity(mealInCart.qty);
+    if (mealInCart) setQuantity(mealInCart.qty);
     else setQuantity(1);
   };
 
@@ -124,10 +126,12 @@ export const DetailMeal = ({ children }) => {
   }
 
   if (error || error?.message) {
-    setTimeout(() => {
-      dispatch(clearState());
-      navigate("/");
-    }, 5000);
+    // setTimeout(() => {
+    //   dispatch(clearState());
+    //   navigate("/page-not-found");
+    // }, 5000);
+    dispatch(clearState());
+    navigate("/page-not-found");
   }
   return (
     <>
@@ -147,7 +151,7 @@ export const DetailMeal = ({ children }) => {
           meal?.secretMeal ? "blur hidden-meal" : ""
         } col-md-9 mx-auto`}
       >
-        {error ? <Alert type="alert-danger" message={error.message} /> : null}
+        {/* {error ? <Alert type="alert-danger" message={error.message} /> : null} */}
         <div className="border rounded-lg p-3">
           <img className="card-img-top" src={meal?.coverImage} alt={slug} />
         </div>
@@ -239,18 +243,18 @@ export const DetailMeal = ({ children }) => {
                 className="btn w-100 btn-secondary font-weight-bold ml-2"
                 disabled={addedToCart}
               >
-                <Link to="/cart" style={{color: "#f4f4f4"}}>
-                {cartLoading ? "Loading..." : "Go To Cart"}
+                <Link to="/cart" style={{ color: "#f4f4f4" }}>
+                  {cartLoading ? "Loading..." : "Go To Cart"}
                 </Link>
               </button>
-                <button
-                  className="btn w-100 font-weight-bold btn-success mr-2"
-                  // id="cart-btn"
-                  disabled={addedToCart}
-                  onClick={() => handleAddToCart(quantity)}
-                  >
-                  {cartLoading ? "Loading..." : "Add To Cart"}
-                </button>
+              <button
+                className="btn w-100 font-weight-bold btn-success mr-2"
+                // id="cart-btn"
+                disabled={addedToCart}
+                onClick={() => handleAddToCart(quantity)}
+              >
+                {cartLoading ? "Loading..." : "Add To Cart"}
+              </button>
             </div>
           </div>
         </div>

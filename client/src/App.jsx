@@ -23,7 +23,13 @@ import { Contact } from "./pages/Contact";
 import { Cart } from "./pages/Cart";
 import { Checkout } from "./pages/Checkout";
 import { VerifyPayment } from "./pages/VerifyPayment";
-import { getMealsCountThunk, clearState, storePagination, resetSortedMeals } from "./store";
+import { NotFound } from "./pages/NotFound";
+import {
+  getMealsCountThunk,
+  clearState,
+  storePagination,
+  resetSortedMeals,
+} from "./store";
 
 export const App = () => {
   const location = useLocation();
@@ -95,13 +101,22 @@ export const App = () => {
           path="/"
           element={
             <Home>
-              <Greeting  pageNumber={pageNumber} setPageNumber={setPageNumber}/>
-              <Weather location={userLocation} weather={weatherData}/>
+              <Greeting pageNumber={pageNumber} setPageNumber={setPageNumber} />
+              <Weather location={userLocation} weather={weatherData} />
             </Home>
           }
         />
-        <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/about" element={<About />} /> */}
+        <Route
+          path="/page-not-found"
+          element={
+            <NotFound>
+              <Greeting />
+              <Weather location={userLocation} weather={weatherData} />
+            </NotFound>
+          }
+        />
+        {/* <Route path="/contact" element={<Contact />} /> */}
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot/password" element={<ForgotPassword />} />
@@ -161,7 +176,7 @@ export const App = () => {
             </Protect>
           }
         />
-      <Route
+        <Route
           path="/cart"
           element={
             <Protect url="/login">
@@ -172,7 +187,7 @@ export const App = () => {
             </Protect>
           }
         />
-      <Route
+        <Route
           path="/checkout"
           element={
             <Protect url="/login">
@@ -183,7 +198,7 @@ export const App = () => {
             </Protect>
           }
         />
-      <Route
+        <Route
           path="/payment/success"
           element={
             <Protect url="/login">
