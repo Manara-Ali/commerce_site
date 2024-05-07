@@ -11,7 +11,7 @@ export const Rating = ({ value }) => {
               : "fa fa-star-o"
           }
           aria-hidden="true"
-          style={{ color: "#d7456b", marginRight: "-0.6rem", marginRight: "5px" }}
+          style={{ color: "#d7456b", marginRight: "5px" }}
         ></i>
       </span>
       <span>
@@ -24,7 +24,7 @@ export const Rating = ({ value }) => {
               : "fa fa-star-o"
           }
           aria-hidden="true"
-          style={{ color: "#d7456b", marginRight: "-0.6rem", marginRight: "5px" }}
+          style={{ color: "#d7456b", marginRight: "5px" }}
         ></i>
       </span>
       <span>
@@ -37,7 +37,7 @@ export const Rating = ({ value }) => {
               : "fa fa-star-o"
           }
           aria-hidden="true"
-          style={{ color: "#d7456b", marginRight: "-0.6rem", marginRight: "5px" }}
+          style={{ color: "#d7456b", marginRight: "5px" }}
         ></i>
       </span>
       <span>
@@ -50,7 +50,7 @@ export const Rating = ({ value }) => {
               : "fa fa-star-o"
           }
           aria-hidden="true"
-          style={{ color: "#d7456b", marginRight: "-0.6rem", marginRight: "5px" }}
+          style={{ color: "#d7456b", marginRight: "5px" }}
         ></i>
       </span>
       <span>
@@ -63,7 +63,7 @@ export const Rating = ({ value }) => {
               : "fa fa-star-o"
           }
           aria-hidden="true"
-          style={{ color: "#d7456b", marginRight: "-0.6rem", marginRight: "5px" }}
+          style={{ color: "#d7456b", marginRight: "5px" }}
         ></i>
       </span>
     </div>
