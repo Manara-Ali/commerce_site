@@ -106,7 +106,15 @@ export const App = () => {
             </Home>
           }
         />
-        {/* <Route path="/about" element={<About />} /> */}
+        <Route
+          path="/about"
+          element={
+            <About>
+              <Greeting />
+              <Weather location={userLocation} weather={weatherData} />
+            </About>
+          }
+        />
         <Route
           path="/page-not-found"
           element={
