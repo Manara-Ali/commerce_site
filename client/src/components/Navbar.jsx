@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router-dom";
-import logo from "../assets/silver-spoon-logo.png";
+import logo from "../assets/mimisKitchen.png";
 
 export const Navbar = () => {
   const navRef = useRef();

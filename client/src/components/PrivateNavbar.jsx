@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../assets/silver-spoon-logo.png";
+import logo from "../assets/mimisKitchen.png";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutThunk, clearCart } from "../store";
 import { calcItemsInCart } from "../utils/calcItemsInCart";
@@ -44,7 +44,7 @@ export const PrivateNavbar = () => {
     >
       {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
-        <img src={logo} alt="log" style={{ width: "150px", height: "100px" }} />
+        <img src={logo} alt="log" style={{ width: "100px", height: "auto" }} />
       </Link>
       <button
         className="navbar-toggler"

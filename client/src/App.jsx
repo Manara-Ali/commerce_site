@@ -116,6 +116,15 @@ export const App = () => {
           }
         />
         <Route
+          path="/contact"
+          element={
+            <Contact>
+              <Greeting />
+              <Weather location={userLocation} weather={weatherData} />
+            </Contact>
+          }
+        />
+        <Route
           path="/page-not-found"
           element={
             <NotFound>

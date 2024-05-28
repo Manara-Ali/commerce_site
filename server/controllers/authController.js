@@ -314,7 +314,7 @@ exports.signup = catchAsyncFn(async (req, res, next) => {
                             <tr>
                               <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
                                 <div style="font-family:Quattrocento;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#000000;">
-                                  <p style="margin: 0;"> Welcome to the Silver Spoon family! We are glad you chose to join us for your catering needs and quick bits. Feel free to contact us if you have any questions regarding our services.</p>
+                                  <p style="margin: 0;"> Welcome to the Silver Spoon family! We are glad you chose to join us for your catering needs and quick bites. Feel free to contact us if you have any questions regarding our services.</p>
                                   <p>Best Regards, ${user.name}!</p>
                                 </div>
                               </td>
