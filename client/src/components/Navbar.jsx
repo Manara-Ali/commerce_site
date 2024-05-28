@@ -12,7 +12,7 @@ export const Navbar = () => {
     >
       {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
-        <img src={logo} alt="log" style={{ width: "150px", height: "100px" }} />
+        <img src={logo} alt="log" style={{ width: "100px", height: "auto" }} />
       </Link>
       <button
         className="navbar-toggler"
