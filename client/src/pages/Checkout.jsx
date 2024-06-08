@@ -180,7 +180,7 @@ export const Checkout = ({ children }) => {
                 <p>
                   {item.qty} x ${item.price} ={" "}
                   <span className="font-weight-bold">
-                    $({item.qty * item.price}).toFixed(2)
+                    ${(item.qty * item.price).toFixed(2)}
                   </span>
                 </p>
               </div>
