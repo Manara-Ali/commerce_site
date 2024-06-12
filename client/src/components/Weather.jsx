@@ -7,16 +7,16 @@ export const Weather = ({ location, weather }) => {
       <span>
         {location.city}, {location.state}
       </span>
-      {/* <span>
+      <span>
         <img id="weather-icon"
           src={`https://openweathermap.org/img/w/${weather?.weather?.[0]?.icon}.png`}
           alt="weather icon"
         />
-      </span> */}
-      {/* <div className="d-flex align-items-center" id="temp-container">
+      </span>
+      <div className="d-flex align-items-center" id="temp-container">
         <img id="temp-icon" src={tempIcon} alt="temperature icon"/>
         <span>{tempFarenheit}ºF</span>
-      </div> */}
+      </div>
     </div>
   );
 };
