@@ -27,18 +27,18 @@ export const Contact = ({ children }) => {
         style={{ fontSize: "1.5rem", fontWeight: "400", color: "#000"}}
       >
         Address:
-        <p className="lead my-0">105 Leyland Xing,</p>
+        {/* <p className="lead my-0">105 Leyland Xing,</p>
         <p className="lead my-0">Dallas, GA</p>
-        <p className="lead my-0">30132, USA</p>
+        <p className="lead my-0">30132, USA</p> */}
       </p>
       <p
         className="px-4 lead font-weight-bold"
         style={{ fontSize: "1.5rem", fontWeight: "400", color: "#000"}}
       >
         Address:
-        <p className="lead my-0">105 Leyland Xing,</p>
+        {/* <p className="lead my-0">105 Leyland Xing,</p>
         <p className="lead my-0">Dallas, GA</p>
-        <p className="lead my-0">30132, USA</p>
+        <p className="lead my-0">30132, USA</p> */}
       </p>
       
 
