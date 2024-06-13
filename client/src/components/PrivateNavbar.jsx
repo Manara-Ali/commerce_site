@@ -1,12 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import logo from "../assets/mimisKitchen.png";
 import { useDispatch, useSelector } from "react-redux";
+import { MdOutlineRestaurantMenu } from "react-icons/md";
 import { logoutThunk, clearCart } from "../store";
 import { calcItemsInCart } from "../utils/calcItemsInCart";
 
 export const PrivateNavbar = () => {
   const navRef = useRef();
+  const [openMenu, setOpenMenu] = useState(false);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -28,7 +30,7 @@ export const PrivateNavbar = () => {
     dispatch(clearCart());
     setTimeout(() => {
       location.reload();
-    }, 500)
+    }, 500);
   };
 
   useEffect(() => {
@@ -40,7 +42,10 @@ export const PrivateNavbar = () => {
   return (
     <nav
       className="navbar navbar-expand-xl d-flex justify-content-between"
-      onClick={() => navRef.current?.click()}
+      onClick={() => {
+        navRef.current?.click();
+        setOpenMenu(!openMenu);
+      }}
     >
       {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
@@ -56,9 +61,16 @@ export const PrivateNavbar = () => {
         aria-label="Toggle navigation"
         ref={navRef}
       >
-        <span className="navbar-toggler-icon">
-          <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
-        </span>
+        {openMenu ? (
+          <MdOutlineRestaurantMenu
+            size={50}
+            color="#66ba30"
+          />
+        ) : (
+          <span className="navbar-toggler-icon">
+            <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
+          </span>
+        )}
       </button>
 
       <div className="collapse navbar-collapse" id="navbar-content">
@@ -91,33 +103,35 @@ export const PrivateNavbar = () => {
           </li>
           <li className="nav-item">
             <Link className="nav-link" to="/cart">
-              <div className="cart-div rounded-lg p-2 pr-3 mb-4" style={{border: "1px solid #fff"}}>
-            <i
-              className="fa fa-shopping-cart fa-2x"
-              aria-hidden="true"
-              style={{ color: "#fff", fontSize: "1.rem" }}
-            ></i>
-            <span
-              className="badge badge-warning"
-              id="lblCartCountNav"
-              style={{
-                paddingRight: `${
-                  calcItemsInCart(cartItems) < 10
-                    ? "0.5rem"
-                    : calcItemsInCart(cartItems) === 10
-                    ? "1.7rem"
-                    : "2.2rem"
-                }`,
-              }}
-            >
-
-              {calcItemsInCart(cartItems) > 0
-                ? calcItemsInCart(cartItems) <= 10
-                  ? calcItemsInCart(cartItems)
-                  : "10+"
-                : null}
-            </span>
-          </div>
+              <div
+                className="cart-div rounded-lg p-2 pr-3 mb-4"
+                style={{ border: "1px solid #fff" }}
+              >
+                <i
+                  className="fa fa-shopping-cart fa-2x"
+                  aria-hidden="true"
+                  style={{ color: "#fff", fontSize: "1.rem" }}
+                ></i>
+                <span
+                  className="badge badge-warning"
+                  id="lblCartCountNav"
+                  style={{
+                    paddingRight: `${
+                      calcItemsInCart(cartItems) < 10
+                        ? "0.5rem"
+                        : calcItemsInCart(cartItems) === 10
+                        ? "1.7rem"
+                        : "2.2rem"
+                    }`,
+                  }}
+                >
+                  {calcItemsInCart(cartItems) > 0
+                    ? calcItemsInCart(cartItems) <= 10
+                      ? calcItemsInCart(cartItems)
+                      : "10+"
+                    : null}
+                </span>
+              </div>
             </Link>
           </li>
           <li className="nav-item" id="profile-img-item">

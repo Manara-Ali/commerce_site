@@ -1,14 +1,19 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { MdOutlineRestaurantMenu } from "react-icons/md";
 import logo from "../assets/mimisKitchen.png";
 
 export const Navbar = () => {
   const navRef = useRef();
+  const [openMenu, setOpenMenu] = useState(false);
 
   return (
     <nav
       className="navbar navbar-expand-xl d-flex justify-content-between"
-      onClick={() => navRef.current?.click()}
+      onClick={() => {
+        navRef.current?.click();
+        setOpenMenu(!openMenu);
+      }}
     >
       {/* <div className="container"> */}
       <Link className="navbar-brand" href="/">
@@ -24,9 +29,17 @@ export const Navbar = () => {
         aria-label="Toggle navigation"
         ref={navRef}
       >
-        <span className="navbar-toggler-icon">
-          <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
-        </span>
+        {openMenu ? (
+          <MdOutlineRestaurantMenu
+            size={50}
+            color="#66ba30"
+            style={{ margin: 0 }}
+          />
+        ) : (
+          <span className="navbar-toggler-icon">
+            <i id="menu" className="fa fa-bars fa-3x" aria-hidden="true"></i>
+          </span>
+        )}
       </button>
 
       <div className="collapse navbar-collapse" id="navbar-content">
