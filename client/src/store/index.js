@@ -31,7 +31,7 @@ export const store = configureStore({
       serializableCheck: false,
     });
   },
-  devTools: false,
+  devTools: process.env.NODE_ENV === "production" ? false : true,
 });
 
 export const persistor = persistStore(store);
