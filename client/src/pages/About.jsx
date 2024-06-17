@@ -20,7 +20,7 @@ export const About = ({ children }) => {
       <h1 className="display-3 text-center">About Us</h1>
       <img className="my-5 border" src={random} alt="" style={{width: "95%", height: "auto", marginLeft: "auto", marginRight: "auto", display: "block", borderRadius: "10px"}}/>
       <p className="px-4" style={{fontSize: "1.5rem", fontWeight: "400", color: "#000"}}>
-        Welcome to Silver Spoon, where culinary excellence meets
+        Welcome to Mimi's Kitchen & Grill, where culinary excellence meets
         unparalleled service. Founded by Mimi, a passionate chef with a flair
         for creating unforgettable dining experiences, our catering services are
         designed to elevate any event, big or small.
@@ -35,7 +35,7 @@ export const About = ({ children }) => {
       </p>
       <img className="my-5 border" src={cookBook} alt="" style={{width: "95%", height: "auto", marginLeft: "auto", marginRight: "auto", display: "block", borderRadius: "10px"}}/>
       <p className="px-4" style={{fontSize: "1.5rem", fontWeight: "400", color: "#000"}}>
-        At Silver Spoon, we understand that each event is unique, which
+        At Mimi's Kitchen & Grill, we understand that each event is unique, which
         is why we work closely with our clients to customize menus that reflect
         their tastes and preferences. From elegant plated dinners to interactive
         food stations, we create culinary experiences that are as distinctive as
