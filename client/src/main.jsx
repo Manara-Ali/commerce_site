@@ -13,6 +13,7 @@ import { App } from "./App.jsx";
 import { store } from "./store/index.js";
 import { CustomProvider } from "./context/ModalContext.jsx";
 import { CustomQuantityProvider } from "./context/QuantityContext.jsx";
+import {disableReactDevTools} from '@fvilers/disable-react-devtools';
 
 const stripeLoad = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
@@ -22,7 +23,7 @@ const options = {
   amount: 1099,
 };
 
-console.log(process.env.NODE_ENV);
+if(process.env.NODE_ENV === "production") disableReactDevTools();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
