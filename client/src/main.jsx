@@ -22,6 +22,8 @@ const options = {
   amount: 1099,
 };
 
+console.log(process.env.NODE_ENV);
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Router>
     <Provider store={store}>

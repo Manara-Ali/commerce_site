@@ -1,0 +1,14 @@
+https://commerce-site-igmb.onrender.com/
+https://commerce-site-igmb.onrender.com/abouthttps://commerce-site-igmb.onrender.com/contacthttps://commerce-site-igmb.onrender.com/page-not-found
+https://commerce-site-igmb.onrender.com/login
+https://commerce-site-igmb.onrender.com/signup
+https://commerce-site-igmb.onrender.com/forgot/password
+https://commerce-site-igmb.onrender.com/reset/password/:resetToken
+https://commerce-site-igmb.onrender.com/profile
+https://commerce-site-igmb.onrender.com/delete-account
+https://commerce-site-igmb.onrender.com/create-meal
+https://commerce-site-igmb.onrender.com/:slug
+https://commerce-site-igmb.onrender.com/edit/:slug
+https://commerce-site-igmb.onrender.com/cart
+https://commerce-site-igmb.onrender.com/checkout
+https://commerce-site-igmb.onrender.com/payment/success
