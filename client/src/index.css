@@ -630,3 +630,10 @@ textarea {
 #verify-payment-container {
   height: 50vh !important;
 }
+
+.business-name {
+  font-size: 1.4rem;
+  font-style: italic;
+  font-weight: 500;
+  color: #d7456b;
+}
