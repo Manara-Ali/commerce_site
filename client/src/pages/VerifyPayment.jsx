@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { verifyPaymentThunk, clearPaymentState, clearCart } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
+import { Helmet } from "react-helmet-async";
 
 export const VerifyPayment = () => {
   const dispatch = useDispatch();
@@ -37,6 +38,15 @@ export const VerifyPayment = () => {
   }
 
   return (
+    <>
+      <Helmet>
+        <title>Payment Success</title>
+        <meta
+          name="description"
+          content="Your payment is being process. Thank you for your support."
+        />
+        <link rel="canonical" href="/reset/password/:resetToken" />
+      </Helmet>
     <div className="d-flex align-items-center" id="verify-payment-container" 
     // style={{ border: "1px solid red" }}
     >
@@ -59,5 +69,6 @@ export const VerifyPayment = () => {
         </Link>
       </div>
     </div>
+    </>
   );
 };

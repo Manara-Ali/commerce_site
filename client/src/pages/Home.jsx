@@ -11,6 +11,7 @@ import { Equalizer } from "../components/Equalizer";
 import { useMinMax } from "../utils/useMinMax";
 import { usePagination } from "../utils/usePagination";
 import { calcItemsInCart } from "../utils/calcItemsInCart";
+import { Helmet } from "react-helmet-async";
 
 export const Home = ({ children }) => {
   const { pageNumber, setPageNumber } = children[0].props;
@@ -169,6 +170,14 @@ export const Home = ({ children }) => {
 
   return (
     <>
+      <Helmet>
+        <title>Home</title>
+        <meta
+          name="description"
+          content="Check out our wide variety of dishes available for order. For more detail navigate to the detail page for each meal."
+        />
+        <link rel="canonical" href="/" />
+      </Helmet>
       <div className="d-flex justify-content-between">{children}</div>
       <div className="container">
         <hr />

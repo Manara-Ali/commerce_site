@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { resetPasswordThunk, clearErrors } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
+import { Helmet } from "react-helmet-async";
 
 export const ResetPassword = () => {
   const { resetToken } = useParams();
@@ -55,6 +56,14 @@ export const ResetPassword = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Reset Password</title>
+        <meta
+          name="description"
+          content="A password reset token was sent to the email we have on file. Please use that token to reset your password."
+        />
+        <link rel="canonical" href="/reset/password/:resetToken" />
+      </Helmet>
       <Link style={{width: "15rem"}} to={"/forgot/password"}>
         <button
           className="btn m-3 p-3 d-flex align-items-center justify-content-center"

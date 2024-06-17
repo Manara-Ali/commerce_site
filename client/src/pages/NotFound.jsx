@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 export const NotFound = ({ children }) => {
   return (
+    <>
+      <Helmet>
+        <title>404 Page Not Found</title>
+        <meta
+          name="description"
+          content="Uh-oh... Looks like something went wrong. Please verify your url and try again."
+        />
+        <link rel="canonical" href="/page-not-found" />
+      </Helmet>
     <div style={{height: "55vh"}}>
       <div className="d-flex justify-content-between">{children}</div>
       <Link style={{ width: "15rem" }} to={"/"}>
@@ -25,5 +35,6 @@ export const NotFound = ({ children }) => {
       <p className="display-5 px-5" style={{fontSize: "1.7rem"}}>The page you are looking for does not exist.</p>
       <p className="display-5 px-5" style={{fontSize: "1.7rem"}}>Click on the back button to return to the home page.</p>
     </div>
+    </>
   );
 };

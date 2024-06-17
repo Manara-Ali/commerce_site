@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { deleteAccountThunk, logoutThunk } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
+import { Helmet } from "react-helmet-async";
 
 export const DeleteAccount = ({children}) => {
   const dispatch = useDispatch();
@@ -44,6 +45,14 @@ export const DeleteAccount = ({children}) => {
   }
   return (
     <>
+      <Helmet>
+        <title>Delete Account</title>
+        <meta
+          name="description"
+          content="Looking to delete your account? Use this page to accomplish that. We are truly sad to see you leave but hopeful you will join our family soon again."
+        />
+        <link rel="canonical" href="/delete-account" />
+      </Helmet>
     <div className="d-flex justify-content-between">{children}</div>   
     <Link style={{width: "15rem"}} to={"/profile"}>
         <button

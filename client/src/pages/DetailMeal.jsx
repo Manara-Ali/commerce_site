@@ -16,6 +16,7 @@ import { ModalContext } from "../context/ModalContext";
 import { QuantityContext } from "../context/QuantityContext";
 import { Delete } from "../components/Delete";
 import { Review } from "../components/Review";
+import { Helmet } from "react-helmet-async";
 
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
@@ -135,6 +136,14 @@ export const DetailMeal = ({ children }) => {
   }
   return (
     <>
+      <Helmet>
+        <title>Meal Details</title>
+        <meta
+          name="description"
+          content="Learn more about our dish and cooking process to familiarize yourself with your order."
+        />
+        <link rel="canonical" href="/:slug" />
+      </Helmet>
       <div className="d-flex justify-content-between">{children}</div>
       <Link style={{ width: "15rem" }} to={"/"}>
         <button

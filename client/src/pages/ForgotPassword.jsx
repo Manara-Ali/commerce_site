@@ -4,6 +4,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { forgotPasswordThunk, clearErrors } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
+import { Helmet } from "react-helmet-async";
 
 export const ForgotPassword = () => {
   const dispatch = useDispatch();
@@ -50,6 +51,14 @@ export const ForgotPassword = () => {
 
   return (
     <>
+      <Helmet>
+        <title>Forgot Password</title>
+        <meta
+          name="description"
+          content="Forgot Password? Please use this page to request a password reset in order to be able to log in again."
+        />
+        <link rel="canonical" href="/forgot/password" />
+      </Helmet>
       <Link style={{width: "15rem"}} to={"/login"}>
         <button
           className="btn m-3 p-3 d-flex align-items-center justify-content-center"

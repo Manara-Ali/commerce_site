@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
+import {HelmetProvider} from 'react-helmet-async';
 import { persistor } from "./store/index.js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Elements } from "@stripe/react-stripe-js";
@@ -28,7 +29,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <CustomProvider>
           <CustomQuantityProvider>
             <Elements stripe={stripeLoad} options={options}>
+              <HelmetProvider>
               <App />
+              </HelmetProvider>
             </Elements>
           </CustomQuantityProvider>
         </CustomProvider>

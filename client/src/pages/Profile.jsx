@@ -15,6 +15,7 @@ import {
 } from "../store";
 import { Spinner } from "../components/Spinner";
 import { Alert } from "../components/Alert";
+import { Helmet } from "react-helmet-async";
 
 export const Profile = ({ children }) => {
   const dispatch = useDispatch();
@@ -175,6 +176,14 @@ export const Profile = ({ children }) => {
 
   return (
     <>
+      <Helmet>
+        <title>Profile</title>
+        <meta
+          name="description"
+          content="Use the profile page to update your information such name, email, and/or password."
+        />
+        <link rel="canonical" href="/profile" />
+      </Helmet>
       <div className="d-flex justify-content-between">{children}</div>
       <div className="container">
         <h1 className="display-3 text-center my-3">User Profile</h1>

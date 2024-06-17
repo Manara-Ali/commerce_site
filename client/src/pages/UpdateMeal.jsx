@@ -11,6 +11,7 @@ import { app } from "../utils/firebase";
 import { updateMealThunk, clearState } from "../store";
 import { Alert } from "../components/Alert";
 import { Spinner } from "../components/Spinner";
+import { Helmet } from "react-helmet-async";
 
 export const UpdateMeal = ({ children }) => {
   const { slug } = useParams();
@@ -186,6 +187,14 @@ export const UpdateMeal = ({ children }) => {
 
   return (
     <>
+      <Helmet>
+        <title>Reset Password</title>
+        <meta
+          name="description"
+          content="Update a meal name, description, price, etc... through this page and persist any changes."
+        />
+        <link rel="canonical" href="/edit/:meal" />
+      </Helmet>
       <div className="d-flex justify-content-between">{children}</div>
       <Link style={{ width: "15rem" }} to={`/${slug}`}>
         <button

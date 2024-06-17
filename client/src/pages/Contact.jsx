@@ -1,7 +1,17 @@
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 export const Contact = ({ children }) => {
   return (
+    <>
+      <Helmet>
+        <title>Contact</title>
+        <meta
+          name="description"
+          content="Contact us anytime with questions and/or comments that you may have or simply if you're looking for more information."
+        />
+        <link rel="canonical" href="/contact" />
+      </Helmet>
     <div>
       <div className="d-flex justify-content-between">{children}</div>
       <Link style={{ width: "15rem" }} to={"/"}>
@@ -116,5 +126,6 @@ export const Contact = ({ children }) => {
         </p>
       </p>
     </div>
+    </>
   );
 };
