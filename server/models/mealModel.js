@@ -55,6 +55,14 @@ const mealSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Each meal must specify how many people it can serve"],
     },
+    size: {
+      type: String,
+      default: undefined,
+      enum: {
+        values: ["12oz", "10oz", "8oz"],
+        message: "Drinks and Snacks sizes can only have a value of '12oz', '10oz', or '8oz'! Try again."
+      }
+    },
     category: {
       type: String,
       required: [true, "Each item on the menu must have a category! Try again."],

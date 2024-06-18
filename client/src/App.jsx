@@ -47,47 +47,47 @@ export const App = () => {
     setPageNumber(1);
   }, []);
 
-  useEffect(() => {
-    axios.get("https://api.ipify.org?format=json").then((response) => {
-      setUserIp(response.data.ip);
-    });
-  }, []);
+  // useEffect(() => {
+  //   axios.get("https://api.ipify.org?format=json").then((response) => {
+  //     setUserIp(response.data.ip);
+  //   });
+  // }, []);
 
-  useEffect(() => {
-    const params = {
-      auth: import.meta.env.VITE_GEOCODE_API_KEY,
-      locate: userIp,
-      json: "1",
-    };
+  // useEffect(() => {
+  //   const params = {
+  //     auth: import.meta.env.VITE_GEOCODE_API_KEY,
+  //     locate: userIp,
+  //     json: "1",
+  //   };
 
-    axios
-      .get("https://geocode.xyz", { params })
-      .then((response) => {
-        // console.log(response);
-        setUserLocation(response.data);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-  }, [userIp]);
+  //   axios
+  //     .get("https://geocode.xyz", { params })
+  //     .then((response) => {
+  //       // console.log(response);
+  //       setUserLocation(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
+  // }, [userIp]);
 
-  useEffect(() => {
-    const getWeather = async () => {
-      const response = await axios({
-        url: `https://api.openweathermap.org/data/2.5/weather?lat=${
-          userLocation.latt
-        }&lon=${userLocation.longt}&appid=${
-          import.meta.env.VITE_OPENWEATHER_API_KEY
-        }`,
-      });
+  // useEffect(() => {
+  //   const getWeather = async () => {
+  //     const response = await axios({
+  //       url: `https://api.openweathermap.org/data/2.5/weather?lat=${
+  //         userLocation.latt
+  //       }&lon=${userLocation.longt}&appid=${
+  //         import.meta.env.VITE_OPENWEATHER_API_KEY
+  //       }`,
+  //     });
 
-      setWeatherData(response.data);
-    };
+  //     setWeatherData(response.data);
+  //   };
 
-    if (userLocation.latt && userLocation.longt) {
-      getWeather();
-    }
-  }, [userLocation?.latt, userLocation?.longt]);
+  //   if (userLocation.latt && userLocation.longt) {
+  //     getWeather();
+  //   }
+  // }, [userLocation?.latt, userLocation?.longt]);
 
   const { isAuthenticated, user } = useSelector((state) => {
     return state.usersCombinedReducer;

@@ -25,6 +25,8 @@ export const Home = ({ children }) => {
   const [debouncedSearchTerm, setDebouncedSearchTerm] = useState("");
   const [applySort, setApplySort] = useState(false);
   const [isSorted, setIsSorted] = useState([]);
+  const [category, setCategory] = useState("all");
+  // const [data, setData] = useState();
 
   const { totalMeals, paginatedMeals } = usePagination(
     debouncedSearchTerm,
@@ -32,6 +34,8 @@ export const Home = ({ children }) => {
   );
 
   // console.log("pagenumber =", pageNumber);
+
+  console.log(category);
 
   let {
     loading,
@@ -237,14 +241,41 @@ export const Home = ({ children }) => {
                 ></i>
               </button>
               <div className="dropdown-menu">
-                <a className="dropdown-item" href="#">
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(e) =>
+                    setCategory(e.target.textContent.toLowerCase())
+                  }
+                >
                   Food
                 </a>
-                <a className="dropdown-item" href="#">
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(e) =>
+                    setCategory(e.target.textContent.toLowerCase())
+                  }
+                >
                   Snacks
                 </a>
-                <a className="dropdown-item" href="#">
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(e) =>
+                    setCategory(e.target.textContent.toLowerCase())
+                  }
+                >
                   Drinks
+                </a>
+                <a
+                  className="dropdown-item"
+                  href="#"
+                  onClick={(e) =>
+                    setCategory(e.target.textContent.toLowerCase())
+                  }
+                >
+                  All
                 </a>
               </div>
             </div>
@@ -252,10 +283,14 @@ export const Home = ({ children }) => {
           <div className="cart-div border rounded-lg p-2 pr-3">
             <Link to="/cart">
               <i
-              className="fa fa-shopping-cart fa-2x"
-              aria-hidden="true"
-              style={{ color: "#d7456b", fontSize: "1.rem", cursor: "pointer" }}
-            ></i>
+                className="fa fa-shopping-cart fa-2x"
+                aria-hidden="true"
+                style={{
+                  color: "#d7456b",
+                  fontSize: "1.rem",
+                  cursor: "pointer",
+                }}
+              ></i>
             </Link>
             <span
               className="badge badge-warning"
@@ -283,7 +318,10 @@ export const Home = ({ children }) => {
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />
         <div className="row" id="dish-div">
-          {isSorted?.map((element, index) => {
+          {isSorted?.filter((element) => {
+            if(category === "all") return element;
+            else return element.category === category;
+          })?.map((element, index) => {
             if (totalMeals?.length === index + 1) {
               return (
                 <div key={element._id}>
