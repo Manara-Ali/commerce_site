@@ -1,8 +1,14 @@
 import { useState, useEffect, useRef, useContext } from "react";
-import { Link, useParams, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useParams,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getMealThunk,
+  getMealBySizeThunk,
   clearState,
   addToCartRequest,
   addToCartSuccess,
@@ -22,6 +28,7 @@ import { PriceContext } from "../context/PriceContext";
 
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
+  const [searchParam, setSearchParam] = useSearchParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const sliderRef = useRef();
@@ -84,27 +91,35 @@ export const DetailMeal = ({ children }) => {
   };
 
   const handleSizeChange = (e) => {
+    const drinkSize = Number(e.target.value);
 
-    console.log(+e.target.value);
-
-    setSize(e.target.value);
-    if (+e.target.value === 16) {
+    setSize(drinkSize);
+    if (drinkSize === 16) {
       setPrice(4.99);
-    } else if (+e.target.value === 12) {
+      setSearchParam({ size: drinkSize });
+    } else if (drinkSize === 12) {
       setPrice(3.99);
-    } else if (+e.target.value === 10) {
+      setSearchParam({ size: drinkSize });
+    } else if (drinkSize === 10) {
       setPrice(2.99);
+      setSearchParam({ size: drinkSize });
     }
   };
 
   const checkForMealInCart = (meal) => {
     const mealInCart = cartItems?.find((element) => {
-      return element._id === meal._id;
+      return element?._id === meal?._id;
     });
 
     if (mealInCart) setQuantity(mealInCart.qty);
     else setQuantity(1);
   };
+
+  useEffect(() => {
+    if (slug.includes("juice")) {
+      setSearchParam({ size: 16 });
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(getMealThunk(slug));
@@ -119,6 +134,15 @@ export const DetailMeal = ({ children }) => {
       dispatch(clearState());
     }
   }, [meal]);
+
+  useEffect(() => {
+    console.log(searchParam.get("size"));
+    if (searchParam.get("size")) {
+      dispatch(
+        getMealBySizeThunk({ data: slug, size: searchParam.get("size") })
+      );
+    }
+  }, [size]);
 
   useEffect(() => {
     window.addEventListener("resize", handleWindowSize);
@@ -195,7 +219,7 @@ export const DetailMeal = ({ children }) => {
           </div>
           <div className="d-flex justify-content-between">
             <span className="lead mr-3">Price:</span>
-            <h4 className="text-center">${meal?.price}</h4>
+            <h4 className="text-center">${price || meal?.price}</h4>
           </div>
           <div className="d-flex justify-content-between">
             <span className="lead mr-3">Spice Level:</span>

@@ -51,6 +51,7 @@ export * from "./thunks/mealThunks/getPaginatedMealsThunk";
 export * from "./thunks/mealThunks/getMealsCountThunk";
 export * from "./thunks/mealThunks/createMealThunk";
 export * from "./thunks/mealThunks/getMealThunk";
+export * from "./thunks/mealThunks/getMealBySizeThunk";
 export * from "./thunks/mealThunks/updateMealThunk";
 export * from "./thunks/mealThunks/deleteMealThunk";
 export * from "./thunks/reviewThunks/createReviewThunk";

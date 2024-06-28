@@ -86,7 +86,7 @@ export const Home = ({ children }) => {
   const memoizedMeals = createSelector(
     (state) => totalMeals,
     (meals) => {
-      if (isSorted.length) {
+      if (isSorted?.length) {
         return isSorted?.filter((element) => {
           return element?.name
             ?.toLowerCase()
@@ -140,7 +140,7 @@ export const Home = ({ children }) => {
   }, [searchTerm]);
 
   useEffect(() => {
-    if (totalMeals.length) {
+    if (totalMeals?.length) {
       const { min, max } = useMinMax(totalMeals);
       setMinPrice(min);
       setMaxPrice(max);
@@ -157,7 +157,7 @@ export const Home = ({ children }) => {
     } else if (searchTerm) {
       setIsSorted(meals);
     } else {
-      (totalMeals.length && setIsSorted(totalMeals)) ||
+      (totalMeals?.length && setIsSorted(totalMeals)) ||
         setIsSorted(sortedMeals);
     }
   }, [applySort, status, totalMeals, sortedMeals]);

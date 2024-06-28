@@ -12,7 +12,7 @@ const mealSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, "Every meal must have a name"],
-      unique: [true, "Each meal must have a unique name"],
+      // unique: [true, "Each meal must have a unique name"],
       minlength: [3, "Meal's name must be at least 3 characters long"],
       maxlength: [40, "Meal's name should not exceed 40 characters"],
     },
@@ -57,7 +57,7 @@ const mealSchema = new mongoose.Schema(
     },
     size: {
       type: Number,
-      default: 16,
+      // default: 16,
       enum: {
         values: [10, 12, 16],
         message: "Drinks and Snacks sizes can only have a value of '16oz', '12oz', or '10oz'! Try again."

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { getAllMealsThunk } from "../thunks/mealThunks/getAllMealsThunk";
 import { createMealThunk } from "../thunks/mealThunks/createMealThunk";
 import { getMealThunk } from "../thunks/mealThunks/getMealThunk";
+import { getMealBySizeThunk } from "../thunks/mealThunks/getMealBySizeThunk";
 import { updateMealThunk } from "../thunks/mealThunks/updateMealThunk";
 import { deleteMealThunk } from "../thunks/mealThunks/deleteMealThunk";
 import { getMealsCountThunk } from "../thunks/mealThunks/getMealsCountThunk";
@@ -36,7 +37,7 @@ const mealsSlice = createSlice({
       // if(!state.totalMeals?.length) return;
       
       // console.log("There");
-      if(state.totalMeals.length) {
+      if(state?.totalMeals?.length) {
         const idArr = state.totalMeals?.map((element) => element._id);
   
         state?.paginatedMeals?.forEach((element) => {
@@ -77,6 +78,12 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(getMealThunk.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+      state.status = "";
+    });
+
+    builder.addCase(getMealBySizeThunk.pending, (state) => {
       state.loading = true;
       state.error = null;
       state.status = "";
@@ -128,6 +135,12 @@ const mealsSlice = createSlice({
       state.status = action.payload.status;
     });
 
+    builder.addCase(getMealBySizeThunk.fulfilled, (state, action) => {
+      state.loading = false;
+      state.meal = action.payload?.data?.meal;
+      state.status = action.payload.status;
+    });
+
     builder.addCase(updateMealThunk.fulfilled, (state, action) => {
       state.loading = false;
       state.meal = action.payload?.data?.meal;
@@ -167,6 +180,14 @@ const mealsSlice = createSlice({
     });
 
     builder.addCase(getMealThunk.rejected, (state, action) => {
+      // console.log(action.payload);
+      state.loading = false;
+      state.error = { message: action.payload?.message };
+      state.status = action.payload.status;
+      state.meal = null;
+    });
+
+    builder.addCase(getMealBySizeThunk.rejected, (state, action) => {
       // console.log(action.payload);
       state.loading = false;
       state.error = { message: action.payload?.message };

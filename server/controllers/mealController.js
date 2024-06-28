@@ -8,9 +8,19 @@ exports.getAllMeals = catchAsyncFn(async (req, res) => {
 
   apiFeatures = apiFeatures.filter().sort().fieldLimit().paginate();
 
-  const meals = await apiFeatures.query
+  let meals = await apiFeatures.query
     .find(req.showMeals)
     .select("+secretMeal");
+
+  meals = meals.filter((element, index, arr) => {
+    return arr.findIndex((item) => {
+      return (element._id === item._id) && (element.size ? element.size === 16 : element);
+    }) === index;
+  });
+
+  meals.forEach((element) => {
+    console.log(element.name, element.size);
+  });
 
   res.status(200).json({
     status: "success",
@@ -35,7 +45,6 @@ exports.createMeal = catchAsyncFn(async (req, res, next) => {
   });
 });
 
-
 exports.countDocuments = catchAsyncFn(async (req, res, next) => {
   const count = await Meal.countDocuments();
 
@@ -45,20 +54,31 @@ exports.countDocuments = catchAsyncFn(async (req, res, next) => {
       count,
     },
   });
-})
+});
 
 exports.getMeal = catchAsyncFn(async (req, res, next) => {
+  let meal;
+
   let { slug } = req.params;
+
+  let { size } = req.query;
+
   const isSecretMeal = req.showMeals;
 
   if (isSecretMeal.isSecretMeal) {
     slug = "undefined";
+    size = "undefined";
   }
 
-  const meal = await Meal.findOne({ slug }).select("+secretMeal")
-  .populate({
-    path: "reviews",
-  });
+  if (size) {
+    meal = await Meal.findOne({ slug, size }).select("+secretMeal").populate({
+      path: "reviews",
+    });
+  } else {
+    meal = await Meal.findOne({ slug }).select("+secretMeal").populate({
+      path: "reviews",
+    });
+  }
 
   if (!meal) {
     const applicationError = new ApplicationError(
@@ -78,9 +98,15 @@ exports.getMeal = catchAsyncFn(async (req, res, next) => {
 });
 
 exports.updateMeal = catchAsyncFn(async (req, res, next) => {
+  let meal;
   const { slug } = req.params;
+  const { size } = req.query;
 
-  let meal = await Meal.findOne({ slug });
+  if (size) {
+    meal = await Meal.findOne({ slug, size });
+  } else {
+    meal = await Meal.findOne({ slug });
+  }
 
   if (!meal) {
     const applicationError = new ApplicationError(
@@ -112,9 +138,15 @@ exports.updateMeal = catchAsyncFn(async (req, res, next) => {
 });
 
 exports.deleteMeal = catchAsyncFn(async (req, res, next) => {
+  let meal;
   const { slug } = req.params;
+  const { size } = req.query;
 
-  const meal = await Meal.findOne({ slug });
+  if (size) {
+    meal = await Meal.findOne({ slug, size });
+  } else {
+    meal = await Meal.findOne({ slug });
+  }
 
   if (!meal) {
     const applicationError = new ApplicationError(

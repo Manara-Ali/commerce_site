@@ -1,11 +1,11 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import axios from 'axios';
 
-export const getMealThunk = createAsyncThunk("meal/get-one", async (data, {rejectWithValue}) => {
-    console.log(data);
+export const getMealBySizeThunk = createAsyncThunk("meal/get-one-by-size", async (obj, {rejectWithValue}) => {
+    console.log(obj);
     try {
         const response = await axios({
-            url: `/api/v1/meals/${data}`,
+            url: `/api/v1/meals/${obj.data}?size=${obj.size}`,
             // url: `https://commerce-site-igmb.onrender.com/api/v1/meals/${data}`,
             method: "GET",
         },
