@@ -12,7 +12,7 @@ export const NotFound = ({ children }) => {
         />
         <link rel="canonical" href="/page-not-found" />
       </Helmet>
-    <div style={{height: "55vh"}}>
+    <div className="mb-5" style={{height: "55vh"}}>
       <div className="d-flex justify-content-between">{children}</div>
       <Link style={{ width: "15rem" }} to={"/"}>
         <button
