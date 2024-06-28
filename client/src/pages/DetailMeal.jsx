@@ -17,6 +17,8 @@ import { QuantityContext } from "../context/QuantityContext";
 import { Delete } from "../components/Delete";
 import { Review } from "../components/Review";
 import { Helmet } from "react-helmet-async";
+import { SizeContext } from "../context/SizeContext";
+import { PriceContext } from "../context/PriceContext";
 
 export const DetailMeal = ({ children }) => {
   const { slug } = useParams();
@@ -25,6 +27,8 @@ export const DetailMeal = ({ children }) => {
   const sliderRef = useRef();
   const { modalOpen, setModalOpen } = useContext(ModalContext);
   const { quantity, setQuantity } = useContext(QuantityContext);
+  const { size, setSize } = useContext(SizeContext);
+  const { price, setPrice } = useContext(PriceContext);
 
   const getWindowSize = function () {
     return {
