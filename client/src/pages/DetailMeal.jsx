@@ -117,7 +117,18 @@ export const DetailMeal = ({ children }) => {
 
   useEffect(() => {
     if (slug.includes("juice")) {
-      setSearchParam({ size: 16 });
+      setSearchParam({ size: searchParam.get("size") });
+
+      if (searchParam.get("size")) setSize(searchParam.get("size"));
+      else(setSearchParam({size: 16}));
+    }
+
+    if (Number(searchParam.get("size")) === 16) {
+      setPrice(4.99);
+    } else if (Number(searchParam.get("size")) === 12) {
+      setPrice(3.99);
+    } else if (Number(searchParam.get("size")) === 10) {
+      setPrice(2.99);
     }
   }, []);
 

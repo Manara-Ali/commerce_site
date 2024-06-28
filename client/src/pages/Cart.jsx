@@ -82,25 +82,50 @@ export const Cart = ({ children }) => {
                       borderRadius: "1rem",
                     }}
                   ></div>
-                  <div className="col-4 d-flex align-items-center">
-                    <Link to={`/${item.slug}`} className="d-flex">
-                      <div className="row d-flex align-items-center">
-                        <p
-                          className="text-dark font-weight-bold col-10"
-                          style={{ textDecoration: "underline" }}
-                        >
-                          {item.name}
-                        </p>
-                      </div>
-                    </Link>
-                    <i
-                      className="fa fa-trash-o fa-2x mb-4"
-                      aria-hidden="true"
-                      style={{ color: "#d7456b" }}
-                      // onClick={() => dispatch(removeFromCart(item))}
-                      onClick={() => handleItemRemoveRequest(item)}
-                    ></i>
-                  </div>
+                  {item.size ? (
+                    <div className="col-4 d-flex align-items-center">
+                      <Link
+                        to={`/${item.slug}?size=${item.size}`}
+                        className="d-flex"
+                      >
+                        <div className="row d-flex align-items-center">
+                          <p
+                            className="text-dark font-weight-bold col-10"
+                            style={{ textDecoration: "underline" }}
+                          >
+                            {item.name}
+                          </p>
+                        </div>
+                      </Link>
+                      <i
+                        className="fa fa-trash-o fa-2x mb-4"
+                        aria-hidden="true"
+                        style={{ color: "#d7456b" }}
+                        // onClick={() => dispatch(removeFromCart(item))}
+                        onClick={() => handleItemRemoveRequest(item)}
+                      ></i>
+                    </div>
+                  ) : (
+                    <div className="col-4 d-flex align-items-center">
+                      <Link to={`/${item.slug}`} className="d-flex">
+                        <div className="row d-flex align-items-center">
+                          <p
+                            className="text-dark font-weight-bold col-10"
+                            style={{ textDecoration: "underline" }}
+                          >
+                            {item.name}
+                          </p>
+                        </div>
+                      </Link>
+                      <i
+                        className="fa fa-trash-o fa-2x mb-4"
+                        aria-hidden="true"
+                        style={{ color: "#d7456b" }}
+                        // onClick={() => dispatch(removeFromCart(item))}
+                        onClick={() => handleItemRemoveRequest(item)}
+                      ></i>
+                    </div>
+                  )}
                   <div className="col-2 d-flex justify-content-center align-items-center p-0">
                     <p>${item.price}</p>
                   </div>
