@@ -56,8 +56,6 @@ export const DetailMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
-  console.log(error);
-
   const { user, isAuthenticated, message } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
@@ -86,12 +84,15 @@ export const DetailMeal = ({ children }) => {
   };
 
   const handleSizeChange = (e) => {
+
+    console.log(+e.target.value);
+
     setSize(e.target.value);
-    if (e.target.value === 16) {
+    if (+e.target.value === 16) {
       setPrice(4.99);
-    } else if (e.target.value === 12) {
+    } else if (+e.target.value === 12) {
       setPrice(3.99);
-    } else if (e.target.value === 10) {
+    } else if (+e.target.value === 10) {
       setPrice(2.99);
     }
   };
@@ -240,6 +241,30 @@ export const DetailMeal = ({ children }) => {
               ></i>
             </h4>
           </div>
+          {meal?.size && (
+            <div className="mt-5 mx-auto border rounded-lg pr-4">
+              <div className="d-flex justify-content-between align-items-center">
+                <p className="pt-3 text-muted font-weight-bold col-md-6">
+                  Size:
+                </p>
+                <select
+                  className=" custom-select"
+                  style={{ fontSize: "1.3rem" }}
+                  onChange={handleSizeChange}
+                  value={size}
+                >
+                  {[16, 12, 10].map((element, index) => {
+                    return (
+                      <option key={index} value={element}>
+                        {`${element} oz`}
+                      </option>
+                    );
+                  })}
+                </select>
+              </div>
+              <div className="d-flex flex-row-reverse my-3 pl-4"></div>
+            </div>
+          )}
           <div className="mt-5 mx-auto border rounded-lg pr-4">
             <div className="d-flex justify-content-between align-items-center">
               <p className="pt-3 text-muted font-weight-bold col-md-6">

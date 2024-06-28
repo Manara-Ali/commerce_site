@@ -2,7 +2,7 @@ import {useState, createContext} from 'react';
 
 export const SizeContext = createContext();
 
-export const CustomPriceProvider = ({children}) => {
+export const CustomSizeProvider = ({children}) => {
     const [size, setSize] = useState(16);
 
     const obj = {
