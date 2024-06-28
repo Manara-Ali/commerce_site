@@ -85,6 +85,17 @@ export const DetailMeal = ({ children }) => {
     setAddedToCart(true);
   };
 
+  const handleSizeChange = (e) => {
+    setSize(e.target.value);
+    if (e.target.value === 16) {
+      setPrice(4.99);
+    } else if (e.target.value === 12) {
+      setPrice(3.99);
+    } else if (e.target.value === 10) {
+      setPrice(2.99);
+    }
+  };
+
   const checkForMealInCart = (meal) => {
     const mealInCart = cartItems?.find((element) => {
       return element._id === meal._id;
