@@ -1,4 +1,4 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { Helmet } from "react-helmet-async";
@@ -6,12 +6,17 @@ import { addToCartRequest, addToCartSuccess, clearCart } from "../store";
 import { Alert } from "../components/Alert";
 import { RemoveFromCart } from "../components/RemoveFromCart";
 import { QuantityContext } from "../context/QuantityContext";
+import { SizeContext } from "../context/SizeContext";
+import { PriceContext } from "../context/PriceContext";
 import { ModalWindow } from "../components/ModalWindow";
 import { ModalContext } from "../context/ModalContext";
 
 export const Cart = ({ children }) => {
   const dispatch = useDispatch();
   const { quantity } = useContext(QuantityContext);
+  const { size, setSize } = useContext(SizeContext);
+  const { price, setPrice } = useContext(PriceContext);
+  const [dropDownItem, setDropDownItem] = useState({});
   const [itemToRemove, setItemToRemove] = useState(null);
 
   const { loading, error, status, cartItems } = useSelector((state) => {
@@ -25,6 +30,23 @@ export const Cart = ({ children }) => {
     dispatch(addToCartSuccess({ ...item, qty: Number(e.target.value) }));
   };
 
+  const handleSizeChange = (e, item) => {
+    const drinkSize = Number(e.target.value);
+
+    setSize(drinkSize);
+
+    if (drinkSize === 16) {
+      setPrice(4.99);
+    } else if (drinkSize === 12) {
+      setPrice(3.99);
+    } else if (drinkSize === 10) {
+      setPrice(2.99);
+    }
+
+    // dispatch(addToCartRequest());
+    // dispatch(addToCartSuccess({ ...item, size: Number(e.target.value), price }));
+  };
+
   const handleItemRemoveRequest = (item) => {
     document.body.scrollTop = document.documentElement.scrollTop = 0;
     document.querySelector(".app-container").classList.add("blur");
@@ -32,9 +54,27 @@ export const Cart = ({ children }) => {
     setItemToRemove(item);
   };
 
+  const selectItem = (e, item) => {
+    console.log({
+      ...item,
+      size: Number(e.target.value),
+      price: Number(e.target.value),
+    });
+    return { ...item, size, price };
+  };
+
   const handleClearCart = () => {
     dispatch(clearCart());
   };
+
+  useEffect(() => {
+    if(dropDownItem.name) {
+      dispatch(addToCartRequest());
+      dispatch(
+        addToCartSuccess({...dropDownItem, price})
+      );
+    }
+  }, [dropDownItem]);
 
   return (
     <>
@@ -77,7 +117,7 @@ export const Cart = ({ children }) => {
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
                       height: "10rem",
-                      width: "5rem",
+                      // width: "5rem",
                       border: "2px solid #939393",
                       borderRadius: "1rem",
                     }}
@@ -127,9 +167,10 @@ export const Cart = ({ children }) => {
                     </div>
                   )}
                   <div className="col-2 d-flex justify-content-center align-items-center p-0">
-                    <p>${item.price}</p>
+                    {/* <p>${item.price}</p> */}
+                    <p>${price}</p>
                   </div>
-                  <div className="d-flex align-items-center">
+                  <div className="d-flex align-items-center" style={{border: "1px solid red"}}>
                     <p className="text-muted col-md-6">Qty:</p>
                     <select
                       className=" custom-select mb-3"
@@ -147,7 +188,51 @@ export const Cart = ({ children }) => {
                         );
                       })}
                     </select>
+                    {item.size ? (
+                    <div className="d-flex align-items-center">
+                      <p className="text-muted col-md-6">Size:</p>
+                      <select
+                        className=" custom-select mb-3"
+                        style={{ fontSize: "1.3rem" }}
+                        value={size === item.size ? item.size : size}
+                        onChange={(e) => {
+                          handleSizeChange(e, item);
+                          setDropDownItem({...item, size: Number(e.target.value)});
+                        }}
+                      >
+                        {[16, 12, 10].map((element) => {
+                          return (
+                            <option key={element} value={element}>
+                              {element}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  ) : null}
                   </div>
+                  {/* {item.size ? (
+                    <div className="d-flex align-items-center">
+                      <p className="text-muted col-md-6">Size:</p>
+                      <select
+                        className=" custom-select mb-3"
+                        style={{ fontSize: "1.3rem" }}
+                        value={size === item.size ? item.size : size}
+                        onChange={(e) => {
+                          handleSizeChange(e, item);
+                          setDropDownItem({...item, size: Number(e.target.value)});
+                        }}
+                      >
+                        {[16, 12, 10].map((element) => {
+                          return (
+                            <option key={element} value={element}>
+                              {element}
+                            </option>
+                          );
+                        })}
+                      </select>
+                    </div>
+                  ) : null} */}
                 </div>
               </div>
             );

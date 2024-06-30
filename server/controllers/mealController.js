@@ -18,10 +18,6 @@ exports.getAllMeals = catchAsyncFn(async (req, res) => {
     }) === index;
   });
 
-  meals.forEach((element) => {
-    console.log(element.name, element.size);
-  });
-
   res.status(200).json({
     status: "success",
     results: meals.length,

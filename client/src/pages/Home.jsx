@@ -33,10 +33,6 @@ export const Home = ({ children }) => {
     pageNumber
   );
 
-  // console.log("pagenumber =", pageNumber);
-
-  console.log(category);
-
   let {
     loading,
     loadingPagination,
@@ -68,7 +64,6 @@ export const Home = ({ children }) => {
       if (observer.current) observer.current.disconnect();
 
       observer.current = new IntersectionObserver((entries) => {
-        // console.log(mealsCount, totalMeals.length)
         if (
           entries[0].isIntersecting &&
           totalMeals.length !== mealsCount &&
@@ -305,8 +300,6 @@ export const Home = ({ children }) => {
                 }`,
               }}
             >
-              {/* {cartItems.length > 0 ? cartItems.length <= 10 ? cartItems.length : "10+" : null} */}
-
               {calcItemsInCart(cartItems) > 0
                 ? calcItemsInCart(cartItems) <= 10
                   ? calcItemsInCart(cartItems)
@@ -318,17 +311,81 @@ export const Home = ({ children }) => {
         <h1 className="display-4 my-3">Latest Delicacies</h1>
         <hr />
         <div className="row" id="dish-div">
-          {isSorted?.filter((element) => {
-            if(category === "all") return element;
-            else return element.category === category;
-          })?.map((element, index) => {
-            if (totalMeals?.length === index + 1) {
-              return (
-                <div key={element._id}>
-                  {loadingPagination && <PaginationSpinner />}
-                  {loadingPagination ? null : (
+          {isSorted
+            ?.filter((element) => {
+              if (category === "all") return element;
+              else return element.category === category;
+            })
+            ?.map((element, index) => {
+              if (totalMeals?.length === index + 1) {
+                return (
+                  <div key={element._id}>
+                    {loadingPagination && <PaginationSpinner />}
+                    {loadingPagination ? null : (
+                      <div
+                        ref={lastMealElementRef}
+                        // key={element._id}
+                        className={`${
+                          element.secretMeal ? "blur hidden-meal" : ""
+                        } card p-0 col-md-3 my-4`}
+                        id="card"
+                      >
+                        <Link to={`/${element.slug}`}>
+                          <img
+                            src={element.coverImage}
+                            className="card-img-top"
+                            alt={`${element?.name}-${element?._id}`}
+                          />
+                        </Link>
+                        <div className="card-body">
+                          <h4 className="card-title">{element.name}</h4>
+                          <p className="card-text">
+                            {element.summary.slice(0, 235) + "..."}
+                          </p>
+                          <div
+                            className="d-flex w-50 mb-3 justify-content-start"
+                            id="icons"
+                          >
+                            <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
+                              <i
+                                className="fa fa-comments-o fa-1x mr-2"
+                                style={{ color: "#d7456b" }}
+                                aria-hidden="true"
+                              ></i>
+                              <span className="text-muted">
+                                {element.ratingsQuantity}
+                              </span>
+                            </div>
+                            <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
+                              <i
+                                className="fa fa-star-o fa-1x mr-2"
+                                style={{ color: "#d7456b" }}
+                                aria-hidden="true"
+                              ></i>
+                              <span className="text-muted">
+                                {element.ratingsAverage}
+                              </span>
+                            </div>
+                          </div>
+                          <Link
+                            to={`/${element.slug}`}
+                            className="btn w-50"
+                            id="read-more-btn"
+                          >
+                            Read More
+                          </Link>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                );
+              } else {
+                return (
+                  <div key={element._id}>
+                    {
+                      // <PaginationSpinner/>
+                    }
                     <div
-                      ref={lastMealElementRef}
                       // key={element._id}
                       className={`${
                         element.secretMeal ? "blur hidden-meal" : ""
@@ -381,72 +438,10 @@ export const Home = ({ children }) => {
                         </Link>
                       </div>
                     </div>
-                  )}
-                </div>
-              );
-            } else {
-              return (
-                <div key={element._id}>
-                  {
-                    // <PaginationSpinner/>
-                  }
-                  <div
-                    // key={element._id}
-                    className={`${
-                      element.secretMeal ? "blur hidden-meal" : ""
-                    } card p-0 col-md-3 my-4`}
-                    id="card"
-                  >
-                    <Link to={`/${element.slug}`}>
-                      <img
-                        src={element.coverImage}
-                        className="card-img-top"
-                        alt={`${element?.name}-${element?._id}`}
-                      />
-                    </Link>
-                    <div className="card-body">
-                      <h4 className="card-title">{element.name}</h4>
-                      <p className="card-text">
-                        {element.summary.slice(0, 235) + "..."}
-                      </p>
-                      <div
-                        className="d-flex w-50 mb-3 justify-content-start"
-                        id="icons"
-                      >
-                        <div className="d-flex align-items-center border rounded-lg px-2 py-1 mr-3">
-                          <i
-                            className="fa fa-comments-o fa-1x mr-2"
-                            style={{ color: "#d7456b" }}
-                            aria-hidden="true"
-                          ></i>
-                          <span className="text-muted">
-                            {element.ratingsQuantity}
-                          </span>
-                        </div>
-                        <div className="d-flex align-items-center border rounded-lg px-2 mr-3">
-                          <i
-                            className="fa fa-star-o fa-1x mr-2"
-                            style={{ color: "#d7456b" }}
-                            aria-hidden="true"
-                          ></i>
-                          <span className="text-muted">
-                            {element.ratingsAverage}
-                          </span>
-                        </div>
-                      </div>
-                      <Link
-                        to={`/${element.slug}`}
-                        className="btn w-50"
-                        id="read-more-btn"
-                      >
-                        Read More
-                      </Link>
-                    </div>
                   </div>
-                </div>
-              );
-            }
-          })}
+                );
+              }
+            })}
         </div>
       </div>
       {modalOpen && (
