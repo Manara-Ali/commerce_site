@@ -100,19 +100,35 @@ export const Cart = ({ children }) => {
             return (
               <div key={item._id} className="mb-5 cart-border border-bottom">
                 <div className="row mb-5 mx-0">
-                  <div
-                    className="col-3 p-0"
+                  {
+                  item.size ? <div
+                    className="col-2 p-0 mt-3"
                     style={{
                       backgroundImage: `url(${item.coverImage})`,
                       backgroundPosition: "center",
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
-                      height: "15rem",
+                      height: "10rem",
                       // width: "5rem",
                       border: "2px solid #939393",
                       borderRadius: "1rem",
                     }}
                   ></div>
+                :
+                    <div
+                    className="col-3 p-0 mt-3"
+                    style={{
+                      backgroundImage: `url(${item.coverImage})`,
+                      backgroundPosition: "center",
+                      backgroundSize: "cover",
+                      backgroundRepeat: "no-repeat",
+                      height: "10rem",
+                      // width: "10rem",
+                      border: "2px solid #939393",
+                      borderRadius: "1rem",
+                    }}
+                  ></div>
+                }
                   {item.size ? (
                     <div className="col-4 d-flex align-items-center" 
                     // style={{border: "1px solid blue"}}
