@@ -54,25 +54,16 @@ export const Cart = ({ children }) => {
     setItemToRemove(item);
   };
 
-  const selectItem = (e, item) => {
-    console.log({
-      ...item,
-      size: Number(e.target.value),
-      price: Number(e.target.value),
-    });
-    return { ...item, size, price };
-  };
+  console.log(dropDownItem);
 
   const handleClearCart = () => {
     dispatch(clearCart());
   };
 
   useEffect(() => {
-    if(dropDownItem.name) {
+    if (dropDownItem.name) {
       dispatch(addToCartRequest());
-      dispatch(
-        addToCartSuccess({...dropDownItem, price})
-      );
+      dispatch(addToCartSuccess({ ...dropDownItem, price }));
     }
   }, [dropDownItem]);
 
@@ -123,30 +114,27 @@ export const Cart = ({ children }) => {
                     }}
                   ></div>
                   {item.size ? (
-                    <div className="col-4 d-flex align-items-center">
+                    <div className="col-4 d-flex align-items-center" 
+                    // style={{border: "1px solid blue"}}
+                    >
                       <Link
                         to={`/${item.slug}?size=${item.size}`}
                         className="d-flex"
                       >
                         <div className="row d-flex align-items-center">
                           <p
-                            className="text-dark font-weight-bold col-10"
+                            className="text-dark font-weight-bold col"
                             style={{ textDecoration: "underline" }}
                           >
                             {item.name}
                           </p>
                         </div>
                       </Link>
-                      <i
-                        className="fa fa-trash-o fa-2x mb-4"
-                        aria-hidden="true"
-                        style={{ color: "#d7456b" }}
-                        // onClick={() => dispatch(removeFromCart(item))}
-                        onClick={() => handleItemRemoveRequest(item)}
-                      ></i>
                     </div>
                   ) : (
-                    <div className="col-4 d-flex align-items-center">
+                    <div className="col-4 d-flex align-items-center"
+                    // style={{border: "1px solid blue"}}
+                    >
                       <Link to={`/${item.slug}`} className="d-flex">
                         <div className="row d-flex align-items-center">
                           <p
@@ -157,50 +145,37 @@ export const Cart = ({ children }) => {
                           </p>
                         </div>
                       </Link>
+                    </div>
+                  )}
+                  <div
+                    className="col p-0"
+                    // style={{ border: "1px solid salmon", padding: "0"}}
+                  >
+                    <div className="d-flex justify-content-center align-items-center w-75 ml-auto">
+                      <p style={{fontWeight: "550", fontSize:"1.7rem"}}>
+                        ${item.price}</p>
                       <i
-                        className="fa fa-trash-o fa-2x mb-4"
+                        className="fa fa-trash-o fa-2x mb-4 ml-auto pt-2"
                         aria-hidden="true"
-                        style={{ color: "#d7456b" }}
+                        style={{ color: "#d7456b", fontWeight: "600"}}
                         // onClick={() => dispatch(removeFromCart(item))}
                         onClick={() => handleItemRemoveRequest(item)}
                       ></i>
                     </div>
-                  )}
-                  <div className="col-2 d-flex justify-content-center align-items-center p-0">
-                    {/* <p>${item.price}</p> */}
-                    <p>${price}</p>
-                  </div>
-                  <div className="d-flex align-items-center" style={{border: "1px solid red"}}>
-                    <p className="text-muted col-md-6">Qty:</p>
-                    <select
-                      className=" custom-select mb-3"
-                      style={{ fontSize: "1.3rem" }}
-                      value={quantity === item.qty ? quantity : item.qty}
-                      onChange={(e) => handleQuantityChange(e, item)}
+                    <div
+                      className="d-flex align-items-center"
+                      // style={{ border: "1px solid blue" }}
                     >
-                      {Array.from({ length: 5 }, (_, index) => {
-                        return ++index;
-                      }).map((element) => {
-                        return (
-                          <option key={element} value={element}>
-                            {element}
-                          </option>
-                        );
-                      })}
-                    </select>
-                    {item.size ? (
-                    <div className="d-flex align-items-center">
-                      <p className="text-muted col-md-6">Size:</p>
+                      <p className="text-muted col pl-0" style={{paddingRight: "2rem"}}>Qty:</p>
                       <select
                         className=" custom-select mb-3"
                         style={{ fontSize: "1.3rem" }}
-                        value={size === item.size ? item.size : size}
-                        onChange={(e) => {
-                          handleSizeChange(e, item);
-                          setDropDownItem({...item, size: Number(e.target.value)});
-                        }}
+                        value={quantity === item.qty ? quantity : item.qty}
+                        onChange={(e) => handleQuantityChange(e, item)}
                       >
-                        {[16, 12, 10].map((element) => {
+                        {Array.from({ length: 5 }, (_, index) => {
+                          return ++index;
+                        }).map((element) => {
                           return (
                             <option key={element} value={element}>
                               {element}
@@ -209,30 +184,38 @@ export const Cart = ({ children }) => {
                         })}
                       </select>
                     </div>
-                  ) : null}
+                    <div
+                      className="d-flex align-items-center"
+                      // style={{ border: "1px solid red" }}
+                    >
+                      {item.size ? (
+                        <div className="d-flex align-items-center w-100">
+                          <p className="text-muted col pl-0">Size:</p>
+                          <select
+                            className=" custom-select mb-3"
+                            style={{ fontSize: "1.3rem" }}
+                            value={size === item.size ? item.size : size}
+                            onChange={(e) => {
+                              handleSizeChange(e, item);
+                              setDropDownItem({
+                                ...item,
+                                price,
+                                size: Number(e.target.value),
+                              });
+                            }}
+                          >
+                            {[16, 12, 10].map((element) => {
+                              return (
+                                <option key={element} value={element}>
+                                  {element + " oz"}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </div>
+                      ) : null}
+                    </div>
                   </div>
-                  {/* {item.size ? (
-                    <div className="d-flex align-items-center">
-                      <p className="text-muted col-md-6">Size:</p>
-                      <select
-                        className=" custom-select mb-3"
-                        style={{ fontSize: "1.3rem" }}
-                        value={size === item.size ? item.size : size}
-                        onChange={(e) => {
-                          handleSizeChange(e, item);
-                          setDropDownItem({...item, size: Number(e.target.value)});
-                        }}
-                      >
-                        {[16, 12, 10].map((element) => {
-                          return (
-                            <option key={element} value={element}>
-                              {element}
-                            </option>
-                          );
-                        })}
-                      </select>
-                    </div>
-                  ) : null} */}
                 </div>
               </div>
             );
