@@ -107,7 +107,7 @@ export const Cart = ({ children }) => {
                       backgroundPosition: "center",
                       backgroundSize: "cover",
                       backgroundRepeat: "no-repeat",
-                      height: "10rem",
+                      height: "15rem",
                       // width: "5rem",
                       border: "2px solid #939393",
                       borderRadius: "1rem",
