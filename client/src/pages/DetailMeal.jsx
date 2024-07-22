@@ -230,7 +230,7 @@ export const DetailMeal = ({ children }) => {
           </div>
           <div className="d-flex justify-content-between">
             <span className="lead mr-3">Price:</span>
-            <h4 className="text-center">${price || meal?.price}</h4>
+            <h4 className="text-center">${meal?.price || price}</h4>
           </div>
           <div className="d-flex justify-content-between">
             <span className="lead mr-3">Spice Level:</span>
