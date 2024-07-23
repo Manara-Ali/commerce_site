@@ -235,7 +235,7 @@ export const DetailMeal = ({ children }) => {
             <h4 className="text-center">${meal?.price || price}</h4>
             <LuDot size={20} color="#d7456b"/>
             <h4 className="text-center">
-              {meal?.spiceLevel === 0 ? "Not Spicy" : "🌶️"}{" "}
+              {meal?.spiceLevel ? "🌶️" : "Not Spicy"}{" "}
             </h4>
             <LuDot size={20} color="#d7456b"/>
             <span className="mr-3">Serving:</span>
