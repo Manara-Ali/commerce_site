@@ -1,4 +1,8 @@
 import { useState, useEffect, useRef, useContext } from "react";
+import { LuDot } from "react-icons/lu";
+import { PiLineVerticalThin } from "react-icons/pi";
+import { FaHeart } from "react-icons/fa";
+import { FaRegStar } from "react-icons/fa";
 import {
   Link,
   useParams,
@@ -223,58 +227,51 @@ export const DetailMeal = ({ children }) => {
             />
           )}
         </div>
-        <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
+        <div className="col-md-9 offset-md-3 mx-auto">
           <div className="d-flex justify-content-between">
-            <span className="lead mr-3">Name:</span>
-            <h4 className="text-center">{meal?.name}</h4>
+            <h1 className="text-center">{meal?.name}</h1>
           </div>
-          <div className="d-flex justify-content-between">
-            <span className="lead mr-3">Price:</span>
+          <div className="d-flex align-middle">
             <h4 className="text-center">${meal?.price || price}</h4>
-          </div>
-          <div className="d-flex justify-content-between">
-            <span className="lead mr-3">Spice Level:</span>
+            <LuDot size={20} color="#d7456b"/>
             <h4 className="text-center">
               {meal?.spiceLevel === 0 ? "Not Spicy" : "🌶️"}{" "}
-              <i
-                className="ml-3 fa fa-power-off"
-                aria-hidden="true"
-                style={{ color: "#d7456b" }}
-              ></i>
             </h4>
-          </div>
-          <div className="d-flex justify-content-between">
-            <span className="lead mr-3">Serving(s):</span>
+            <LuDot size={20} color="#d7456b"/>
+            <span className="mr-3">Serving:</span>
             <h4 className="text-center">
               {meal?.serving}{" "}
-              <i
-                className="ml-3 fa fa-user-o"
-                aria-hidden="true"
-                style={{ color: "#d7456b", fontWeight: "bolder" }}
-              ></i>
             </h4>
           </div>
-          <div className="d-flex justify-content-between">
-            <span className="lead mr-3">Number Of Ratings:</span>
-            <h4 className="text-center">
-              {meal?.ratingsQuantity}{" "}
-              <i
-                className="ml-3 fa fa-bar-chart"
-                aria-hidden="true"
-                style={{ color: "#d7456b", marginRight: "-0.6rem" }}
-              ></i>
-            </h4>
-          </div>
-          <div className="d-flex justify-content-between">
-            <span className="lead mr-3">Ratings Average:</span>
-            <h4 className="text-center">
+        </div>
+         <div className="d-flex justify-content-between col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
+          <div className="d-flex flex-column align-items-start">
+            <h4 className="">
               {meal?.ratingsAverage}
-              <i
-                className="ml-3 fa fa-star-o"
-                aria-hidden="true"
-                style={{ color: "#d7456b", fontWeight: "bold" }}
-              ></i>
             </h4>
+              <FaRegStar size={20} color="#d7456b"/>
+          </div>
+          <PiLineVerticalThin size={50}/>
+          <div className="d-flex flex-column align-items-start">
+            <h4 className="">
+              {meal?.ratingsAverage >= 4.5 ? "User's Favorite" : "Many Users loved it"}
+            </h4>
+              <FaHeart size={20} color="#d7456b"/>
+          </div>
+          <PiLineVerticalThin size={50}/>
+          <div className="d-flex flex-column align-items-start">
+            <h4 className="">
+              {meal?.ratingsQuantity}{" "}
+            </h4>
+              <p className="font-weight-light" style={{textDecoration: "underline"}}>Reviews</p>
+          </div>
+         </div>
+        <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
+          <div className="">
+            <h3 className="text-center mb-4">Description</h3>
+            <p className="text-center">
+              {meal?.description}
+            </p>
           </div>
           {meal?.size && (
             <div className="mt-5 mx-auto border rounded-lg pr-4">
