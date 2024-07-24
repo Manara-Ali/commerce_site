@@ -54,8 +54,6 @@ export const Cart = ({ children }) => {
     setItemToRemove(item);
   };
 
-  console.log(dropDownItem);
-
   const handleClearCart = () => {
     dispatch(clearCart());
   };

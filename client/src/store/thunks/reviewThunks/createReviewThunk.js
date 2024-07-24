@@ -14,11 +14,8 @@ export const createReviewThunk = createAsyncThunk("review/create", async (data, 
             withCredentials: true,
         });
 
-        // console.log(response.data);
-
         return response.data;
     } catch (error) {
-        console.log(error);
         return rejectWithValue(error.response?.data);
     }
 });

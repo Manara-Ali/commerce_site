@@ -14,7 +14,6 @@ export const deleteReviewThunk = createAsyncThunk("review/delete", async (data, 
 
         return response;
     } catch (error) {
-        console.log(error);
         return rejectWithValue(error.response?.data);
     }
 });

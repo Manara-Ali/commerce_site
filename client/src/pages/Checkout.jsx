@@ -80,7 +80,6 @@ export const Checkout = ({ children }) => {
   useEffect(() => {
     const helperFn = async () => {
       if (status === "success" && !paymentError) {
-        console.log("Here");
         const { error } = await stripe.confirmPayment({
           elements,
           clientSecret,
@@ -102,7 +101,6 @@ export const Checkout = ({ children }) => {
 
   useEffect(() => {
     if (paymentError) {
-      console.log("There");
       setErrorMessage(paymentError.message);
     }
 

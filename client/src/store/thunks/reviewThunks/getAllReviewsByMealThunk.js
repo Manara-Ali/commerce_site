@@ -14,7 +14,6 @@ export const getAllReviewsByMealThunk = createAsyncThunk("review/get-all", async
 
         return response.data;
     } catch (error) {
-        console.log(error);
         return rejectWithValue(error.response?.data);
     }
 });

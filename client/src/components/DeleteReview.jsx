@@ -10,8 +10,6 @@ export const DeleteReview = ({ setUserInput, slug, reviewId }) => {
 
   const handleReviewClick = (e) => {
     if (e.target.name === "cancel") {
-      console.log("Cancel");
-
       setDeleteModalOpen(false);
       document.querySelector(".app-container").classList.remove("blur");
       // Scroll to the bottom of the page

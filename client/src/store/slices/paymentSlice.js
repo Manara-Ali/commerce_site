@@ -35,7 +35,6 @@ const paymentsSlice = createSlice({
 
     ////////////// FULFILLED
     builder.addCase(checkoutPaymentThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.status = "success";
       state.clientSecret = action.payload.clientSecret;
@@ -44,7 +43,6 @@ const paymentsSlice = createSlice({
     });
 
     builder.addCase(verifyPaymentThunk.fulfilled, (state, action) => {
-      console.log(action.payload);
       state.loading = false;
       state.status = action.payload.status;
       state.paymentReferenceId = action.payload.paymentReferenceId;
@@ -58,7 +56,6 @@ const paymentsSlice = createSlice({
     });
 
     builder.addCase(verifyPaymentThunk.rejected, (state, action) => {
-        console.log(action.payload);
       state.loading = false;
     //   state.status = action.payload?.status;
     //   state.error = action.payload;

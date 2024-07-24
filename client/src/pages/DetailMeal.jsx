@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useContext } from "react";
 import { LuDot } from "react-icons/lu";
 import { PiLineVerticalThin } from "react-icons/pi";
-import { FaHeart } from "react-icons/fa";
-import { FaRegStar } from "react-icons/fa";
+import { FaHeart, FaRegStar } from "react-icons/fa";
+import { FiUser } from "react-icons/fi";
 import {
   Link,
   useParams,
@@ -151,7 +151,6 @@ export const DetailMeal = ({ children }) => {
   }, [meal]);
 
   useEffect(() => {
-    console.log(searchParam.get("size"));
     if (searchParam.get("size")) {
       dispatch(
         getMealBySizeThunk({ data: slug, size: searchParam.get("size") })
@@ -235,18 +234,20 @@ export const DetailMeal = ({ children }) => {
             <h4 className="text-center">${meal?.price || price}</h4>
             <LuDot size={20} color="#d7456b"/>
             <h4 className="text-center">
-              {console.log(meal.spiceLevel)}
-              {meal?.spiceLevel > 0 ? "🌶️" : "Not Spicy"}{" "}
+              {meal?.spiceLevel > 0 ? "🌶️" : null}{" "}
             </h4>
-            <LuDot size={20} color="#d7456b"/>
+            {meal?.spiceLevel > 0 ? <LuDot size={20} color="#d7456b"/> : null}{" "}
             <span className="mr-3">Serving:</span>
-            <h4 className="text-center">
+            <h4 className="text-center mr-1">
               {meal?.serving}{" "}
             </h4>
+            <div style={{marginTop: "-0.3rem"}}>
+              <FiUser size={20} color="#d7456b"/>
+            </div>
           </div>
         </div>
          <div className="d-flex justify-content-between col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
-          <div className="d-flex flex-column align-items-center">
+          <div className="d-flex flex-column align-items-center" style={{marginLeft: "2.5rem"}}>
             <h4 className="">
               {meal?.ratingsAverage}
             </h4>
@@ -260,7 +261,7 @@ export const DetailMeal = ({ children }) => {
               <FaHeart size={20} color="#d7456b"/>
           </div>
           <PiLineVerticalThin size={50}/>
-          <div className="d-flex flex-column align-items-center">
+          <div className="d-flex flex-column align-items-center" style={{marginRight: "2.5rem"}}>
             <h4 className="">
               {meal?.ratingsQuantity}{" "}
             </h4>
@@ -269,7 +270,7 @@ export const DetailMeal = ({ children }) => {
          </div>
         <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
           <div className="">
-            <h3 className="text-center mb-4">Description</h3>
+            <h2 className="text-center mb-4">Description</h2>
             <p className="text-center">
               {meal?.description}
             </p>
