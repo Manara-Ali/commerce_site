@@ -47,8 +47,7 @@ const mealSchema = new mongoose.Schema(
       required: [true, "Each meal must have a description section"],
     },
     spiceLevel: {
-      type: String,
-      trim: true,
+      type: Number,
       required: [true, "Each meal must specify its spice level."],
     },
     serving: {
