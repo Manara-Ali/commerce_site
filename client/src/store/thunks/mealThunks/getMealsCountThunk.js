@@ -5,8 +5,8 @@ export const getMealsCountThunk = createAsyncThunk("meal/count", async (_, {reje
 
     try {
         const response = await axios({
-            url: "/api/v1/meals",
-            // url: "https://commerce-site-igmb.onrender.com/api/v1/meals",
+            // url: "/api/v1/meals",
+            url: "https://commerce-site-igmb.onrender.com/api/v1/meals",
             method: "GET",
         },
         {
