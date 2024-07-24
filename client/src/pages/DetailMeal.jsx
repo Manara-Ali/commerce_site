@@ -245,21 +245,21 @@ export const DetailMeal = ({ children }) => {
           </div>
         </div>
          <div className="d-flex justify-content-between col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
-          <div className="d-flex flex-column align-items-start">
+          <div className="d-flex flex-column align-items-center">
             <h4 className="">
               {meal?.ratingsAverage}
             </h4>
               <FaRegStar size={20} color="#d7456b"/>
           </div>
           <PiLineVerticalThin size={50}/>
-          <div className="d-flex flex-column align-items-start">
+          <div className="d-flex flex-column align-items-center">
             <h4 className="">
               {meal?.ratingsAverage >= 4.5 ? "User's Favorite" : "Many Users loved it"}
             </h4>
               <FaHeart size={20} color="#d7456b"/>
           </div>
           <PiLineVerticalThin size={50}/>
-          <div className="d-flex flex-column align-items-start">
+          <div className="d-flex flex-column align-items-center">
             <h4 className="">
               {meal?.ratingsQuantity}{" "}
             </h4>
