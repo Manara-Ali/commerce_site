@@ -127,12 +127,12 @@ export const Cart = ({ children }) => {
                     }}
                   ></div>
                 }
-                  {item.size ? (
+                  {size ? (
                     <div className="col-4 d-flex align-items-center" 
                     // style={{border: "1px solid blue"}}
                     >
                       <Link
-                        to={`/${item.slug}?size=${item.size}`}
+                        to={`/${item.slug}?size=${size}`}
                         className="d-flex"
                       >
                         <div className="row d-flex align-items-center">
@@ -167,7 +167,7 @@ export const Cart = ({ children }) => {
                   >
                     <div className="d-flex justify-content-center align-items-center w-75 ml-auto">
                       <p style={{fontWeight: "550", fontSize:"1.7rem"}}>
-                        ${item.price}</p>
+                        ${price === item.price ? item.price : price}</p>
                       <i
                         className="fa fa-trash-o fa-2x mb-4 ml-auto pt-2"
                         aria-hidden="true"

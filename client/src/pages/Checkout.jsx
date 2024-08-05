@@ -33,8 +33,6 @@ export const Checkout = ({ children }) => {
     return state.paymentsCombinedReducer;
   });
 
-  console.log(paymentError);
-
   // Configure stripe
   const stripe = useStripe();
   const elements = useElements();
@@ -215,7 +213,7 @@ export const Checkout = ({ children }) => {
                 style={{ fontSize: "1.8rem" }}
               >
                 Taxes:{" "}
-                <span className="font-weight-bold ml-5">${taxPrice}</span>
+                <span className="font-weight-bold ml-5">${`${taxPrice.toFixed(2)}`}</span>
               </div>
               <div
                 className="list-group-item text-center mb-3 p-3 border d-flex justify-content-between"

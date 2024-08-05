@@ -5,8 +5,8 @@ export const getMealBySizeThunk = createAsyncThunk("meal/get-one-by-size", async
     try {
         const response = await axios(
           {
-            // url: `/api/v1/meals/${obj.data}?size=${obj.size}`,
-            url: `https://commerce-site-igmb.onrender.com/api/v1/meals/${obj.data}?size=${obj.size}`,
+            url: `/api/v1/meals/${obj.data}?size=${obj.size}`,
+            // url: `https://commerce-site-igmb.onrender.com/api/v1/meals/${obj.data}?size=${obj.size}`,
             method: "GET",
           },
           {

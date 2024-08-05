@@ -5,9 +5,9 @@ export const getPaginatedMealsThunk = createAsyncThunk("meal/pagination", async 
     try {
         const response = await axios({
             method: "GET",
-            // url: `/api/v1/meals?page=${data.pageNumber}&limit=3`,
+            url: `/api/v1/meals?page=${data.pageNumber}&limit=3`,
             
-            url: `https://commerce-site-igmb.onrender.com/api/v1/meals?page=${data.pageNumber}&limit=3`,
+            // url: `https://commerce-site-igmb.onrender.com/api/v1/meals?page=${data.pageNumber}&limit=3`,
         },
         {
             withCredentials: true,

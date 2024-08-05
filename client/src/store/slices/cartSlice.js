@@ -46,7 +46,9 @@ const cartSlice = createSlice({
         }, 0)
       );
 
-      state.taxPrice = formatPrice(state.itemsPrice * 0.1).toFixed(2);
+      state.taxPrice = formatPrice(state.itemsPrice * 0.1);
+
+      console.log(state.itemsPrice, state.taxPrice.toFixed(2));
 
       state.totalPrice = formatPrice(state.itemsPrice + state.taxPrice);
 

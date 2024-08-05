@@ -231,7 +231,7 @@ export const DetailMeal = ({ children }) => {
             <h1 className="text-center">{meal?.name}</h1>
           </div>
           <div className="d-flex align-middle">
-            <h4 className="text-center">${meal?.price || price}</h4>
+            <h4 className="text-center">${price === meal?.price ? meal?.price : price }</h4>
             <LuDot size={20} color="#d7456b"/>
             <h4 className="text-center">
               {meal?.spiceLevel > 0 ? "🌶️" : null}{" "}
@@ -275,6 +275,14 @@ export const DetailMeal = ({ children }) => {
               {meal?.description}
             </p>
           </div>
+          <div className="message-alert mt-5">
+          {addedToCart && (
+            <Alert
+              type="alert-success"
+              message="Your item was added to the cart"
+            />
+          )}
+        </div>
           {meal?.size && (
             <div className="mt-5 mx-auto border rounded-lg pr-4">
               <div className="d-flex justify-content-between align-items-center">
