@@ -67,6 +67,8 @@ export const DetailMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
+  console.log(meal);
+
   const { user, isAuthenticated, message } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
@@ -124,7 +126,7 @@ export const DetailMeal = ({ children }) => {
       setSearchParam({ size: searchParam.get("size") });
 
       if (searchParam.get("size")) setSize(searchParam.get("size"));
-      else(setSearchParam({size: 16}));
+      else setSearchParam({ size: 16 });
     }
 
     if (Number(searchParam.get("size")) === 16) {
@@ -231,58 +233,75 @@ export const DetailMeal = ({ children }) => {
             <h1 className="text-center">{meal?.name}</h1>
           </div>
           <div className="d-flex align-middle">
-            <h4 className="text-center">${price === meal?.price ? meal?.price : price }</h4>
-            <LuDot size={20} color="#d7456b"/>
+            {meal.category === "drinks" ? (
+              <h4 className="text-center">
+                ${price === meal?.price ? meal?.price : price}
+              </h4>
+            ) : (
+              <h4 className="text-center">
+                ${price === meal?.price ? price : meal?.price}
+              </h4>
+            )}
+            {/* <h4 className="text-center">${price === meal?.price ? meal?.price : price }</h4> */}
+            {/* <h4 className="text-center">
+              ${price === meal?.price ? price : meal?.price}
+            </h4> */}
+            <LuDot size={20} color="#d7456b" />
             <h4 className="text-center">
               {meal?.spiceLevel > 0 ? "🌶️" : null}{" "}
             </h4>
-            {meal?.spiceLevel > 0 ? <LuDot size={20} color="#d7456b"/> : null}{" "}
+            {meal?.spiceLevel > 0 ? <LuDot size={20} color="#d7456b" /> : null}{" "}
             <span className="mr-3">Serving:</span>
-            <h4 className="text-center mr-1">
-              {meal?.serving}{" "}
-            </h4>
-            <div style={{marginTop: "-0.3rem"}}>
-              <FiUser size={20} color="#d7456b"/>
+            <h4 className="text-center mr-1">{meal?.serving} </h4>
+            <div style={{ marginTop: "-0.3rem" }}>
+              <FiUser size={20} color="#d7456b" />
             </div>
           </div>
         </div>
-         <div className="d-flex justify-content-between col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
-          <div className="d-flex flex-column align-items-center" style={{marginLeft: "2.5rem"}}>
-            <h4 className="">
-              {meal?.ratingsAverage}
-            </h4>
-              <FaRegStar size={20} color="#d7456b"/>
+        <div className="d-flex justify-content-between col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
+          <div
+            className="d-flex flex-column align-items-center"
+            style={{ marginLeft: "2.5rem" }}
+          >
+            <h4 className="">{meal?.ratingsAverage}</h4>
+            <FaRegStar size={20} color="#d7456b" />
           </div>
-          <PiLineVerticalThin size={50}/>
+          <PiLineVerticalThin size={50} />
           <div className="d-flex flex-column align-items-center">
             <h4 className="">
-              {meal?.ratingsAverage >= 4.5 ? "User's Favorite" : "Many Users loved it"}
+              {meal?.ratingsAverage >= 4.5
+                ? "User's Favorite"
+                : "Many Users loved it"}
             </h4>
-              <FaHeart size={20} color="#d7456b"/>
+            <FaHeart size={20} color="#d7456b" />
           </div>
-          <PiLineVerticalThin size={50}/>
-          <div className="d-flex flex-column align-items-center" style={{marginRight: "2.5rem"}}>
-            <h4 className="">
-              {meal?.ratingsQuantity}{" "}
-            </h4>
-              <p className="font-weight-light" style={{textDecoration: "underline"}}>Reviews</p>
+          <PiLineVerticalThin size={50} />
+          <div
+            className="d-flex flex-column align-items-center"
+            style={{ marginRight: "2.5rem" }}
+          >
+            <h4 className="">{meal?.ratingsQuantity} </h4>
+            <p
+              className="font-weight-light"
+              style={{ textDecoration: "underline" }}
+            >
+              Reviews
+            </p>
           </div>
-         </div>
+        </div>
         <div className="col-md-9 offset-md-3 mt-5 mx-auto border rounded-lg p-4">
           <div className="">
             <h2 className="text-center mb-4">Description</h2>
-            <p className="text-center">
-              {meal?.description}
-            </p>
+            <p className="text-center">{meal?.description}</p>
           </div>
           <div className="message-alert mt-5">
-          {addedToCart && (
-            <Alert
-              type="alert-success"
-              message="Your item was added to the cart"
-            />
-          )}
-        </div>
+            {addedToCart && (
+              <Alert
+                type="alert-success"
+                message="Your item was added to the cart"
+              />
+            )}
+          </div>
           {meal?.size && (
             <div className="mt-5 mx-auto border rounded-lg pr-4">
               <div className="d-flex justify-content-between align-items-center">

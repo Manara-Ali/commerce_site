@@ -98,38 +98,39 @@ export const Cart = ({ children }) => {
             return (
               <div key={item._id} className="mb-5 cart-border border-bottom">
                 <div className="row mb-5 mx-0">
-                  {
-                  item.size ? <div
-                    className="col-2 p-0 mt-3"
-                    style={{
-                      backgroundImage: `url(${item.coverImage})`,
-                      backgroundPosition: "center",
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      height: "10rem",
-                      // width: "5rem",
-                      border: "2px solid #939393",
-                      borderRadius: "1rem",
-                    }}
-                  ></div>
-                :
+                  {item.size ? (
                     <div
-                    className="col-3 p-0 mt-3"
-                    style={{
-                      backgroundImage: `url(${item.coverImage})`,
-                      backgroundPosition: "center",
-                      backgroundSize: "cover",
-                      backgroundRepeat: "no-repeat",
-                      height: "10rem",
-                      // width: "10rem",
-                      border: "2px solid #939393",
-                      borderRadius: "1rem",
-                    }}
-                  ></div>
-                }
+                      className="col-2 p-0 mt-3"
+                      style={{
+                        backgroundImage: `url(${item.coverImage})`,
+                        backgroundPosition: "center",
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        height: "10rem",
+                        // width: "5rem",
+                        border: "2px solid #939393",
+                        borderRadius: "1rem",
+                      }}
+                    ></div>
+                  ) : (
+                    <div
+                      className="col-3 p-0 mt-3"
+                      style={{
+                        backgroundImage: `url(${item.coverImage})`,
+                        backgroundPosition: "center",
+                        backgroundSize: "cover",
+                        backgroundRepeat: "no-repeat",
+                        height: "10rem",
+                        // width: "10rem",
+                        border: "2px solid #939393",
+                        borderRadius: "1rem",
+                      }}
+                    ></div>
+                  )}
                   {size ? (
-                    <div className="col-4 d-flex align-items-center" 
-                    // style={{border: "1px solid blue"}}
+                    <div
+                      className="col-4 d-flex align-items-center"
+                      // style={{border: "1px solid blue"}}
                     >
                       <Link
                         to={`/${item.slug}?size=${size}`}
@@ -146,8 +147,9 @@ export const Cart = ({ children }) => {
                       </Link>
                     </div>
                   ) : (
-                    <div className="col-4 d-flex align-items-center"
-                    // style={{border: "1px solid blue"}}
+                    <div
+                      className="col-4 d-flex align-items-center"
+                      // style={{border: "1px solid blue"}}
                     >
                       <Link to={`/${item.slug}`} className="d-flex">
                         <div className="row d-flex align-items-center">
@@ -166,7 +168,34 @@ export const Cart = ({ children }) => {
                     // style={{ border: "1px solid salmon", padding: "0"}}
                   >
                     <div className="d-flex justify-content-center align-items-center w-75 ml-auto">
-                      <p style={{fontWeight: "550", fontSize:"1.7rem"}}>
+                      {item.category === "drinks" ? (
+                        <>
+                          <p style={{ fontWeight: "550", fontSize: "1.7rem" }}>
+                            ${price === item.price ? item.price : price}
+                          </p>
+                          <i
+                            className="fa fa-trash-o fa-2x mb-4 ml-auto pt-2"
+                            aria-hidden="true"
+                            style={{ color: "#d7456b", fontWeight: "600" }}
+                            // onClick={() => dispatch(removeFromCart(item))}
+                            onClick={() => handleItemRemoveRequest(item)}
+                          ></i>
+                        </>
+                      ) : (
+                        <>
+                          <p style={{ fontWeight: "550", fontSize: "1.7rem" }}>
+                            ${price === item.price ? price : item.price}
+                          </p>
+                          <i
+                            className="fa fa-trash-o fa-2x mb-4 ml-auto pt-2"
+                            aria-hidden="true"
+                            style={{ color: "#d7456b", fontWeight: "600" }}
+                            // onClick={() => dispatch(removeFromCart(item))}
+                            onClick={() => handleItemRemoveRequest(item)}
+                          ></i>
+                        </>
+                      )}
+                      {/* <p style={{fontWeight: "550", fontSize:"1.7rem"}}>
                         ${price === item.price ? item.price : price}</p>
                       <i
                         className="fa fa-trash-o fa-2x mb-4 ml-auto pt-2"
@@ -174,13 +203,18 @@ export const Cart = ({ children }) => {
                         style={{ color: "#d7456b", fontWeight: "600"}}
                         // onClick={() => dispatch(removeFromCart(item))}
                         onClick={() => handleItemRemoveRequest(item)}
-                      ></i>
+                      ></i> */}
                     </div>
                     <div
                       className="d-flex align-items-center"
                       // style={{ border: "1px solid blue" }}
                     >
-                      <p className="text-muted col pl-0" style={{paddingRight: "2rem"}}>Qty:</p>
+                      <p
+                        className="text-muted col pl-0"
+                        style={{ paddingRight: "2rem" }}
+                      >
+                        Qty:
+                      </p>
                       <select
                         className=" custom-select mb-3"
                         style={{ fontSize: "1.3rem" }}
