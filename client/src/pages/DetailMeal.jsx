@@ -67,8 +67,6 @@ export const DetailMeal = ({ children }) => {
     return state.mealsCombinedReducer;
   });
 
-  console.log(meal);
-
   const { user, isAuthenticated, message } = useSelector((state) => {
     return state.usersCombinedReducer;
   });
@@ -242,10 +240,6 @@ export const DetailMeal = ({ children }) => {
                 ${price === meal?.price ? price : meal?.price}
               </h4>
             )}
-            {/* <h4 className="text-center">${price === meal?.price ? meal?.price : price }</h4> */}
-            {/* <h4 className="text-center">
-              ${price === meal?.price ? price : meal?.price}
-            </h4> */}
             <LuDot size={20} color="#d7456b" />
             <h4 className="text-center">
               {meal?.spiceLevel > 0 ? "🌶️" : null}{" "}
@@ -293,6 +287,14 @@ export const DetailMeal = ({ children }) => {
           <div className="">
             <h2 className="text-center mb-4">Description</h2>
             <p className="text-center">{meal?.description}</p>
+          </div>
+          <div className="message-alert mt-5">
+            {addedToCart && (
+              <Alert
+                type="alert-success"
+                message="Your item was added to the cart"
+              />
+            )}
           </div>
           <div className="message-alert mt-5">
             {addedToCart && (

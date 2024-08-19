@@ -127,13 +127,13 @@ export const Cart = ({ children }) => {
                       }}
                     ></div>
                   )}
-                  {size ? (
+                  {item.size ? (
                     <div
                       className="col-4 d-flex align-items-center"
                       // style={{border: "1px solid blue"}}
                     >
                       <Link
-                        to={`/${item.slug}?size=${size}`}
+                        to={`/${item.slug}?size=${item.size}`}
                         className="d-flex"
                       >
                         <div className="row d-flex align-items-center">
@@ -168,9 +168,10 @@ export const Cart = ({ children }) => {
                     // style={{ border: "1px solid salmon", padding: "0"}}
                   >
                     <div className="d-flex justify-content-center align-items-center w-75 ml-auto">
-                      {item.category === "drinks" ? (
-                        <>
-                          <p style={{ fontWeight: "550", fontSize: "1.7rem" }}>
+                      {
+                        item.category === "drinks" ? (
+                          <>
+                            <p style={{ fontWeight: "550", fontSize: "1.7rem" }}>
                             ${price === item.price ? item.price : price}
                           </p>
                           <i
@@ -180,9 +181,9 @@ export const Cart = ({ children }) => {
                             // onClick={() => dispatch(removeFromCart(item))}
                             onClick={() => handleItemRemoveRequest(item)}
                           ></i>
-                        </>
-                      ) : (
-                        <>
+                          </>
+                        ) : (
+                          <>
                           <p style={{ fontWeight: "550", fontSize: "1.7rem" }}>
                             ${price === item.price ? price : item.price}
                           </p>
@@ -194,13 +195,15 @@ export const Cart = ({ children }) => {
                             onClick={() => handleItemRemoveRequest(item)}
                           ></i>
                         </>
-                      )}
-                      {/* <p style={{fontWeight: "550", fontSize:"1.7rem"}}>
-                        ${price === item.price ? item.price : price}</p>
+                        )
+                      }
+                      {/* <p style={{ fontWeight: "550", fontSize: "1.7rem" }}>
+                        ${price === item.price ? item.price : price}
+                      </p>
                       <i
                         className="fa fa-trash-o fa-2x mb-4 ml-auto pt-2"
                         aria-hidden="true"
-                        style={{ color: "#d7456b", fontWeight: "600"}}
+                        style={{ color: "#d7456b", fontWeight: "600" }}
                         // onClick={() => dispatch(removeFromCart(item))}
                         onClick={() => handleItemRemoveRequest(item)}
                       ></i> */}
